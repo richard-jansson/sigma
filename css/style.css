@@ -1,0 +1,36 @@
+@font-face {
+	font-family: PressStart2P;
+	src: url('../fonts/PressStart2P-Regular.ttf');
+}
+
+body {
+	font-family: PressStart2P;
+}
+
+#game {
+	width: 640px;
+	height: 480px;
+	background-color: black;
+	margin: 0px auto;
+}
+
+#help{
+	width: 640px;
+	height: 480px;
+	margin: 50px auto;
+	font-size: 12px;
+}
+
+.cont {
+	width: 50%;
+	float: left;
+}
+.cont-100 {
+	width: 100%;
+	float: left;
+}
+
+#menu {
+	width: 640px;
+	margin: 20px auto 10px;
+}
