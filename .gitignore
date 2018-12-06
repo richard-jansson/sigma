@@ -1,2 +1,5 @@
 tmp.txt
 foo.txt
+.*swp
+bar.txt
+tojson
