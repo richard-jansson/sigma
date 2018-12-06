@@ -8,6 +8,8 @@ var n_levels=0;
 var words=0;
 var t0;
 
+var hit;
+
 function __drawString(s){
 	var tdim=ctx.measureText(s);
 
@@ -56,6 +58,8 @@ function doWord(){
 }
 
 function init(){
+	hit=new Audio("bling.wav");
+
 	for(var k in levels) n_levels++;
 
 	console.log("init");
@@ -100,6 +104,7 @@ function doKey(key){
 	}
 
 	if(pword.toLowerCase() == cword.trimEnd().toLowerCase()){
+		hit.play();
 		console.log("Match!");
 		doWord();
 		pword="";
