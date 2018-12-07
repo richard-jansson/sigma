@@ -5,6 +5,9 @@ var paragraph=0;
 var level=0;
 var n_levels=0;
 
+// frequency profile data
+var freq_prof={};
+
 var words=0;
 var t0;
 
@@ -39,6 +42,64 @@ function textArea(ctx,x,y,w,h,style){
 		clear:__clearString};
 }
 
+function doAnalysis(text,depth){
+	console.log("analysis on "+text.length+" depth: "+depth);
+	for(var p=0;p<text.length-depth-1;p++){
+		var cs=text.substr(p,depth).toLowerCase();
+		var c=text.charAt(depth).toLowerCase();
+
+		if(typeof(freq_prof[cs])=="undefined"){
+			freq_prof[cs]={};
+			freq_prof[cs][c]=1;
+		}else if(typeof(freq_prof[cs][c])=="undefined"){
+			freq_prof[cs][c]=1;	
+		}else{
+			freq_prof[cs][c]++;
+		}
+	}
+}
+
+function sortX(o){
+	list=[];
+	for(var k in o){
+		list[k]=o[k];
+	}
+	var max=-1000;	
+	var max_k=false;
+	sorted=[];
+	var n=0;
+	for(var k in list) n++;
+
+	while(n){
+		max=-1000;
+		for(var k in list){
+			if(list[k] > max){
+				max=list[k];
+				max_k=k;
+			}
+		}
+		sorted.push(max_k);
+		delete list[max_k];
+		n--;
+	}
+	
+	return sorted;
+}
+
+function getFreqProf(){
+	var prof_t0=new Date();
+	console.log("Generate frequency profile...");	
+	for(var k in levels){
+		var c=levels[k];
+		for(var i=0;i<c.length;i++){
+			for(var j=0;j<7;j++){
+				doAnalysis(c[i],j);
+			}
+		}
+	}
+	console.log("Profile generated in "+(new Date()-prof_t0) + "ms");
+}
+
 function doWord(){
 	var i=curr.indexOf(" ");
 	var w=curr.substr(0,i+1);
@@ -58,6 +119,8 @@ function doWord(){
 }
 
 function init(){
+	getFreqProf();
+
 	hit=new Audio("bling.wav");
 
 	for(var k in levels) n_levels++;
