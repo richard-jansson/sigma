@@ -87,6 +87,40 @@ function sortX(o){
 	return sorted;
 }
 
+function __setToTree(set,n,m,d,md){
+	var ret=[];	
+	var i=0;
+	var l=0;
+
+	if(d==md) return [];
+
+	for(var k in set) if(typeof(set[k])!="undefined") l++;
+
+	if(l==0) return [];
+
+	for(var k in set){
+		if(i==n) break;
+		ret[i]=set[k];
+		delete(set[k]);
+		i++;
+	}
+	for(var i=0;i<m;i++){
+		ret.push(__setToTree(set,n,m,d+1,md));	
+	}
+	return ret;
+}
+
+function setToTree(set,n,m){
+	var d=0;
+	var cap=4;
+	while( cap < set.length){
+		cap+=Math.pow(m,d)*n; 
+		d++;
+	}
+	console.log("max depth = "+d +" gives cap: "+cap);
+	return __setToTree(set,n,m,0,d);
+}
+
 function getFreqProf(){
 	var prof_t0=new Date();
 	console.log("Generate frequency profile...");	
@@ -142,23 +176,8 @@ function __render_treeboard(){
 
 	x=this.w/2;
 
-	for(var i=0;i<N;i++){
-		a=i*2*Math.PI/N+o;
-		x0=Math.cos(a)*r+x;
-		y0=Math.sin(a)*r+y+this.y0;
-
-		this.ctx.strokeText(set[i+4],x0,y0);
 	}
 	
-	x=3*this.w/4;
-
-	for(var i=0;i<N;i++){
-		a=i*2*Math.PI/N+o;
-		x0=Math.cos(a)*r+x;
-		y0=Math.sin(a)*r+y+this.y0;
-
-		this.ctx.strokeText(set[i+8],x0,y0);
-	}
 
 }
 
