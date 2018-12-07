@@ -4,6 +4,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
+var dkeys=["W","D","S","A"];
 
 // frequency profile data
 var freq_prof={};
@@ -92,7 +93,7 @@ function getFreqProf(){
 	for(var k in levels){
 		var c=levels[k];
 		for(var i=0;i<c.length;i++){
-			for(var j=0;j<7;j++){
+			for(var j=0;j<3;j++){
 				doAnalysis(c[i],j);
 			}
 		}
@@ -118,6 +119,42 @@ function doWord(){
 	cword=w;
 }
 
+function __render_treeboard(){
+	this.ctx.fillStyle=this.style;
+	this.ctx.strokeStyle=this.style;
+	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
+
+	set=sortX(freq_prof[""]);	
+
+	var r=this.h/4;
+	var x=this.h/2;
+	var y=this.h/2;
+	var N=4;
+	var o=-Math.PI/2;
+
+	for(var i=0;i<N;i++){
+		a=i*2*Math.PI/N+o;
+		x0=Math.cos(a)*r+y+this.x0;
+		y0=Math.sin(a)*r+y+this.y0;
+
+//		this.ctx.fillRect(x0,y0,10,10);
+
+		this.ctx.strokeText(dkeys[i]+":"+set[i],x0,y0);
+	}
+
+}
+
+function treeboard(ctx,x,y,w,h,style){
+	return {ctx:ctx,
+		render:__render_treeboard,
+		x0:x,
+		y0:y,
+		w:w,
+		h:h,
+		style:style
+		}
+}
+
 function init(){
 	getFreqProf();
 
@@ -136,9 +173,13 @@ function init(){
 
 	wpm=new textArea(ctx,0,0,640,36,"green");
 	gametext=new textArea(ctx,36,36,640,480-36*4,"white");
-	playertext=new textArea(ctx,36,480-36*2,640,480-36*4,"red");
-
+	playertext=new textArea(ctx,36,480-36*6,640,480-36*4,"red");
+	
+	keyboard=new treeboard(ctx,36,480-36*4,640-36*2,36*3,"red");
+	
 	doWord();
+
+	keyboard.render();
 //	setInterval(doWord,100);
 }
 
@@ -154,6 +195,8 @@ function doWPM(){
 
 function doKey(key){
 	console.log(key);		
+
+	return;
 
 	playertext.print(key);
 
@@ -182,13 +225,25 @@ function doDelete(){
 	if(pword.length<1) return;
 	pword=pword.substr(0,pword.length-1);
 
-	playertext.clear();
-	playertext.print(pword);
+//	playertext.clear();
+//	playertext.print(pword);
 }
 
 document.onkeyup=function(e){ 
 	tmp=e; 
-	if(e.key=="Backspace") doDelete();
+
+	key=e.key.toUpperCase();
+	
+	var keyn=-1;
+	for(var i=0;i<dkeys.length;i++){
+		if(dkeys[i]==key) keyn=i; 
+	}
+//	console.log(key+" "+keyn);
+	if(keyn!=-1){
+		set=sortX(freq_prof[""]);	
+		playertext.print(set[keyn]);
+	}
+	
 	if(e.key.length<3) doKey(e.key)
 };
 
