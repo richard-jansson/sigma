@@ -153,6 +153,53 @@ function doWord(){
 	cword=w;
 }
 
+
+function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
+	var i=0;
+//	var r=72;
+	ctx.strokeStyle="green";
+	ctx.font=fs+"px PressStart2P";
+	for(var k in branch){
+		if(typeof(branch[k])!="string") continue;
+		if(i==n) break;
+
+
+	   a=i*2*Math.PI/n - Math.PI/4;	
+		dy=Math.sin(a)*ro/4;
+		dx=Math.cos(a)*ro/4;
+
+		ctx.strokeText(branch[k],x+dx,y+dy);
+
+		i++;
+	}
+	i=0;
+	ctx.strokeStyle="blue";
+//	o=-Math.PI/2;
+//	o=-Math.PI;
+//	o=0;
+	o=-Math.PI/8;
+
+	for(var k in branch){
+		if(typeof(branch[k])!="object") continue;
+//		a=o+i*2*Math.PI/4;	
+		a=ao+o+ i*Math.PI/4;
+		
+		y0=Math.sin(a)*ro;
+		x0=Math.cos(a)*ro;
+
+		console.log(x0+","+y0);
+		this.ctx.beginPath();
+		this.ctx.moveTo(x,y);
+		this.ctx.lineTo(x+x0,y+y0);
+		this.ctx.stroke();
+
+		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs/3,a,ro);	
+
+		i++;
+//		if(i==1) break;
+	}
+}
+
 function __render_treeboard(){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
@@ -160,11 +207,13 @@ function __render_treeboard(){
 
 	set=sortX(freq_prof[""]);	
 
-	var r=this.h/4;
+	var r=48;
 	var x=this.h/2;
 	var y=this.h/2;
-	var N=4;
+	var N=4,M=2;
 	var o=-Math.PI/2;
+	
+	this.ctx.font="24px PressStart2P";
 
 	for(var i=0;i<N;i++){
 		a=i*2*Math.PI/N+o;
@@ -174,10 +223,30 @@ function __render_treeboard(){
 		this.ctx.strokeText(dkeys[i]+":"+set[i],x0,y0);
 	}
 
-	x=this.w/2;
-
-	}
+	x=3*this.w/4;
+	y=this.y0;
 	
+	tree=setToTree(set,N,M);
+
+	o=Math.PI/4;
+	o=0;
+	o=-3*Math.PI/4;
+
+	y=this.y0+this.h
+	
+	for(var i=0;i<M;i++){
+		a=o+i*2*Math.PI/4;	
+		
+		y0=Math.sin(a)*r*2;
+		x0=Math.cos(a)*r*2;
+		
+		this.ctx.beginPath();
+		this.ctx.moveTo(x,y);
+		this.ctx.lineTo(x+x0,y+y0);
+		this.ctx.stroke();
+
+		__render_tree(ctx,tree[4+i],x+x0,y+y0,N,M,48,a,r*2);
+	}
 
 }
 
@@ -211,8 +280,7 @@ function init(){
 	wpm=new textArea(ctx,0,0,640,36,"green");
 	gametext=new textArea(ctx,36,36,640,480-36*4,"white");
 	playertext=new textArea(ctx,36,480-36*6,640,480-36*4,"red");
-	
-	keyboard=new treeboard(ctx,36,480-36*4,640-36*2,36*3,"red");
+	keyboard=new treeboard(ctx,36,480-36*6,640-36*2,36*5,"red");
 	
 	doWord();
 
