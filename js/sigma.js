@@ -137,9 +137,27 @@ function __render_treeboard(){
 		x0=Math.cos(a)*r+y+this.x0;
 		y0=Math.sin(a)*r+y+this.y0;
 
-//		this.ctx.fillRect(x0,y0,10,10);
-
 		this.ctx.strokeText(dkeys[i]+":"+set[i],x0,y0);
+	}
+
+	x=this.w/2;
+
+	for(var i=0;i<N;i++){
+		a=i*2*Math.PI/N+o;
+		x0=Math.cos(a)*r+x;
+		y0=Math.sin(a)*r+y+this.y0;
+
+		this.ctx.strokeText(set[i+4],x0,y0);
+	}
+	
+	x=3*this.w/4;
+
+	for(var i=0;i<N;i++){
+		a=i*2*Math.PI/N+o;
+		x0=Math.cos(a)*r+x;
+		y0=Math.sin(a)*r+y+this.y0;
+
+		this.ctx.strokeText(set[i+8],x0,y0);
 	}
 
 }
