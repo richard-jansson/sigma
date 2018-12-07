@@ -5,6 +5,11 @@ var paragraph=0;
 var level=0;
 var n_levels=0;
 var dkeys=["W","D","S","A"];
+var sel_m=["J","O"];
+var N=4,M=2;
+var tree=false;
+var W=1024;
+var H=768;
 
 // frequency profile data
 var freq_prof={};
@@ -20,7 +25,7 @@ function __drawString(s){
 	this.ctx.strokeStyle=this.style;
 	this.ctx.font="24px PressStart2P";
 
-	if( tdim.width + this.x > 640 ){
+	if( tdim.width + this.x > W ){
 		this.x=this.x0;
 		this.y+=36;
 	}
@@ -47,7 +52,7 @@ function doAnalysis(text,depth){
 	console.log("analysis on "+text.length+" depth: "+depth);
 	for(var p=0;p<text.length-depth-1;p++){
 		var cs=text.substr(p,depth).toLowerCase();
-		var c=text.charAt(depth).toLowerCase();
+		var c=text.charAt(p+depth).toLowerCase();
 
 		if(typeof(freq_prof[cs])=="undefined"){
 			freq_prof[cs]={};
@@ -187,46 +192,46 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		y0=Math.sin(a)*ro;
 		x0=Math.cos(a)*ro;
 
-		console.log(x0+","+y0);
+//		console.log(x0+","+y0);
 		this.ctx.beginPath();
 		this.ctx.moveTo(x,y);
 		this.ctx.lineTo(x+x0,y+y0);
 		this.ctx.stroke();
 
-		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs/3,a,ro);	
+		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,3*fs/4,a,ro);	
 
 		i++;
 //		if(i==1) break;
 	}
 }
 
-function __render_treeboard(){
+function __render_treeboard(tree){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
 	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 
-	set=sortX(freq_prof[""]);	
+//	set=sortX(freq_prof[""]);	
+//	tree=setToTree(set,N,M);
 
 	var r=48;
-	var x=this.h/2;
-	var y=this.h/2;
+	var x=this.w/2;
+	var y=this.h;
 	var N=4,M=2;
 	var o=-Math.PI/2;
 	
 	this.ctx.font="24px PressStart2P";
+	x=this.w/2+this.x0;
+	y=this.y0+this.h;
 
 	for(var i=0;i<N;i++){
 		a=i*2*Math.PI/N+o;
-		x0=Math.cos(a)*r+y+this.x0;
-		y0=Math.sin(a)*r+y+this.y0;
+		x0=Math.cos(a)*r+x;
+		y0=Math.sin(a)*r+y;
 
-		this.ctx.strokeText(dkeys[i]+":"+set[i],x0,y0);
+		this.ctx.strokeText(dkeys[i]+":"+tree[i],x0,y0);
 	}
 
-	x=3*this.w/4;
-	y=this.y0;
 	
-	tree=setToTree(set,N,M);
 
 	o=Math.PI/4;
 	o=0;
@@ -250,6 +255,11 @@ function __render_treeboard(){
 
 }
 
+function __tboard_clear(){
+	this.ctx.fillStyle="black";
+	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+}
+
 function treeboard(ctx,x,y,w,h,style){
 	return {ctx:ctx,
 		render:__render_treeboard,
@@ -257,7 +267,8 @@ function treeboard(ctx,x,y,w,h,style){
 		y0:y,
 		w:w,
 		h:h,
-		style:style
+		style:style,
+		clear:__tboard_clear,
 		}
 }
 
@@ -277,14 +288,17 @@ function init(){
 
 	t0=new Date();
 
-	wpm=new textArea(ctx,0,0,640,36,"green");
-	gametext=new textArea(ctx,36,36,640,480-36*4,"white");
-	playertext=new textArea(ctx,36,480-36*6,640,480-36*4,"red");
-	keyboard=new treeboard(ctx,36,480-36*6,640-36*2,36*5,"red");
+	wpm=new textArea(ctx,0,0,W,36,"green");
+	gametext=new textArea(ctx,36,36,W,H-36*4,"white");
+	playertext=new textArea(ctx,36,H-36*13,W,36,"red");
+	keyboard=new treeboard(ctx,36,H-36*12,W-36*2,36*10,"red");
 	
 	doWord();
 
-	keyboard.render();
+	set=sortX(freq_prof[""]);	
+	tree=setToTree(set,N,M);
+
+	keyboard.render(tree);
 //	setInterval(doWord,100);
 }
 
@@ -299,9 +313,6 @@ function doWPM(){
 }
 
 function doKey(key){
-	console.log(key);		
-
-	return;
 
 	playertext.print(key);
 
@@ -346,10 +357,32 @@ document.onkeyup=function(e){
 //	console.log(key+" "+keyn);
 	if(keyn!=-1){
 		set=sortX(freq_prof[""]);	
-		playertext.print(set[keyn]);
+//		playertext.print(tree[keyn]);
+		doKey(tree[keyn]);
+
+		set=sortX(freq_prof[""]);	
+		tree=setToTree(set,N,M);
+
+		keyboard.clear();
+		keyboard.render(tree);
+		return;
+	}
+
+	var keyn=-1;
+	for(var i=0;i<dkeys.length;i++){
+		if(sel_m[i]==key) keyn=i; 
+	}
+	if(keyn!=-1){
+//		set=sortX(freq_prof[""]);	
+//		tree=setToTree(set,N,M);
+		// FIXME check
+		tree=tree[4+keyn];
+
+		keyboard.clear();
+		keyboard.render(tree);
 	}
 	
-	if(e.key.length<3) doKey(e.key)
+//	if(e.key.length<3) doKey(e.key)
 };
 
 if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) init();
