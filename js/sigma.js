@@ -8,13 +8,19 @@ var dkeys=["W","D","S","A"];
 var sel_m=["J","O"];
 var rst="SHIFT";
 var bcksp="SPACE";
+var PRED_LEN=12;
 var N=4,M=2;
 var tree=false;
 var W=1024;
 var H=768;
-var ANIMT=60;
+var ANIMT=30;
 var FPS=60;
 var input_lock=false;
+var input_queue=[];
+var f_top=0;
+var setc;
+var ptot="";
+var show_keys=false;
 
 // frequency profile data
 var freq_prof={};
@@ -84,6 +90,7 @@ function doAnalysis(text,depth){
 function sortX(o){
 	list=[];
 	for(var k in o){
+		if(k==" ") continue;
 		list[k]=o[k];
 	}
 	var max=-1000;	
@@ -108,47 +115,48 @@ function sortX(o){
 	return sorted;
 }
 
-function __setToTree(set,n,m,d,md){
-	var ret=[];	
-	var i=0;
-	var l=0;
 
-	if(d==md) return [];
+var num_nodes=0;
 
-	for(var k in set) if(typeof(set[k])!="undefined") l++;
+function setToTree(set,n,m){
+	var ret=[];
 
-	if(l==0) return [];
+	var queue=[];
 
-	for(var k in set){
-		if(i==n) break;
-		ret[i]=set[k];
-		delete(set[k]);
-		i++;
+	for(var i=0;i<n;i++){
+		var v=set.shift();
+		if(typeof(v)=="undefined") return ret;
+		ret.push(v);
 	}
 	for(var i=0;i<m;i++){
-		ret.push(__setToTree(set,n,m,d+1,md));	
+		ret.push([]);
+		queue.push(ret[n+i]);
 	}
+
+	while(queue.length){
+		var curr=queue.shift();
+
+		for(var i=0;i<n;i++){
+			var v=set.shift();
+			if(typeof(v)=="undefined") return ret;
+			curr.push(v);
+		}
+		for(var i=0;i<m;i++){
+			curr.push([]);
+			queue.push(curr[n+i]);
+		}
+	}
+
 	return ret;
 }
 
-function setToTree(set,n,m){
-	var d=0;
-	var cap=4;
-	while( cap < set.length){
-		cap+=Math.pow(m,d)*n; 
-		d++;
-	}
-	console.log("max depth = "+d +" gives cap: "+cap);
-	return __setToTree(set,n,m,0,d);
-}
-
 function getFreqProf(){
-	var prof_t0=new Date();
+			  var prof_t0=new Date();
 	console.log("Generate frequency profile...");	
 	for(var k in levels){
 		var c=levels[k];
 		for(var i=0;i<c.length;i++){
-			for(var j=0;j<3;j++){
+			for(var j=0;j<PRED_LEN;j++){
 				doAnalysis(c[i],j);
 			}
 		}
@@ -174,12 +182,52 @@ function doWord(){
 	cword=w;
 }
 
+function getMax(freqs){
+	var m=-1;
+	for(var k in freqs) if(freqs[k] > m ) m=freqs[k];
+	return m;
+}
 
+function getSymColor(pstr,a){
+	var str=pstr.substr(0-PRED_LEN);
+	var mult=Math.E;
+	var s;
+	var tot_s=0;
+	var res;
+
+	for(var i=0;i<=str.length;i++){
+		if(i==0) s="";
+		else s=str.substr(0-i);
+
+		if(typeof(freq_prof[s])=="undefined") continue;
+		if(typeof(freq_prof[s][a])=="undefined") continue;
+
+		var fm=getMax(freq_prof[s]);
+		var f=freq_prof[s][a];
+		var fn=f/fm;
+
+		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
+
+		res=fn;
+
+		mult*=Math.E;
+	}
+	console.log(res);
+
+	fn=res;
+	var l=Math.pow(Math.E,fn)/Math.E;
+	var c=Math.floor(255*l);
+	console.log(c);
+	return "rgb(0,"+c+",0)";
+}
+	
 function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	var i=0;
 //	var r=72;
-	ctx.strokeStyle="green";
+//	ctx.strokeStyle="green";
+	ctx.strokeStyle="rgb(0,255,0)";
 	ctx.font=fs+"px Sans";
+
 	for(var k in branch){
 		if(typeof(branch[k])!="string") continue;
 		if(i==n) break;
@@ -188,6 +236,16 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	   a=i*2*Math.PI/n - Math.PI/2;	
 		dy=Math.sin(a)*ro/4;
 		dx=Math.cos(a)*ro/4;
+	
+/*		var s=branch[k];
+		var f=freq_prof["ha"][s]*Math.E*Math.E
+
+		
+		var fn=f/ftop;
+		var l=Math.pow(Math.E,fn)/Math.E;
+		var c=Math.floor(255*l);
+		*/
+		ctx.strokeStyle=getSymColor(ptot,branch[k]);
 
 		ctx.strokeText(branch[k],x+dx,y+dy);
 
@@ -251,7 +309,13 @@ function __render_treeboard(tree,p){
 		x0=Math.cos(a)*r+x;
 		y0=Math.sin(a)*r+y;
 
-		this.ctx.strokeText(dkeys[i]+":"+tree[i],x0,y0);
+		ctx.strokeStyle=getSymColor(ptot,tree[i]);
+		
+		var txt;
+		if(show_keys) txt=dkeys[i]+":"+tree[i]
+		else txt=tree[i];
+
+		this.ctx.strokeText(txt,x0,y0);
 	}
 
 	
@@ -308,7 +372,8 @@ function __anim_step(o){
 
 	if(o.frame==FPS){
 		clearInterval(o.intId);
-		input_lock=false;
+		procInpQueue();
+//		input_lock=false;
 		o.frame=0;
 //		o.coords=[];
 
@@ -364,7 +429,18 @@ function treeboard(ctx,x,y,w,h,style){
 		}
 }
 
+function genTraining(t){
+	var ret="";
+	for(var k in t){
+		if(typeof(t[k])=="string") ret+=t[k]+" ";
+		if(typeof(t[k])=="object") ret+=genTraining(t[k]);
+	}
+	return ret;
+}
+
 function init(){
+	curr=genTraining();
+
 	setInterval(doWPM,100);
 	getFreqProf();
 
@@ -383,16 +459,21 @@ function init(){
 
 	t0=new Date();
 
+	set=sortX(freq_prof[""]);	
+	ftop=freq_prof[""][set[0]];
+	tree=setToTree(set,N,M);
+
+//	curr=genTraining(tree);
+
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
-	gametext=new textArea(ctx,280,36,W,H-36*4,"white");
+	gametext=new textArea(ctx,280,36,W,36*6,"white");
 	playertext=new textArea(ctx,36,H-72*1.5,W,72,"red",72,true);
 	keyboard=new treeboard(ctx,36,H-36*14,W-36*2,36*10,"red");
 	
 	doWord();
 
-	set=sortX(freq_prof[""]);	
-	tree=setToTree(set,N,M);
+
 
 	keyboard.render(tree);
 //	setInterval(doWord,100);
@@ -417,7 +498,7 @@ function doWPM(){
 
 function doKey(key){
 
-
+	ptot+=key;
 	pword+=key;
 	playertext.print(pword);
 	
@@ -431,6 +512,7 @@ function doKey(key){
 	if(pword.toLowerCase() == cword.trimEnd().toLowerCase()){
 		hit.play();
 		console.log("Match!");
+		ptot+=" ";
 		words++;
 		doWPM();
 		doWord();
@@ -445,6 +527,7 @@ function doKey(key){
 function doDelete(){
 	if(pword.length<1) return;
 	pword=pword.substr(0,pword.length-1);
+	ptot=ptot.substr(0,ptot.length-1);
 
 	playertext.clear();
 	playertext.print(pword);
@@ -462,10 +545,22 @@ window.onkeydown=function(e){
 }
 
 window.onkeyup=function(e){ 
-	tmp=e; 
+	tmp=e;
+	if(!input_lock) doInput(e);
+	else {
+		input_queue.push(e);
+	}
+}
 
+function procInpQueue(){
+	var ce=input_queue.shift();
+	if(input_queue.length==0) input_lock=false;
+	doInput(ce);
+//	if(input_queue.length==0) input_lock=false;
+}
+
+function doInput(e){
 	// Don't accept input during animation
-	if(input_lock) return;
 
 	key=e.key.toUpperCase();
 	
