@@ -12,6 +12,9 @@ var N=4,M=2;
 var tree=false;
 var W=1024;
 var H=768;
+var ANIMT=500;
+var FPS=30;
+var input_lock=false;
 
 // frequency profile data
 var freq_prof={};
@@ -208,10 +211,11 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	}
 }
 
-function __render_treeboard(tree){
+function __render_treeboard(tree,p){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
 	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
+	
 
 //	set=sortX(freq_prof[""]);	
 //	tree=setToTree(set,N,M);
@@ -223,8 +227,17 @@ function __render_treeboard(tree){
 	var o=-Math.PI/2;
 	
 	this.ctx.font="24px Sans";
-	x=this.w/2+this.x0;
-	y=this.y0+this.h-48;
+	if(typeof(p)=="undefined"){
+		// rendering data 
+		this.coords=[];
+		x=this.w/2+this.x0;
+		y=this.y0+this.h-48;
+		this.coords.push({x:x,y:y});
+	}else{
+		x=p.x;
+		y=p.y;
+	}
+
 
 	for(var i=0;i<N;i++){
 		a=i*2*Math.PI/N+o;
@@ -242,6 +255,8 @@ function __render_treeboard(tree){
 
 //	y=this.y0+this.h
 	
+	var s2coords=[];
+	
 	for(var i=0;i<M;i++){
 		a=o+i*2*Math.PI/4;	
 		
@@ -253,9 +268,65 @@ function __render_treeboard(tree){
 		this.ctx.lineTo(x+x0,y+y0);
 		this.ctx.stroke();
 
+		s2coords.push({x:(x+x0),y:(y+y0),a:a});
 		__render_tree(ctx,tree[4+i],x+x0,y+y0,N,M,48,a,r*2);
-	}
 
+	}
+		
+	if(typeof(p)=="undefined"){
+		this.coords.push(s2coords);
+	}
+}
+
+function __anim_step(o){
+//	console.log("frame:"+o.frame);	
+
+	o.frame++;
+
+	o.p.x+=o.avec.x;
+	o.p.y+=o.avec.y;
+
+//	console.log("render");
+//	console.log(o.p);
+
+	o.clear();
+	o.render(tree,o.p);
+
+	if(o.frame==FPS){
+		clearInterval(o.intId);
+		input_lock=false;
+		o.frame=0;
+//		o.coords=[];
+
+		o.render(tree);
+	}
+}
+
+function __animate_treeboard(s,e){
+	input_lock=true;
+
+	var dx=(s.x-e.x)/FPS;
+	var dy=(s.y-e.y)/FPS;
+
+	this.p=s;
+	this.avec={x:-dx,y:-dy};
+	this.frame=0;
+
+	this.clear();
+	
+	/*
+	this.ctx.beginPath();
+	this.ctx.moveTo(s.x,s.y);
+	this.ctx.lineTo(e.x,e.y);
+	this.ctx.stroke();
+
+	this.ctx.beginPath();
+	this.ctx.moveTo(s.x,s.y);
+	this.ctx.lineTo(s.x+10,s.y);
+	this.ctx.stroke();
+	*/
+
+	this.intId=setInterval(this.animstep,ANIMT/FPS,this);
 }
 
 function __tboard_clear(){
@@ -266,6 +337,8 @@ function __tboard_clear(){
 function treeboard(ctx,x,y,w,h,style){
 	return {ctx:ctx,
 		render:__render_treeboard,
+		anim:__animate_treeboard,
+		animstep:__anim_step,
 		x0:x,
 		y0:y,
 		w:w,
@@ -362,6 +435,9 @@ window.onkeydown=function(e){
 window.onkeyup=function(e){ 
 	tmp=e; 
 
+	// Don't accept input during animation
+	if(input_lock) return;
+
 	key=e.key.toUpperCase();
 	
 	if(key==rst){
@@ -401,8 +477,16 @@ window.onkeyup=function(e){
 		// FIXME check
 		tree=tree[4+keyn];
 
-		keyboard.clear();
-		keyboard.render(tree);
+		var p0=keyboard.coords[1][keyn];
+		var p1=keyboard.coords[0];
+
+		console.log("animate from "+JSON.stringify(p0)+" to "+ JSON.stringify(p1));
+
+//		keybopard.
+		keyboard.anim(p0,p1);
+		
+
+//		keyboard.render(tree);
 	}
 	
 //	if(e.key.length<3) doKey(e.key)
