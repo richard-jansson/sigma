@@ -20,7 +20,7 @@ while true;do
 	LEN=$(( END-START -3 ))
 	echo "S=$START E=$END L=$LEN"
 	
-	head -n $(( END -1 )) tmp.txt | tail -n $LEN > chapters/$CHAPTER.txt
+	head -n $(( END -1 )) tmp.txt | tail -n $LEN | sed "s/[^a-Z0-9\.,]/ /g" > chapters/$CHAPTER.txt
 	./tojson chapters/$CHAPTER.txt > chapters/$CHAPTER.json
 	echo "CHAPTER: $CHAPTER"
 	CHAPTER=$(( CHAPTER+1 ))
@@ -34,7 +34,7 @@ echo "CHAP: $CHAPTER"
 ENDA=$( wc -l tmp.txt | cut -d " " -f1) 
 
 
-tail -n $(( ENDA -2 ))  tmp.txt > chapters/$CHAPTER.txt
+tail -n $(( ENDA -2 ))  tmp.txt | sed "s/[^a-Z0-9\.,]/ /g" > chapters/$CHAPTER.txt
 ./tojson chapters/$CHAPTER.txt > chapters/$CHAPTER.json
 
 ./cat.sh > js/levels.js
