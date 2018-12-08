@@ -28,16 +28,26 @@ function __drawString(s){
 	var tdim=ctx.measureText(s);
 
 	this.ctx.strokeStyle=this.style;
-	this.ctx.font="24px Sans";
+	this.ctx.font=this.fontsize+"px Sans";
 
 	if( tdim.width + this.x > W ){
 		this.x=this.x0;
-		this.y+=36;
+		this.y+=this.fontsize;
 	}
-	if( 36 + this.y> this.h+this.y0){
+	if( this.fontsize + this.y> this.h+this.y0){
 		this.clear();
 	}
-	this.ctx.strokeText(s,this.x,this.y+36);
+	if(this.center_text){
+		var tdim=ctx.measureText(s);
+		var x=(this.w-tdim.width)/2;		
+		console.log(tdim);
+		if(x<0) x=0;
+//		this.cnt+=s;
+		console.log(this.cnt);
+		this.clear();
+		this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
+	}else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
+
 	var tdim=ctx.measureText(s);
 	this.x+=tdim.width;
 }
@@ -47,11 +57,14 @@ function __clearString(){
 	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
 	this.x=this.x0;
 	this.y=this.y0;
+	this.cnt="";
 }
 
-function textArea(ctx,x,y,w,h,style){
+function textArea(ctx,x,y,w,h,style,size,center){
+	var fontsize=typeof(size)=="undefined"?36:size;
+	var center_text=typeof(center)=="undefined"?false:center;
 	return {ctx:ctx,x0:x,y0:y,w:w,h:h,print:__drawString,x:x,y:y,style:style,
-		clear:__clearString};
+		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:""};
 }
 
 function doAnalysis(text,depth){
@@ -192,6 +205,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 
 	for(var k in branch){
 		if(typeof(branch[k])!="object") continue;
+		if(branch[k].length==0) continue;
 //		a=o+i*2*Math.PI/4;	
 		a=ao+o+ i*Math.PI/4;
 		
@@ -214,11 +228,6 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 function __render_treeboard(tree,p){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
-	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
-	
-
-//	set=sortX(freq_prof[""]);	
-//	tree=setToTree(set,N,M);
 
 	var r=48;
 	var x=this.w/2;
@@ -362,6 +371,7 @@ function init(){
 
 	hit=new Audio("bling.wav");
 	err=new Audio("boop.wav");
+	rot=new Audio("rotate.wav");
 
 	for(var k in levels) n_levels++;
 
@@ -376,8 +386,8 @@ function init(){
 
 	wpm=new textArea(ctx,0,0,W,36,"green");
 	gametext=new textArea(ctx,36,36,W,H-36*4,"white");
-	playertext=new textArea(ctx,36,H-36*13,W,36,"red");
-	keyboard=new treeboard(ctx,36,H-36*12,W-36*2,36*10,"red");
+	playertext=new textArea(ctx,36,H-72*1.5,W,72,"red",72,true);
+	keyboard=new treeboard(ctx,36,H-36*14,W-36*2,36*10,"red");
 	
 	doWord();
 
@@ -400,9 +410,9 @@ function doWPM(){
 
 function doKey(key){
 
-	playertext.print(key);
 
 	pword+=key;
+	playertext.print(pword);
 	
 	console.log("{"+pword+"} = {"+cword+"}");
 
@@ -489,6 +499,9 @@ window.onkeyup=function(e){
 			err.play();	
 			return;
 		}
+
+		rot.play();
+
 		tree=tree[N+keyn];
 
 		var p0=keyboard.coords[1][keyn];
