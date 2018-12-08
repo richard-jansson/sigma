@@ -6,6 +6,8 @@ var level=0;
 var n_levels=0;
 var dkeys=["W","D","S","A"];
 var sel_m=["J","O"];
+var rst="SHIFT";
+var bcksp="SPACE";
 var N=4,M=2;
 var tree=false;
 var W=1024;
@@ -23,7 +25,7 @@ function __drawString(s){
 	var tdim=ctx.measureText(s);
 
 	this.ctx.strokeStyle=this.style;
-	this.ctx.font="24px PressStart2P";
+	this.ctx.font="24px Sans";
 
 	if( tdim.width + this.x > W ){
 		this.x=this.x0;
@@ -38,6 +40,7 @@ function __drawString(s){
 }
 
 function __clearString(){
+	this.ctx.fillStyle="black";
 	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
 	this.x=this.x0;
 	this.y=this.y0;
@@ -163,7 +166,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	var i=0;
 //	var r=72;
 	ctx.strokeStyle="green";
-	ctx.font=fs+"px PressStart2P";
+	ctx.font=fs+"px Sans";
 	for(var k in branch){
 		if(typeof(branch[k])!="string") continue;
 		if(i==n) break;
@@ -219,9 +222,9 @@ function __render_treeboard(tree){
 	var N=4,M=2;
 	var o=-Math.PI/2;
 	
-	this.ctx.font="24px PressStart2P";
+	this.ctx.font="24px Sans";
 	x=this.w/2+this.x0;
-	y=this.y0+this.h;
+	y=this.y0+this.h-48;
 
 	for(var i=0;i<N;i++){
 		a=i*2*Math.PI/N+o;
@@ -237,7 +240,7 @@ function __render_treeboard(tree){
 	o=0;
 	o=-3*Math.PI/4;
 
-	y=this.y0+this.h
+//	y=this.y0+this.h
 	
 	for(var i=0;i<M;i++){
 		a=o+i*2*Math.PI/4;	
@@ -341,14 +344,34 @@ function doDelete(){
 	if(pword.length<1) return;
 	pword=pword.substr(0,pword.length-1);
 
-//	playertext.clear();
-//	playertext.print(pword);
+	playertext.clear();
+	playertext.print(pword);
 }
 
-document.onkeyup=function(e){ 
+window.onkeydown=function(e){
+	code=e.code.toUpperCase();
+
+	if(code==bcksp){
+		console.log("delete...");
+		doDelete();		
+		e.preventDefault();
+		return true;
+	}
+}
+
+window.onkeyup=function(e){ 
 	tmp=e; 
 
 	key=e.key.toUpperCase();
+	
+	if(key==rst){
+		set=sortX(freq_prof[""]);	
+		tree=setToTree(set,N,M);
+
+		keyboard.clear();
+		keyboard.render(tree);
+		return;
+	}
 	
 	var keyn=-1;
 	for(var i=0;i<dkeys.length;i++){
