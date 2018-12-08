@@ -40,10 +40,7 @@ function __drawString(s){
 	if(this.center_text){
 		var tdim=ctx.measureText(s);
 		var x=(this.w-tdim.width)/2;		
-		console.log(tdim);
 		if(x<0) x=0;
-//		this.cnt+=s;
-		console.log(this.cnt);
 		this.clear();
 		this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
 	}else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
@@ -290,6 +287,7 @@ function __render_treeboard(tree,p){
 	if(typeof(p)=="undefined"){
 		this.coords.push(s2coords);
 	}
+	
 }
 
 function __anim_step(o){
@@ -367,6 +365,7 @@ function treeboard(ctx,x,y,w,h,style){
 }
 
 function init(){
+	setInterval(doWPM,100);
 	getFreqProf();
 
 	hit=new Audio("bling.wav");
@@ -384,8 +383,9 @@ function init(){
 
 	t0=new Date();
 
-	wpm=new textArea(ctx,0,0,W,36,"green");
-	gametext=new textArea(ctx,36,36,W,H-36*4,"white");
+	wpm=new textArea(ctx,0,0,275,144,"green",144);
+	wpmt=new textArea(ctx,0,144,275,72,"green",72);
+	gametext=new textArea(ctx,280,36,W,H-36*4,"white");
 	playertext=new textArea(ctx,36,H-72*1.5,W,72,"red",72,true);
 	keyboard=new treeboard(ctx,36,H-36*14,W-36*2,36*10,"red");
 	
@@ -399,13 +399,20 @@ function init(){
 }
 
 function doWPM(){
-	words++;
+//	words++;
 	var t=new Date();
 	var dt=(t-t0)/1000;
-	var wps=words/dt;
+	var wpmi=Math.floor(60*words/dt);
 
 	wpm.clear();
-	wpm.print( Math.floor(wps*60) +" WPM Lvl: "+(level+1)+"/"+n_levels +" "+Math.ceil(100*paragraph/levels[level].length)+"%");
+
+	if(wpmi<3) wpm.style="red";
+	else if(wpmi<7) wpm.style="yellow";
+	else wpm.style="green";
+
+	wpm.print(wpmi);
+	wpmt.clear();
+	wpmt.print("WPM");
 }
 
 function doKey(key){
@@ -424,6 +431,8 @@ function doKey(key){
 	if(pword.toLowerCase() == cword.trimEnd().toLowerCase()){
 		hit.play();
 		console.log("Match!");
+		words++;
+		doWPM();
 		doWord();
 		pword="";
 		playertext.clear();
