@@ -12,8 +12,8 @@ var N=4,M=2;
 var tree=false;
 var W=1024;
 var H=768;
-var ANIMT=300;
-var FPS=30;
+var ANIMT=60;
+var FPS=60;
 var input_lock=false;
 
 // frequency profile data
@@ -361,6 +361,7 @@ function init(){
 	getFreqProf();
 
 	hit=new Audio("bling.wav");
+	err=new Audio("boop.wav");
 
 	for(var k in levels) n_levels++;
 
@@ -484,7 +485,11 @@ window.onkeyup=function(e){
 //		set=sortX(freq_prof[""]);	
 //		tree=setToTree(set,N,M);
 		// FIXME check
-		tree=tree[4+keyn];
+		if(tree[N+keyn].length==0){
+			err.play();	
+			return;
+		}
+		tree=tree[N+keyn];
 
 		var p0=keyboard.coords[1][keyn];
 		var p1=keyboard.coords[0];
