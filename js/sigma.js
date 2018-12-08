@@ -12,7 +12,7 @@ var N=4,M=2;
 var tree=false;
 var W=1024;
 var H=768;
-var ANIMT=500;
+var ANIMT=300;
 var FPS=30;
 var input_lock=false;
 
@@ -175,7 +175,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		if(i==n) break;
 
 
-	   a=i*2*Math.PI/n - Math.PI/4;	
+	   a=i*2*Math.PI/n - Math.PI/2;	
 		dy=Math.sin(a)*ro/4;
 		dx=Math.cos(a)*ro/4;
 
@@ -232,10 +232,11 @@ function __render_treeboard(tree,p){
 		this.coords=[];
 		x=this.w/2+this.x0;
 		y=this.y0+this.h-48;
-		this.coords.push({x:x,y:y});
+		this.coords.push({x:x,y:y,a:0});
 	}else{
 		x=p.x;
 		y=p.y;
+		o=p.a-Math.PI/2;
 	}
 
 
@@ -252,6 +253,10 @@ function __render_treeboard(tree,p){
 	o=Math.PI/4;
 	o=0;
 	o=-3*Math.PI/4;
+
+	if(typeof(p)!="undefined"){
+		o=p.a-3*Math.PI/4;
+	}
 
 //	y=this.y0+this.h
 	
@@ -285,11 +290,13 @@ function __anim_step(o){
 
 	o.p.x+=o.avec.x;
 	o.p.y+=o.avec.y;
+	o.p.a+=o.avec.a;
 
 //	console.log("render");
 //	console.log(o.p);
 
 	o.clear();
+	console.log(o.p);
 	o.render(tree,o.p);
 
 	if(o.frame==FPS){
@@ -298,6 +305,7 @@ function __anim_step(o){
 		o.frame=0;
 //		o.coords=[];
 
+		o.clear();
 		o.render(tree);
 	}
 }
@@ -307,9 +315,10 @@ function __animate_treeboard(s,e){
 
 	var dx=(s.x-e.x)/FPS;
 	var dy=(s.y-e.y)/FPS;
+	var da=(s.a-e.a)/FPS;
 
 	this.p=s;
-	this.avec={x:-dx,y:-dy};
+	this.avec={x:-dx,y:-dy,a:-da};
 	this.frame=0;
 
 	this.clear();
@@ -479,6 +488,9 @@ window.onkeyup=function(e){
 
 		var p0=keyboard.coords[1][keyn];
 		var p1=keyboard.coords[0];
+
+		p0.a=-0.39;
+		p1.a=0;
 
 		console.log("animate from "+JSON.stringify(p0)+" to "+ JSON.stringify(p1));
 
