@@ -5,10 +5,10 @@ var paragraph=0;
 var level=0;
 var n_levels=0;
 var dkeys=["W","D","S","A"];
-var sel_m=["J","O"];
+var sel_m=["Q","F"];
 var rst="SHIFT";
 var bcksp="SPACE";
-var PRED_LEN=12;
+var PRED_LEN=18;
 var N=4,M=2;
 var tree=false;
 var W=1024;
@@ -206,19 +206,87 @@ function getSymColor(pstr,a){
 		var f=freq_prof[s][a];
 		var fn=f/fm;
 
-		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
+//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
 
 		res=fn;
 
 		mult*=Math.E;
 	}
-	console.log(res);
+	console.log(a+":"+res);
 
 	fn=res;
 	var l=Math.pow(Math.E,fn)/Math.E;
 	var c=Math.floor(255*l);
-	console.log(c);
+//	console.log(c);
 	return "rgb(0,"+c+",0)";
+}
+function getSymBold(pstr,a){
+	var str=pstr.substr(0-PRED_LEN);
+	var mult=Math.E;
+	var s;
+	var tot_s=0;
+	var res;
+
+	for(var i=0;i<=str.length;i++){
+		if(i==0) s="";
+		else s=str.substr(0-i);
+
+		if(typeof(freq_prof[s])=="undefined") continue;
+		if(typeof(freq_prof[s][a])=="undefined") continue;
+
+		var fm=getMax(freq_prof[s]);
+		var f=freq_prof[s][a];
+		var fn=f/fm;
+
+//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
+
+		res=fn;
+
+		mult*=Math.E;
+	}
+	console.log(a+":"+res);
+
+	fn=res;
+	var l=Math.pow(Math.E,fn)/Math.E;
+	var c=Math.floor(255*l);
+
+	return l>0.8;
+//	console.log(c);
+//	return "rgb(0,"+c+",0)";
+}
+function getSymSize(pstr,a,fs){
+	var str=pstr.substr(0-PRED_LEN);
+	var mult=Math.E;
+	var s;
+	var tot_s=0;
+	var res;
+
+	for(var i=0;i<=str.length;i++){
+		if(i==0) s="";
+		else s=str.substr(0-i);
+
+		if(typeof(freq_prof[s])=="undefined") continue;
+		if(typeof(freq_prof[s][a])=="undefined") continue;
+
+		var fm=getMax(freq_prof[s]);
+		var f=freq_prof[s][a];
+		var fn=f/fm;
+
+//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
+
+		res=fn;
+
+		mult*=Math.E;
+	}
+	console.log(a+":"+res);
+
+	fn=res;
+	var l=Math.pow(Math.E,fn)/Math.E;
+	return l*fs;
+
+//	var c=Math.floor(255*l);
+//	console.log(c);
+//	return "rgb(0,"+c+",0)";
 }
 	
 function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
@@ -245,9 +313,15 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		var l=Math.pow(Math.E,fn)/Math.E;
 		var c=Math.floor(255*l);
 		*/
-		ctx.strokeStyle=getSymColor(ptot,branch[k]);
+		ctx.font=getSymSize(ptot,branch[k],fs)+"px Sans";
 
-		ctx.strokeText(branch[k],x+dx,y+dy);
+		if(!getSymBold(ptot,branch[k])){
+			ctx.strokeStyle=getSymColor(ptot,branch[k]);
+			ctx.strokeText(branch[k],x+dx,y+dy);
+		} else {
+			ctx.fillStyle=getSymColor(ptot,branch[k]);
+			ctx.fillText(branch[k],x+dx,y+dy);
+		}
 
 		i++;
 	}
@@ -309,13 +383,20 @@ function __render_treeboard(tree,p){
 		x0=Math.cos(a)*r+x;
 		y0=Math.sin(a)*r+y;
 
-		ctx.strokeStyle=getSymColor(ptot,tree[i]);
+		ctx.font=getSymSize(ptot,tree[i],24)+"px Sans";
 		
 		var txt;
 		if(show_keys) txt=dkeys[i]+":"+tree[i]
 		else txt=tree[i];
 
-		this.ctx.strokeText(txt,x0,y0);
+		if(getSymBold(ptot,tree[i])){
+			ctxfillStyle=getSymColor(ptot,tree[i]);
+			this.ctx.fillText(txt,x0,y0);
+		}
+		else{
+			ctx.strokeStyle=getSymColor(ptot,tree[i]);
+			this.ctx.strokeText(txt,x0,y0);
+		}
 	}
 
 	
