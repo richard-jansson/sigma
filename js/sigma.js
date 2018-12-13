@@ -8,7 +8,7 @@ var dkeys=["W","D","S","A"];
 var sel_m=["Q","F"];
 var rst="SHIFT";
 var bcksp="SPACE";
-var PRED_LEN=18;
+var PRED_LEN=2;
 var N=4,M=2;
 var tree=false;
 var W=1024;
@@ -21,9 +21,11 @@ var f_top=0;
 var setc;
 var ptot="";
 var show_keys=false;
+var font_family="serif";
 
 // frequency profile data
 var freq_prof={};
+var avg_wordlength=false;
 
 var words=0;
 var t0;
@@ -34,7 +36,7 @@ function __drawString(s){
 	var tdim=ctx.measureText(s);
 
 	this.ctx.strokeStyle=this.style;
-	this.ctx.font=this.fontsize+"px Sans";
+	this.ctx.font=this.fontsize+"px "+font_family;
 
 	if( tdim.width + this.x > W ){
 		this.x=this.x0;
@@ -212,7 +214,7 @@ function getSymColor(pstr,a){
 
 		mult*=Math.E;
 	}
-	console.log(a+":"+res);
+//	console.log(a+":"+res);
 
 	fn=res;
 	var l=Math.pow(Math.E,fn)/Math.E;
@@ -278,7 +280,7 @@ function getSymSize(pstr,a,fs){
 
 		mult*=Math.E;
 	}
-	console.log(a+":"+res);
+//	console.log(a+":"+res);
 
 	fn=res;
 	var l=Math.pow(Math.E,fn)/Math.E;
@@ -294,7 +296,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 //	var r=72;
 //	ctx.strokeStyle="green";
 	ctx.strokeStyle="rgb(0,255,0)";
-	ctx.font=fs+"px Sans";
+	ctx.font=fs+"px "+font_family;
 
 	for(var k in branch){
 		if(typeof(branch[k])!="string") continue;
@@ -313,7 +315,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		var l=Math.pow(Math.E,fn)/Math.E;
 		var c=Math.floor(255*l);
 		*/
-		ctx.font=getSymSize(ptot,branch[k],fs)+"px Sans";
+		ctx.font=getSymSize(ptot,branch[k],fs)+"px "+font_family;
 
 		if(!getSymBold(ptot,branch[k])){
 			ctx.strokeStyle=getSymColor(ptot,branch[k]);
@@ -358,32 +360,33 @@ function __render_treeboard(tree,p){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
 
-	var r=48;
-	var x=this.w/2;
-	var y=this.h;
-	var N=4,M=2;
-	var o=-Math.PI/2;
-	
-	this.ctx.font="24px Sans";
-	if(typeof(p)=="undefined"){
-		// rendering data 
-		this.coords=[];
-		x=this.w/2+this.x0;
-		y=this.y0+this.h-48;
-		this.coords.push({x:x,y:y,a:0});
-	}else{
-		x=p.x;
-		y=p.y;
-		o=p.a-Math.PI/2;
-	}
+			  var r=54;
+			  var x=this.w/2;
+			  var y=this.h;
+			  var N=4,M=2;
+			  var o=-Math.PI/2;
+			  var fs=72;
+			  
+			  this.ctx.font=fs+"px serif";
+			  if(typeof(p)=="undefined"){
+				  // rendering data 
+				  this.coords=[];
+				  x=this.w/2+this.x0;
+				  y=this.y0+this.h-fs;
+				  this.coords.push({x:x,y:y,a:0});
+			  }else{
+				  x=p.x;
+				  y=p.y;
+				  o=p.a-Math.PI/2;
+			  }
 
 
-	for(var i=0;i<N;i++){
-		a=i*2*Math.PI/N+o;
-		x0=Math.cos(a)*r+x;
-		y0=Math.sin(a)*r+y;
+			  for(var i=0;i<N;i++){
+				  a=i*2*Math.PI/N+o;
+				  x0=Math.cos(a)*r+x;
+				  y0=Math.sin(a)*r+y;
 
-		ctx.font=getSymSize(ptot,tree[i],24)+"px Sans";
+		ctx.font=getSymSize(ptot,tree[i],fs)+"px "+font_family;
 		
 		var txt;
 		if(show_keys) txt=dkeys[i]+":"+tree[i]
@@ -425,7 +428,7 @@ function __render_treeboard(tree,p){
 		this.ctx.stroke();
 
 		s2coords.push({x:(x+x0),y:(y+y0),a:a});
-		__render_tree(ctx,tree[4+i],x+x0,y+y0,N,M,48,a,r*2);
+		__render_tree(ctx,tree[4+i],x+x0,y+y0,N,M,fs,a,r*2);
 
 	}
 		
