@@ -15,3 +15,14 @@ var N=4,M=2;
 
 // 
 var mute=true;
+
+/* 
+ *  Keybindings for classic keyboard.
+ *
+ */ 
+var kb_up="W";
+var kb_rgt="D";
+var kb_dwn="S";
+var kb_lft="A";
+var kb_sel="E";
+
