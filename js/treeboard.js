@@ -1,3 +1,17 @@
+/* 
+ *  Tree representation where each tree holds N leaves / symbols
+ *  also they point to M branches whhich in turn might contain 
+ *  up to N symbols/leaves and M branches, and so forth ad 
+ *  infinitum. 
+ * 
+ *  o --- {0,1,...,N} 
+ *     \_____________ {0,1,..N}_0
+ *                |-- {0,1,..N}_1
+ *                |-- ...
+ *                \-- {0,1,..N}_M 
+ * 
+ */
+
 function sortX(o){
 	list=[];
 	for(var k in o){
@@ -138,6 +152,11 @@ function __render_treeboard(p){
 	}
 }
 
+function __tboard_clear(){
+	this.ctx.fillStyle="black";
+	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+}
+
 function __treeboard_anim_step(o){
 	o.frame++;
 
@@ -251,10 +270,8 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 		render:__render_treeboard,
 		anim:__animate_treeboard,
 		animstep:__treeboard_anim_step,
-		x0:x,
-		y0:y,
-		w:w,
-		h:h,
+		x0:x, y0:y,
+		w:w, h:h,
 		style:style,
 		clear:__tboard_clear,
 		keydown: __tboard_kdown,

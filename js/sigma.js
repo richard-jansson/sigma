@@ -292,35 +292,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 
 
 
-function __tboard_clear(){
-	this.ctx.fillStyle="black";
-	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
-}
 
-function __render_keyboard(){
-}
-
-function __animate_keyboard(){
-}
-
-function keyboard(set,ctx,x,y,w,h){
-
-	return {
-		rows:[
-		["q","w","e","r","t","y","u","i","o","p"],
-		["a","s","d","f","g","h","j","k","l","l"],
-		["z","x","v","b","n","m",",","."]
-		],
-		ctx:ctx,
-		render:__render_keyboard,
-		anim:__animate_keyboard,
-		animstep:__anim_step,
-		x0:x, y0:y,
-		w:w, h:h,
-		style:style,
-		clear:__tboard_clear,
-		}
-}
 
 function genTraining(t){
 	var ret="";
@@ -360,8 +332,8 @@ function init(){
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,W,36*6,"white");
 	playertext=new textArea(ctx,36,H-72*1.5,W,72,"red",72,true);
-	keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*14,W-36*2,36*10,"red");
-//	keyboard=new keyboard(ctx,36,H-36*14,W-36*2,36*10,"red");
+//	keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*14,W-36*2,36*10,"red");
+	keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	
 	doWord();
 
