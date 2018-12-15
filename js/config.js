@@ -26,4 +26,4 @@ var kb_dwn="S";
 var kb_lft="A";
 var kb_sel="E";
 
-var KB_INT=1000;
+var KB_INT=100;

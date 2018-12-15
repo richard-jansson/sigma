@@ -54,27 +54,26 @@ function __kboard_clear(){
 
 
 function __kboard_kup(code) {
-/*	if(typeof(this.repeats[code])!="undeifned"){
+	if(typeof(this.repeats[code])!="undeifned"){
 		clearInterval(this.repeats[code]);
 		delete this.repeats[code];
 
 		console.log("stopped repeating "+code);
 	}
-	*/
 
 	return false;
 }
-/*function __kboard_rep(o){
+function __kboard_rep(o){
 	var t=o.o;
 	console.log("keyrep");
 	t.keydown(o.ev);
 }
-*/
 
 function __kboard_kdown(e) {
 	code=e.code.toUpperCase();
 
 	if(typeof(code)=="undefined") return false;
+
 
 	if(bcksp==code){
 		doDelete();
@@ -84,6 +83,13 @@ function __kboard_kdown(e) {
 		return false;
 	}else {
 		var code=e.key.toUpperCase();
+		// Let the internal repeation handling do it's work
+		if(typeof(this.repeats[code])!="undefined" && 
+			typeof(e.sigma_int)=="undefined"
+			&& this.native_repeat==false){
+//			console.log("leave repeat for inhouse repetition...");
+			return true;
+		}
 
 		if(kb_up==code) this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
 		else if(kb_dwn==code) this.cur_y = (this.cur_y+1 > 3) ? 3 : this.cur_y +1; 
@@ -94,12 +100,14 @@ function __kboard_kdown(e) {
 			return false;
 		}
 		
-//		if(typeof(this.repeats[code])=="undefined"){
-//			console.log("starting repeat "+KB_INT+"ms int on "+code);
-//			intid=setInterval(this.keyrep,KB_INT,{o:this,ev:e});
-//			console.log("intid="+intid);
-//			this.repeats[code]=intid;
-//		}
+		if(typeof(this.repeats[code])=="undefined"){
+			console.log("starting repeat "+KB_INT+"ms int on "+code);
+			this.repeats[code]=1;
+			e.sigma_int=true;
+			intid=setInterval(this.keyrep,KB_INT,{o:this,ev:e});
+			console.log("intid="+intid);
+			this.repeats[code]=intid;
+		}
 
 		this.clear();
 		this.render();
@@ -117,7 +125,8 @@ function vkeyboard(ctx,x,y,w,h,style,font_size){
 		["z","x","c","v","b","n","m",",",".","?"],
 		[" "]
 		],
-//		keyrep:__kboard_rep,
+		native_repeat: false,
+		keyrep:__kboard_rep,
 		ctx:ctx,
 		render:__render_keyboard,
 		anim:__animate_keyboard,
@@ -132,7 +141,7 @@ function vkeyboard(ctx,x,y,w,h,style,font_size){
 		// cursor position 
 		cur_x:2,cur_y: 2,
 		// code -> intervalid
-//		repeats: []
+		repeats: []
 
 		}
 
