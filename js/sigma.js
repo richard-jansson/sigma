@@ -4,7 +4,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
-var PRED_LEN=2;
+var PRED_LEN=10;
 var W=1024;
 var H=768;
 var input_lock=false;
@@ -66,8 +66,8 @@ function textArea(ctx,x,y,w,h,style,size,center){
 function doAnalysis(freq_prof,text,depth){
 //	console.log("analysis on "+text.length+" depth: "+depth);
 	for(var p=0;p<text.length-depth-1;p++){
-		var cs=text.substr(p,depth).toLowerCase();
-		var c=text.charAt(p+depth).toLowerCase();
+		var cs=text.substr(p,depth);
+		var c=text.charAt(p+depth);
 
 		if(typeof(freq_prof[cs])=="undefined"){
 			freq_prof[cs]={};
@@ -89,11 +89,11 @@ function getFreqProf(){
 	console.log("Generate frequency profile...");	
 	for(var k in levels){
 		var c=levels[k];
-		for(var i=0;i<c.length;i++){
-			for(var j=0;j<PRED_LEN;j++){
-				doAnalysis(freq_prof,c[i],j);
-			}
+//		for(var i=0;i<c.length;i++){
+		for(var j=0;j<PRED_LEN;j++){
+			doAnalysis(freq_prof,c,j);
 		}
+//		}
 	}
 	console.log("Profile generated in "+(new Date()-prof_t0) + "ms");
 	return freq_prof;
@@ -322,7 +322,9 @@ function init(){
 
 	ctx=canvas.getContext("2d");
 
-	curr=levels[0][0];		
+//	curr=levels[0][0];		
+// change of structure for the illiad
+	curr=levels[0]
 
 	t0=new Date();
 
@@ -332,8 +334,8 @@ function init(){
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,W,36*6,"white");
 	playertext=new textArea(ctx,36,H-72*1.5,W,72,"red",72,true);
-//	keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*14,W-36*2,36*10,"red");
-	keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
+	keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*14,W-36*2,36*10,"red");
+//	keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	
 	doWord();
 
