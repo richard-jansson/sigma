@@ -194,7 +194,9 @@ function __animate_treeboard(s,e){
 
 // return value of true requests a prevention of bubbling 
 // of said event
-function __tboard_kdown(code){
+function __tboard_kdown(e){
+	var code=e.code.toUpperCase();	
+
 	if(code==bcksp){
 		doDelete();		
 		return true;
