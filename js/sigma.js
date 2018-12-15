@@ -395,9 +395,7 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
-	code=e.code.toUpperCase();
-	
-	if(keyboard.keydown(code)) e.preventDefault();
+	if(keyboard.keydown(e)) e.preventDefault();
 }
 
 window.onkeyup=function(e){ 

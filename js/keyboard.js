@@ -54,33 +54,62 @@ function __kboard_clear(){
 
 
 function __kboard_kup(code) {
-	if(kb_sel==code){
-		doKey(this.rows[this.cur_y][this.cur_x]);
-	}
-	if(kb_up==code) 
-		this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
-	else if(kb_dwn==code) 
-		this.cur_y = (this.cur_y+1 > 3) ? 3 : this.cur_y +1; 
-	else if(kb_lft==code) 
-		this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
-	else if(kb_rgt==code) 
-		this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1; 
+/*	if(typeof(this.repeats[code])!="undeifned"){
+		clearInterval(this.repeats[code]);
+		delete this.repeats[code];
 
-	this.clear();
-	this.render();
+		console.log("stopped repeating "+code);
+	}
+	*/
 
 	return false;
 }
-function __kboard_kdown(code) {
+/*function __kboard_rep(o){
+	var t=o.o;
+	console.log("keyrep");
+	t.keydown(o.ev);
+}
+*/
+
+function __kboard_kdown(e) {
+	code=e.code.toUpperCase();
+
+	if(typeof(code)=="undefined") return false;
+
 	if(bcksp==code){
 		doDelete();
 		return true;
+	} if(kb_sel==code){
+		doKey(this.rows[this.cur_y][this.cur_x]);
+		return false;
+	}else {
+		var code=e.key.toUpperCase();
+
+		if(kb_up==code) this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
+		else if(kb_dwn==code) this.cur_y = (this.cur_y+1 > 3) ? 3 : this.cur_y +1; 
+		else if(kb_lft==code) this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
+		else if(kb_rgt==code) this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1; 
+		else if(kb_sel==code){
+			doKey(this.rows[this.cur_y][this.cur_x]);
+			return false;
+		}
+		
+//		if(typeof(this.repeats[code])=="undefined"){
+//			console.log("starting repeat "+KB_INT+"ms int on "+code);
+//			intid=setInterval(this.keyrep,KB_INT,{o:this,ev:e});
+//			console.log("intid="+intid);
+//			this.repeats[code]=intid;
+//		}
+
+		this.clear();
+		this.render();
+
+
+		return false;
 	}
-	return false;
 }
 
 function vkeyboard(ctx,x,y,w,h,style,font_size){
-
 	return {
 		rows:[
 		["q","w","e","r","t","y","u","i","o","p"],
@@ -88,6 +117,7 @@ function vkeyboard(ctx,x,y,w,h,style,font_size){
 		["z","x","c","v","b","n","m",",",".","?"],
 		[" "]
 		],
+//		keyrep:__kboard_rep,
 		ctx:ctx,
 		render:__render_keyboard,
 		anim:__animate_keyboard,
@@ -100,7 +130,10 @@ function vkeyboard(ctx,x,y,w,h,style,font_size){
 		keyup: __kboard_kup,
 		keydown: __kboard_kdown,
 		// cursor position 
-		cur_x:2,cur_y: 2
+		cur_x:2,cur_y: 2,
+		// code -> intervalid
+//		repeats: []
+
 		}
 
 }
