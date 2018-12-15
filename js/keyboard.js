@@ -91,9 +91,13 @@ function __kboard_kdown(e) {
 			return true;
 		}
 
-		if(kb_up==code) this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
-		else if(kb_dwn==code) this.cur_y = (this.cur_y+1 > 3) ? 3 : this.cur_y +1; 
-		else if(kb_lft==code) this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
+		if(kb_up==code){
+			if(this.cur_y == 3) this.cur_x=4;
+			this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
+		} else if(kb_dwn==code){
+			this.cur_y = (this.cur_y+1 > 3) ? 3 : this.cur_y +1; 
+			if(this.cur_y==3) this.cur_x=0;
+		} else if(kb_lft==code) this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
 		else if(kb_rgt==code) this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1; 
 		else if(kb_sel==code){
 			doKey(this.rows[this.cur_y][this.cur_x]);
