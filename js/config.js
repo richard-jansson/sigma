@@ -1,6 +1,6 @@
 // Time in ms for animation 
-var ANIMT=30;
-var FPS=60;
+var ANIMT=10;
+var FPS=20;
 // keys to select leaves 
 var dkeys=["W","D","S","A"];
 // keys to select branches
@@ -14,7 +14,7 @@ var bcksp="SPACE";
 var N=4,M=2;
 
 // 
-var mute=true;
+var mute=false;
 
 /* 
  *  Keybindings for classic keyboard.
