@@ -4,7 +4,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
-var PRED_LEN=10;
+var PRED_LEN=7;
 var W=1024;
 var H=768;
 var input_lock=false;
@@ -334,8 +334,10 @@ function init(){
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,W,36*6,"white");
 	playertext=new textArea(ctx,36,H-72,W,72,"red",72,true);
-	keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
-//	keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
+
+	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
+	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
+	else  throw "Error!";
 	
 	doWord();
 
