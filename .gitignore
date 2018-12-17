@@ -3,3 +3,4 @@ foo.txt
 .*swp
 bar.txt
 tojson
+tmp/*
