@@ -4,7 +4,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
-var PRED_LEN=3;
+var PRED_LEN=7;
 var W=1024;
 var H=768;
 var input_lock=false;
@@ -89,11 +89,11 @@ function getFreqProf(){
 	console.log("Generate frequency profile...");	
 	for(var k in levels){
 		var c=levels[k];
-//		for(var i=0;i<c.length;i++){
-		for(var j=0;j<PRED_LEN;j++){
-			doAnalysis(freq_prof,c,j);
+		for(var i=0;i<c.length;i++){
+			for(var j=0;j<PRED_LEN;j++){
+				doAnalysis(freq_prof,c[i],j);
+			}
 		}
-//		}
 	}
 	console.log("Profile generated in "+(new Date()-prof_t0) + "ms");
 	return freq_prof;
@@ -322,9 +322,9 @@ function init(){
 
 	ctx=canvas.getContext("2d");
 
-//	curr=levels[0][0];		
+	curr=levels[0][0];		
 // change of structure for the illiad
-	curr=levels[0]
+//	curr=levels[0]
 
 	t0=new Date();
 
@@ -337,7 +337,6 @@ function init(){
 
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
-	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",36,"serif");
 	else  throw "Error!";
 	
 	doWord();
