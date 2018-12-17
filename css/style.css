@@ -7,6 +7,11 @@ body {
 	font-family: PressStart2P;
 }
 
+#logo img {
+	height: 128px;
+	position: absolute;
+}
+
 #game {
 	width: 1024px;
 	height: 768px;
