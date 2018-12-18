@@ -1,6 +1,22 @@
-/*  
- *  Skeleton for a keyboard class 
- */ 
+function __render_quad(branch,dim,fs){
+	var w=dim.w/QUAD_COLS;
+	var h=dim.h/QUAD_ROWS;
+	var fs2=fs/QUAD_ROWS;
+
+	for(var y=0;y<QUAD_ROWS;y++){
+		for(var x=0;x<QUAD_ROWS;x++){
+			var o=y*QUAD_ROWS+x;
+			if(typeof(branch[o])=="string"){
+				console.log("str"+branch[o]+" fs:"+fs);
+				this.ctx.strokeRect(dim.x+x*w,dim.y+y*h,w,h);
+				this.ctx.fillText(branch[o],dim.x+x*w,dim.y+(y+1)*h,fs);
+			}else if(typeof(branch[o])=="object"){
+				var ndim={x:dim.x+x*w,y:dim.y+y*h,w:w,h:h};
+				this.__render_quad(branch[o],ndim,fs2);
+			}
+		}
+	}
+}
 
 function __render_quadboard(p){
 
@@ -18,8 +34,11 @@ function __render_quadboard(p){
 
 	tmp=new Error();
 
-	this.ctx.fillText("Render is stub", this.x0,this.y0+this.font_size);
+//	this.ctx.fillText("Render is stub", this.x0,this.y0+this.font_size);
 	console.log("stub function");
+
+	var dim={x:this.x0,y:this.y0,w:this.w,h:this.h};
+	this.__render_quad(this.tree,dim,this.font_size);
 }
 
 function __animate_quadboard(s,e){
@@ -76,5 +95,6 @@ function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 		__rst: __qboard_rst,
 //		__sel_node:__qboard_sel_node,
 //		__sel_branch:__qboard_sel_branch
+		__render_quad: __render_quad
 		}
 }
