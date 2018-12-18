@@ -36,3 +36,5 @@ var selq=["Q","W","E",
 			"Z","X","C"];
 var QUAD_COLS=3;
 var QUAD_ROWS=3;
+var QUAD_TOPPAD=20;
+var QUAD_RPAD=5;

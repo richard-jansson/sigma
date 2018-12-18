@@ -1,6 +1,9 @@
-function __render_quad(branch,dim,fs){
-	var w=dim.w/QUAD_COLS;
-	var h=dim.h/QUAD_ROWS;
+function __render_quad(branch,dim,fs,d){
+	var th=Math.floor(QUAD_TOPPAD*dim.h/100);
+	var tr=Math.floor(QUAD_RPAD*dim.w/100);
+
+	var w=Math.floor((100-QUAD_RPAD)*dim.w/(100*QUAD_COLS));
+	var h=Math.floor((100-QUAD_TOPPAD)*dim.h/(100*QUAD_ROWS));
 	var fs2=fs/QUAD_ROWS;
 
 	for(var y=0;y<QUAD_ROWS;y++){
@@ -8,11 +11,26 @@ function __render_quad(branch,dim,fs){
 			var o=y*QUAD_ROWS+x;
 			if(typeof(branch[o])=="string"){
 				console.log("str"+branch[o]+" fs:"+fs);
+				
+				var tdim=this.ctx.measureText(branch[o]);
+				var mleft=(w-tdim.width)/2
+				var mtop=(h-fs)/2;
+				mleft=mleft<0?0:mleft;
+				mtop=mtop<0?0:mtop;
+
+				var x0=dim.x+x*w+mleft;
+				var y0=dim.y+(y)*h+fs-1*fs/5;
+
 				this.ctx.strokeRect(dim.x+x*w,dim.y+y*h,w,h);
-				this.ctx.fillText(branch[o],dim.x+x*w,dim.y+(y+1)*h,fs);
+				this.ctx.font=fs+"px serif";
+				this.ctx.fillText(branch[o],x0,y0,fs);
 			}else if(typeof(branch[o])=="object"){
-				var ndim={x:dim.x+x*w,y:dim.y+y*h,w:w,h:h};
-				this.__render_quad(branch[o],ndim,fs2);
+				var ndim={x:dim.x+x*w+tr,y:dim.y+y*h+th,w:w,h:h};
+				if(!d){
+					this.ctx.font=Math.floor(fs2/QUAD_ROWS)+"px serif";
+					this.ctx.fillText(selq[o],dim.x+x*w+tr,dim.y+y*h+th);
+				}
+				this.__render_quad(branch[o],ndim,fs2/1.5,d+1);
 			}
 		}
 	}
@@ -38,7 +56,7 @@ function __render_quadboard(p){
 	console.log("stub function");
 
 	var dim={x:this.x0,y:this.y0,w:this.w,h:this.h};
-	this.__render_quad(this.tree,dim,this.font_size);
+	this.__render_quad(this.tree,dim,this.font_size*QUAD_ROWS,0);
 }
 
 function __animate_quadboard(s,e){
