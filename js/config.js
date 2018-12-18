@@ -27,3 +27,12 @@ var kb_lft="A";
 var kb_sel="E";
 
 var KB_INT=100;
+
+/* 
+ *  Keybindings for quad keyboard.
+ */ 
+var selq=["Q","W","E",
+			"A","S","D",
+			"Z","X","C"];
+var QUAD_COLS=3;
+var QUAD_ROWS=3;

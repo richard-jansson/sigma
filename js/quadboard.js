@@ -39,7 +39,8 @@ function __qboard_kdown(e){
 }
 // Code as string directly
 function __qboard_kup(code){
-	console.log("stub");
+	var keyn=has_el(code,selq);
+	console.log("select quad: "+keyn);
 }
 
 function __qboard_rst(){
@@ -53,14 +54,14 @@ function __qboard_sel(n){
 function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
-//	tree=setToTree(set,N,M);
+	tree=maketree(set,QUAD_ROWS,QUAD_COLS);
 
 	return {ctx:ctx,
 		font: ft,
 		font_size: fts,
 		freq_prof: freq_prof,
 		set: set,
-//		tree: tree,
+		tree: tree,
 		ftop: ftop,
 		render:__render_quadboard,
 		anim:__animate_quadboard,
