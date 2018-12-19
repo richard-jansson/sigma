@@ -333,7 +333,7 @@ function init(){
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,W,36*6,"white");
-	playertext=new textArea(ctx,36,H-72,W,72,"red",72,true);
+	playertext=new textArea(ctx,36,H-100,W,72,"red",72,true);
 
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
