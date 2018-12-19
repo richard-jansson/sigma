@@ -1,3 +1,21 @@
+/*
+Sigma Text input experiment 
+Copyright (C) 2018 Richard J. Jansson 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
 var levels = {
 0 : ["I have just returned from a visit to my landlord  the solitary neighbour that I shall be troubled with.  This is certainly a beautiful country   In all England, I do not believe that I could have fixed on a situation so completely removed from the stir of society.  A perfect misanthropist s heaven  and Mr. Heathcliff and I are such a suitable pair to divide the desolation between us.  A capital fellow   He little imagined how my heart warmed towards him when I beheld his black eyes withdraw so suspiciously under their brows, as I rode up, and when his fingers sheltered themselves, with a jealous resolution, still further in his waistcoat, as I announced my name. ",
 " Mr. Heathcliff   I said. ",
