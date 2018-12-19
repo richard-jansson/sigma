@@ -338,6 +338,7 @@ function init(){
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",36,"serif");
+	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",24,"serif");
 	else  throw "Error!";
 	
 	doWord();
@@ -416,8 +417,9 @@ function procInpQueue(){
 
 function doInput(e){
 	key=e.key.toUpperCase();
+	code=e.code.toUpperCase();
 	
-	if(keyboard.keyup(key)) e.preventDefault();
+	if(keyboard.keyup(key,code)) e.preventDefault();
 };
 
 if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) init();

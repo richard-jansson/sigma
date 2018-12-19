@@ -26,7 +26,7 @@ var kb_dwn="S";
 var kb_lft="A";
 var kb_sel="E";
 
-var KB_INT=100;
+var KB_INT=150;
 
 /* 
  *  Keybindings for quad keyboard.
@@ -38,3 +38,11 @@ var QUAD_COLS=3;
 var QUAD_ROWS=3;
 var QUAD_TOPPAD=20;
 var QUAD_RPAD=5;
+
+/* 
+ * Bindings for linear
+ * 
+ */ 
+var lin_up="Q";
+var lin_down="F";
+var lin_sel="E";
