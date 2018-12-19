@@ -72,16 +72,34 @@ function __clear_quadboard(){
 function __qboard_kdown(e){
 	var code=e.code.toUpperCase();	
 
-	console.log("stub");
+	if(code==bcksp){
+		doDelete();		
+		return true;
+	}
+	return false;
 }
 // Code as string directly
 function __qboard_kup(code){
 	var keyn=has_el(code,selq);
-	console.log("select quad: "+keyn);
+//	console.log("select quad: "+keyn);
+	
+	if(code==rst) this.__rst();
+		
+	if(typeof(this.tree[keyn])=="string"){
+		doKey(this.tree[keyn]);
+		this.tree=this.otree;
+		this.render();
+	}else if(typeof(this.tree[keyn])=="object"){
+		this.tree=this.tree[keyn];	
+		this.render();
+	}else{
+		console.log("potential error...");
+	}
 }
 
 function __qboard_rst(){
-	console.log("stub");
+	this.tree=this.otree;
+	this.render();
 }
 
 function __qboard_sel(n){
@@ -98,6 +116,7 @@ function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 		font_size: fts,
 		freq_prof: freq_prof,
 		set: set,
+		otree: tree,
 		tree: tree,
 		ftop: ftop,
 		render:__render_quadboard,
