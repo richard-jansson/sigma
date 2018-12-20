@@ -32,7 +32,7 @@ var setc;
 var ptot="";
 var show_keys=false;
 var font_family="serif";
-var keyboard=false;
+var menu=false;
 
 var avg_wordlength=false;
 
@@ -117,23 +117,6 @@ function getFreqProf(){
 	return freq_prof;
 }
 
-function doWord(){
-	var i=curr.indexOf(" ");
-	var w=curr.substr(0,i+1);
-
-	if(curr.length==0) curr=levels[level][++paragraph];
-	if(curr.length==0) curr=levels[++level][0];
-	if(curr.length==0) {
-		// FIXME 
-		console.log("GaMe OvEr!");
-	}
-
-
-	curr=curr.substr(i+1);
-	
-	gametext.print(w);
-	cword=w;
-}
 
 function getMax(freqs){
 	var m=-1;
@@ -322,11 +305,6 @@ function genTraining(t){
 }
 
 function init(){
-	curr=genTraining();
-
-	setInterval(doWPM,100);
-	var freq_prof=getFreqProf();
-
 	if(!mute){
 		tih=new Audio("gnilb.wav");
 		hit=new Audio("bling.wav");
@@ -334,53 +312,28 @@ function init(){
 		rot=new Audio("rotate.wav");
 	}
 
-	for(var k in levels) n_levels++;
 
-	console.log("init");
+	// FIXME move to parent!
 	var canvas=document.getElementById("canvas");
-
 	ctx=canvas.getContext("2d");
+	
+	bg=new Image();
+	bg.onload=function(){
+		ctx.drawImage(bg,0,0);
+		menu.clear();
+		menu.render();
+	};
+	bg.src="img/bg.png";
 
-//	curr=levels[0][0];		
-// change of structure for the illiad
-	curr=levels[0]
 
 	t0=new Date();
-
-//	curr=genTraining(tree);
-
-	wpm=new textArea(ctx,0,0,275,144,"green",144);
-	wpmt=new textArea(ctx,0,144,275,72,"green",72);
-	gametext=new textArea(ctx,280,36,W,36*6,"white");
-	playertext=new textArea(ctx,36,H-100,W,72,"red",72,true);
-
-	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
-	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
-	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",36,"serif");
-	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",24,"serif");
-	else  throw "Error!";
 	
-	doWord();
-
-	keyboard.render();
+	W*0.20
+   menu=new gmenu(ctx,0.65*W,0.7*H,0.3*W,0.2*H,"red",24,"serif");
+		
+	menu.render();
 }
 
-function doWPM(){
-//	words++;
-	var t=new Date();
-	var dt=(t-t0)/1000;
-	var wpmi=Math.floor(60*words/dt);
-
-	wpm.clear();
-
-	if(wpmi<3) wpm.style="red";
-	else if(wpmi<7) wpm.style="yellow";
-	else wpm.style="green";
-
-	wpm.print(wpmi);
-	wpmt.clear();
-	wpmt.print("WPM");
-}
 
 function doKey(key){
 
@@ -400,7 +353,6 @@ function doKey(key){
 		console.log("Match!");
 		ptot+=" ";
 		words++;
-		doWPM();
 		doWord();
 		pword="";
 		playertext.clear();
@@ -420,7 +372,7 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
-	if(keyboard.keydown(e)) e.preventDefault();
+	if(menu.keydown(e)) e.preventDefault();
 }
 
 window.onkeyup=function(e){ 
@@ -438,7 +390,7 @@ function doInput(e){
 	key=e.key.toUpperCase();
 	code=e.code.toUpperCase();
 	
-	if(keyboard.keyup(key,code)) e.preventDefault();
+	if(menu.keyup(key,code)) e.preventDefault();
 };
 
 if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) init();
