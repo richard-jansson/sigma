@@ -33,6 +33,7 @@ var ptot="";
 var show_keys=false;
 var font_family="serif";
 var keyboard=false;
+var game=false;
 
 var avg_wordlength=false;
 
@@ -101,17 +102,17 @@ function doAnalysis(freq_prof,text,depth){
 var num_nodes=0;
 
 
-function getFreqProf(){
+function getFreqProf(cnt){
 	freq_prof={};
   	var prof_t0=new Date();
 	console.log("Generate frequency profile...");	
-	for(var k in levels){
-		var c=levels[k];
-//		for(var i=0;i<c.length;i++){
-		for(var j=0;j<PRED_LEN;j++){
-			doAnalysis(freq_prof,c,j);
+	for(var k in cnt){
+		var c=cnt[k];
+		for(var i=0;i<c.length;i++){
+			for(var j=0;j<PRED_LEN;j++){
+				doAnalysis(freq_prof,c[i],j);
+			}
 		}
-//		}
 	}
 	console.log("Profile generated in "+(new Date()-prof_t0) + "ms");
 	return freq_prof;
@@ -324,8 +325,10 @@ function genTraining(t){
 function init(){
 	curr=genTraining();
 
+	game=new gamexx();
+
 	setInterval(doWPM,100);
-	var freq_prof=getFreqProf();
+	var freq_prof=getFreqProf(game.content);
 
 	if(!mute){
 		tih=new Audio("gnilb.wav");
@@ -343,7 +346,8 @@ function init(){
 
 //	curr=levels[0][0];		
 // change of structure for the illiad
-	curr=levels[0]
+//	curr=levels[0]
+	curr=game.content[0][0];
 
 	t0=new Date();
 
