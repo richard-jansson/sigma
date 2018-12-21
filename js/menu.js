@@ -17,128 +17,128 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-		  var urls=["/tree.html?l=","/quad.html?l=","/key.html?l=","/linear.html?l="];
+var urls=["/tree.html?l=","/quad.html?l=","/key.html?l=","/linear.html?l="];
 
-		  function __menu_render(p){
-			  // Clear what's previously been drawn 
-			  this.clear();
-			  // Set style of lines, basically color
-			  this.ctx.strokeStyle=this.style;
-			  this.ctx.fillStyle=this.style;
+function __menu_render(p){
+	  // Clear what's previously been drawn 
+	  this.clear();
+	  // Set style of lines, basically color
+	  this.ctx.strokeStyle=this.style;
+	  this.ctx.fillStyle=this.style;
 
-			  // Draw a border rectangle around the keyboard 
-			  this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
-			  
-			  // Set font size and and font 
-			  this.ctx.font=this.font_size+" "+this.font;
+	  // Draw a border rectangle around the keyboard 
+	  this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
+	  
+	  // Set font size and and font 
+	  this.ctx.font=this.font_size+" "+this.font;
 
-			  tmp=new Error();
+	  tmp=new Error();
 
-		  //	this.ctx.fillText("Render is stub", this.x0,this.y0+this.font_size);
-		  //	console.log("stub function");
-			  
-			  var h=this.font_size;
-			  var y=0,i=0;
-			  for(var k in this.cmenu){
-				  y+=h*1.5;
-				  this.ctx.font=this.font_size+"px "+this.font;
-				  var txt=(i==this.cursor?"→":"    ")+k;
-				  this.ctx.fillText(txt,this.x0+32,this.y0+y);
-				  i++;
-			  }
-			  
+  //	this.ctx.fillText("Render is stub", this.x0,this.y0+this.font_size);
+  //	console.log("stub function");
+	  
+	  var h=this.font_size;
+	  var y=0,i=0;
+	  for(var k in this.cmenu){
+		  y+=h*1.5;
+		  this.ctx.font=this.font_size+"px "+this.font;
+		  var txt=(i==this.cursor?"→":"    ")+k;
+		  this.ctx.fillText(txt,this.x0+32,this.y0+y);
+		  i++;
+	  }
+	  
+  }
+
+  function __animate_quadboard(s,e){
+	  console.log("stub");
+  }
+
+  function __menu_clear(){
+	  this.ctx.drawImage(bg,0,0);
+
+	  this.ctx.fillStyle="rgba(0,0,0,0.5)";
+	  this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+  }
+
+  // here we receive the full js event
+  function __menu_kdown(e){
+	  var code=e.code.toUpperCase();	
+	  var key=e.key.toUpperCase();	
+
+	  if(code=="SPACE" || code=="ENTER"){
+		  var i=0;
+
+		  this.path.push(this.cursor);
+		  for(var k in this.cmenu){
+			  if(i==this.cursor) this.cmenu=this.cmenu[k];	
+			  i++;
+
+		  }
+		  var mposts=0;
+		  for(var k in this.cmenu) mposts++;
+		  this.mposts=mposts;
+
+		  this.cursor=0;
+		  this.clear();
+		  this.render();
+
+		  if(!mute) rot.play();
+
+		  console.log("cpath:");
+	  
+		  if(typeof(this.cmenu)=="number"){
+			  console.log(typeof(this.cmenu));
+			  console.log(this.path);
+
+			  url= urls[this.cmenu]+this.path[1];
+
+			  console.log("url:"+url);
+			  setTimeout(function(){
+				  window.location.href=window.location.origin+url;
+			  },500)
 		  }
 
-		  function __animate_quadboard(s,e){
-			  console.log("stub");
-		  }
+		  return true;
+	  }if(key=="W" || key=="ARROWUP"){
+		  this.cursor=this.cursor-1;
+		  if(this.cursor<0) this.cursor=this.mposts-1;
 
-		  function __menu_clear(){
-			  this.ctx.drawImage(bg,0,0);
+		  if(!mute) tih.play();
+		  this.clear();
+		  this.render();
 
-			  this.ctx.fillStyle="rgba(0,0,0,0.5)";
-			  this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
-		  }
+		  return true;
+	  }else if(key=="S" || key=="ARROWDOWN"){
+		  this.cursor=(this.cursor+1)%this.mposts;
+		  if(!mute) hit.play();
+		  this.clear();
+		  this.render();
+		  return true;
+	  }
 
-		  // here we receive the full js event
-		  function __menu_kdown(e){
-			  var code=e.code.toUpperCase();	
-			  var key=e.key.toUpperCase();	
+	  return false;
+  }
 
-			  if(code=="SPACE"){
-				  var i=0;
+  // Code as string directly
+  function __menu_kup(code){
+  }
 
-				  this.path.push(this.cursor);
-				  for(var k in this.cmenu){
-					  if(i==this.cursor) this.cmenu=this.cmenu[k];	
-					  i++;
+  function __menu_sel(n){
+	  console.log("stub");
+  }
 
-				  }
-				  var mposts=0;
-				  for(var k in this.cmenu) mposts++;
-				  this.mposts=mposts;
+  function gmenu(ctx,x,y,w,h,style,fts,ft){
+	  var weapons={"tree":0,"quad":1,"bore":2,"lin":3};
 
-				  this.cursor=0;
-				  this.clear();
-				  this.render();
-
-				  if(!mute) rot.play();
-
-				  console.log("cpath:");
-			  
-				  if(typeof(this.cmenu)=="number"){
-					  console.log(typeof(this.cmenu));
-					  console.log(this.path);
-
-					  url= urls[this.cmenu]+this.path[1];
-
-					  console.log("url:"+url);
-					  setTimeout(function(){
-						  window.location.href=window.location.origin+url;
-					  },500)
-				  }
-
-				  return true;
-			  }if(key=="W" || key=="ARROWUP"){
-				  this.cursor=this.cursor-1;
-				  if(this.cursor<0) this.cursor=this.mposts-1;
-
-				  if(!mute) tih.play();
-				  this.clear();
-				  this.render();
-
-				  return true;
-			  }else if(key=="S" || key=="ARROWDOWN"){
-				  this.cursor=(this.cursor+1)%this.mposts;
-				  if(!mute) hit.play();
-				  this.clear();
-				  this.render();
-				  return true;
-			  }
-
-			  return false;
-		  }
-
-		  // Code as string directly
-		  function __menu_kup(code){
-		  }
-
-		  function __menu_sel(n){
-			  console.log("stub");
-		  }
-
-		  function gmenu(ctx,x,y,w,h,style,fts,ft){
-			  var weapons={"tree":0,"quad":1,"bore":2,"lin":3};
-
-			  var menu={"Start":
-					  {
-					  "Tutorial":weapons,
-					  "Wuthering heights": weapons,
-					  "ΙΛΙΑΔΑ":weapons,
-					  "道德經":weapons
-					  },
-					  "Config":{},
-					  "About":{}};
+	  var menu={"Start":
+			  {
+			  "Tutorial":weapons,
+			  "Wuthering heights": weapons,
+			  "ΙΛΙΑΔΑ":weapons,
+			  "道德經":weapons
+			  },
+			  "Config":{},
+			  "About":{}};
 	var mposts=0;
 	for(var k in menu) mposts++;
 		
