@@ -39,7 +39,7 @@ var avg_wordlength=false;
 var words=0;
 var t0;
 
-var hit;
+var hit,music;
 
 function __drawString(s){
 	var tdim=ctx.measureText(s);
@@ -310,6 +310,10 @@ function init(){
 		hit=new Audio("bling.wav");
 		err=new Audio("boop.wav");
 		rot=new Audio("rotate.wav");
+
+		music=new Audio("audio/wherethereisnodarkness.mp3");
+
+		music.play();
 	}
 
 
