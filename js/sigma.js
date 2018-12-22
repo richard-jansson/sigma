@@ -35,6 +35,8 @@ var font_family="serif";
 var keyboard=false;
 var game=false;
 
+var sym_log_cache=[];
+
 var avg_wordlength=false;
 
 var words=0;
@@ -149,8 +151,15 @@ function getMax(freqs){
 	return m;
 }
 
-function getSymColor(pstr,a){
+function clearSymCache(){
+	sym_log_cache=[];
+}
+
+function getSymLog(pstr,a){
+	if(typeof(sym_log_cache[pstr+a])!="undefined") 
+		return sym_log_cache[pstr+a];
 	var str=pstr.substr(0-PRED_LEN);
+
 	var mult=Math.E;
 	var s;
 	var tot_s=0;
@@ -167,87 +176,33 @@ function getSymColor(pstr,a){
 		var f=freq_prof[s][a];
 		var fn=f/fm;
 
-//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
-
 		res=fn;
 
 		mult*=Math.E;
 	}
-//	console.log(a+":"+res);
 
 	fn=res;
 	var l=Math.pow(Math.E,fn)/Math.E;
+
+	sym_log_cache[pstr+a]=l;
+
+	return l;
+}
+
+function getSymColor(pstr,a){
+	var l=getSymLog(pstr,a);
 	var c=Math.floor(255*l);
-//	console.log(c);
+
 	return "rgb(0,"+c+",0)";
 }
 function getSymBold(pstr,a){
-	var str=pstr.substr(0-PRED_LEN);
-	var mult=Math.E;
-	var s;
-	var tot_s=0;
-	var res;
-
-	for(var i=0;i<=str.length;i++){
-		if(i==0) s="";
-		else s=str.substr(0-i);
-
-		if(typeof(freq_prof[s])=="undefined") continue;
-		if(typeof(freq_prof[s][a])=="undefined") continue;
-
-		var fm=getMax(freq_prof[s]);
-		var f=freq_prof[s][a];
-		var fn=f/fm;
-
-//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
-
-		res=fn;
-
-		mult*=Math.E;
-	}
-//	console.log(a+":"+res);
-
-	fn=res;
-	var l=Math.pow(Math.E,fn)/Math.E;
 	var c=Math.floor(255*l);
-
+	var l=getSymLog(pstr,a);
 	return l>0.8;
-//	console.log(c);
-//	return "rgb(0,"+c+",0)";
 }
 function getSymSize(pstr,a,fs){
-	var str=pstr.substr(0-PRED_LEN);
-	var mult=Math.E;
-	var s;
-	var tot_s=0;
-	var res;
-
-	for(var i=0;i<=str.length;i++){
-		if(i==0) s="";
-		else s=str.substr(0-i);
-
-		if(typeof(freq_prof[s])=="undefined") continue;
-		if(typeof(freq_prof[s][a])=="undefined") continue;
-
-		var fm=getMax(freq_prof[s]);
-		var f=freq_prof[s][a];
-		var fn=f/fm;
-
-//		console.log(s+"--"+a+":"+f+"/"+fm+" => "+fn+" | "+fn*mult);
-
-		res=fn;
-
-		mult*=Math.E;
-	}
-//	console.log(a+":"+res);
-
-	fn=res;
-	var l=Math.pow(Math.E,fn)/Math.E;
+	var l=getSymLog(pstr,a);
 	return l*fs;
-
-//	var c=Math.floor(255*l);
-//	console.log(c);
-//	return "rgb(0,"+c+",0)";
 }
 
 function genTraining(t){

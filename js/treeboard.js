@@ -225,6 +225,7 @@ function __treeboard_anim_step(o){
 	if(this.inanim){
 //		this.animdata=	
 		this.inanim=true;
+		clearSymCache();
 	}
 
 	if(o.frame==FPS){
@@ -330,7 +331,7 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 		set: set,
 		tree: tree,
 		ftop: ftop,
-		font_size: 108,
+		font_size: 54,
 		render:__render_treeboard,
 		anim:__animate_treeboard,
 		animstep:__treeboard_anim_step,
