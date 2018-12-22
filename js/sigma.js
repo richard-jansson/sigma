@@ -248,12 +248,12 @@ function init(){
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,W,36*3,"white");
-	playertext=new textArea(ctx,36,H-100,W,72,"red",72,true);
+	playertext=new textArea(ctx,280,36*4,W/2,36*3,"red",72,true);
 
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*19,W-36*2,36*17,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
-	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*12,"red",36,"serif");
+	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",144,"serif");
 	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",24,"serif");
 	else  throw "Error!";
 	

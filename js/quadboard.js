@@ -16,9 +16,50 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
 function __render_quad(branch,dim,fs,d){
+	var w=dim.w/QUAD_COLS;
+	var h=dim.h/QUAD_ROWS;
+
+
+	var x0=dim.x;
+	var y0=dim.y;
+
+	if(!d){
+		x0+=dim.w*0.05;
+		y0+=dim.h*0.05+72;
+	}
+
+	var w1=w*0.9;
+	var h1=h*0.9;
+
+	for(var y=0;y<QUAD_ROWS;y++){
+		for(var x=0;x<QUAD_COLS;x++){
+			var o=y*QUAD_ROWS+x;
+			var x1=x0+w1*x;
+			var y1=y0+h1*y;
+
+			if(typeof(branch[o])=="string"){
+				this.ctx.font=fs+"px "+this.font;
+				console.log("ctx_font:"+this.ctx.font);
+				this.ctx.fillText(branch[o],x1,y1);
+			}else if(typeof(branch[o])=="object"){
+				var ndim={x:x1,y:y1,w:w1,h:h1};
+				
+				if(!d){
+					
+				}
+				this.__render_quad(branch[o],ndim,fs/QUAD_ROWS,d+1);
+			}
+		}
+	}
+
+}
+
+function __render_quad19(branch,dim,fs,d){
 	var th=Math.floor(QUAD_TOPPAD*dim.h/100);
 	var tr=Math.floor(QUAD_RPAD*dim.w/100);
+
 
 	var w=Math.floor((100-QUAD_RPAD)*dim.w/(100*QUAD_COLS));
 	var h=Math.floor((100-QUAD_TOPPAD)*dim.h/(100*QUAD_ROWS));
@@ -39,9 +80,9 @@ function __render_quad(branch,dim,fs,d){
 				var x0=dim.x+x*w+mleft;
 				var y0=dim.y+(y)*h+fs-1*fs/5;
 
-				this.ctx.strokeRect(dim.x+x*w,dim.y+y*h,w,h);
+				this.ctx.strokeRect(dim.x+x*(w+tr)+tr,dim.y+y*(h+th)+th,w,h);
 				this.ctx.font=fs+"px serif";
-				this.ctx.fillText(branch[o],x0,y0+7,fs*0.9);
+				this.ctx.fillText(branch[o],x0+tr,y0+th,fs);
 			}else if(typeof(branch[o])=="object"){
 				var ndim={x:dim.x+x*w+tr,y:dim.y+y*h+th,w:w,h:h};
 				if(!d){
@@ -65,7 +106,7 @@ function __render_quadboard(p){
 	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 	
 	// Set font size and and font 
-	this.ctx.font=this.font_size+" "+this.font;
+	this.ctx.font=this.font_size+"px "+this.font;
 
 	tmp=new Error();
 
@@ -73,7 +114,7 @@ function __render_quadboard(p){
 	console.log("stub function");
 
 	var dim={x:this.x0,y:this.y0,w:this.w,h:this.h};
-	this.__render_quad(this.tree,dim,this.font_size*QUAD_ROWS,0);
+	this.__render_quad(this.tree,dim,this.font_size,0);
 }
 
 function __animate_quadboard(s,e){
@@ -98,10 +139,10 @@ function __qboard_kdown(e){
 // Code as string directly
 function __qboard_kup(code){
 	var keyn=has_el(code,selq);
-//	console.log("select quad: "+keyn);
-	
+
 	if(code==rst) this.__rst();
-		
+	if(keyn==-1) return;
+
 	if(typeof(this.tree[keyn])=="string"){
 		doKey(this.tree[keyn]);
 		this.tree=this.otree;
@@ -110,7 +151,7 @@ function __qboard_kup(code){
 		this.tree=this.tree[keyn];	
 		this.render();
 	}else{
-		console.log("potential error...");
+		console.log("No such key");
 	}
 }
 
