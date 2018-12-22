@@ -120,7 +120,14 @@ function getFreqProf(cnt){
 
 function doWord(){
 	var i=curr.indexOf(" ");
+	if(i==-1){
+		ia=curr.indexOf("，");
+		ib=curr.indexOf("。");
+		i=ia<ib?ia:ib;
+	}
 	var w=curr.substr(0,i+1);
+
+	this.ctx
 
 	if(curr.length==0) curr=levels[level][++paragraph];
 	if(curr.length==0) curr=levels[++level][0];
@@ -242,76 +249,6 @@ function getSymSize(pstr,a,fs){
 //	console.log(c);
 //	return "rgb(0,"+c+",0)";
 }
-	
-function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
-	var i=0;
-//	var r=72;
-//	ctx.strokeStyle="green";
-	ctx.strokeStyle="rgb(0,255,0)";
-	ctx.font=fs+"px "+font_family;
-
-	for(var k in branch){
-		if(typeof(branch[k])!="string") continue;
-		if(i==n) break;
-
-
-	   a=i*2*Math.PI/n - Math.PI/2;	
-		dy=Math.sin(a)*ro/4;
-		dx=Math.cos(a)*ro/4;
-	
-/*		var s=branch[k];
-		var f=freq_prof["ha"][s]*Math.E*Math.E
-
-		
-		var fn=f/ftop;
-		var l=Math.pow(Math.E,fn)/Math.E;
-		var c=Math.floor(255*l);
-		*/
-		ctx.font=getSymSize(ptot,branch[k],fs)+"px "+font_family;
-
-		if(!getSymBold(ptot,branch[k])){
-			ctx.strokeStyle=getSymColor(ptot,branch[k]);
-			ctx.strokeText(branch[k],x+dx,y+dy);
-		} else {
-			ctx.fillStyle=getSymColor(ptot,branch[k]);
-			ctx.fillText(branch[k],x+dx,y+dy);
-		}
-
-		i++;
-	}
-	i=0;
-	ctx.strokeStyle="blue";
-//	o=-Math.PI/2;
-//	o=-Math.PI;
-//	o=0;
-	o=-Math.PI/8;
-
-	for(var k in branch){
-		if(typeof(branch[k])!="object") continue;
-		if(branch[k].length==0) continue;
-//		a=o+i*2*Math.PI/4;	
-		a=ao+o+ i*Math.PI/4;
-		
-		y0=Math.sin(a)*ro;
-		x0=Math.cos(a)*ro;
-
-//		console.log(x0+","+y0);
-		this.ctx.beginPath();
-		this.ctx.moveTo(x,y);
-		this.ctx.lineTo(x+x0,y+y0);
-		this.ctx.stroke();
-
-		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,3*fs/4,a,ro);	
-
-		i++;
-//		if(i==1) break;
-	}
-}
-
-
-
-
-
 
 function genTraining(t){
 	var ret="";
@@ -355,10 +292,11 @@ function init(){
 
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
-	gametext=new textArea(ctx,280,36,W,36*6,"white");
+	gametext=new textArea(ctx,280,36,W,36*3,"white");
 	playertext=new textArea(ctx,36,H-100,W,72,"red",72,true);
 
-	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*17,W-36*2,36*15,"red");
+//	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
+	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*19,W-36*2,36*17,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",36,"serif");
 	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",24,"serif");
