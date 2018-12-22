@@ -28,7 +28,7 @@ function __render_quad(branch,dim,fs,d){
 		for(var x=0;x<QUAD_ROWS;x++){
 			var o=y*QUAD_ROWS+x;
 			if(typeof(branch[o])=="string"){
-				console.log("str"+branch[o]+" fs:"+fs);
+//				console.log("str"+branch[o]+" fs:"+fs);
 				
 				var tdim=this.ctx.measureText(branch[o]);
 				var mleft=(w-tdim.width)/2
@@ -41,7 +41,7 @@ function __render_quad(branch,dim,fs,d){
 
 				this.ctx.strokeRect(dim.x+x*w,dim.y+y*h,w,h);
 				this.ctx.font=fs+"px serif";
-				this.ctx.fillText(branch[o],x0,y0,fs);
+				this.ctx.fillText(branch[o],x0,y0+7,fs*0.9);
 			}else if(typeof(branch[o])=="object"){
 				var ndim={x:dim.x+x*w+tr,y:dim.y+y*h+th,w:w,h:h};
 				if(!d){
@@ -55,7 +55,6 @@ function __render_quad(branch,dim,fs,d){
 }
 
 function __render_quadboard(p){
-
 	// Clear what's previously been drawn 
 	this.clear();
 	// Set style of lines, basically color
@@ -127,7 +126,9 @@ function __qboard_sel(n){
 function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
-	tree=maketree(set,QUAD_ROWS,QUAD_COLS);
+	tree=maketree(set,QUAD_ROWS,QUAD_COLS,QUAD_N_SHALLOW,QUAD_N_DEEP);
+
+	console.log("jhwui");
 
 	return {ctx:ctx,
 		font: ft,
