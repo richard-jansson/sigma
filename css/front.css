@@ -49,3 +49,20 @@
 	color: white;
 
 }
+#content {
+	width: 480px;
+	margin: 20px auto 10px;
+}
+
+#content img {
+	width: 480px;
+}
+
+#content p {
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.board {
+	margin-bottom: 80px;
+}
