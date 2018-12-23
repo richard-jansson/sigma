@@ -40,6 +40,7 @@ function __spiral(){
 	this.ctx.strokeStyle="blue";	
 
 
+	var ptota=ptot.trim();
 	for(var i=0;i<this.set.length-this.offset;i++){
 		var a0=a0-ao;
 		var x=x0+r*Math.cos(a0);
