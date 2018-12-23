@@ -254,7 +254,7 @@ function init(){
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*19,W-36*2,36*17,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",144,"serif");
-	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",24,"serif");
+	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",72,"serif");
 	else  throw "Error!";
 	
 	doWord();

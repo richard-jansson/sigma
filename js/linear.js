@@ -27,19 +27,29 @@ function __lin_render(p){
 	// Draw a border rectangle around the keyboard 
 	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 	
-	this.font_size=24;
-	// Set font size and and font 
-	this.ctx.font=this.font_size+" "+this.font;
+	var l=this.set.length;	
 
+	var hf=this.font_size/2;
+		
 	tmp=new Error();
 
 	var h=this.font_size;
+	var yofs=0;
 	for(var y=0;y<this.set.length;y++){
 		var yi=y+this.offset;
-		if(this.y0+this.h < this.y0+(y+1)*h) break;
+		var div=y+1;
+		var d=div*div;
+		var fs=Math.floor(hf+hf/(d));
+
+		if(this.y0+this.h < this.y0+yofs+fs) break;
 		if(typeof(this.set[yi])=="undefined") continue;
-		this.ctx.font=this.font_size+"px "+this.font;
-		this.ctx.fillText(this.set[yi],this.x0+64,this.y0+(y+1)*h);
+
+
+		this.ctx.font=fs+"px "+this.font;
+
+		yofs+=fs;
+
+		this.ctx.fillText(this.set[yi],this.x0+64,this.y0+yofs);
 	}
 }
 
