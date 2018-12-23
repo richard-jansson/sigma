@@ -16,6 +16,61 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+function __spiral(){
+	var x0=this.w/4+this.x0;
+	var y0=this.h/2+this.y0;
+
+	var r=this.h/2-this.font_size;
+
+	var ao=Math.PI/4;
+	var a=-Math.PI/2;
+
+	var a0=a,a1=a;
+
+	var x=x0+r*Math.cos(a0);
+	var y=y0+r*Math.sin(a0);
+
+
+	this.ctx.strokeStyle="green";	
+	this.ctx.beginPath();
+	this.ctx.moveTo(x0,y0);
+	this.ctx.lineTo(x,y);
+	this.ctx.stroke();
+	this.ctx.strokeStyle="blue";	
+
+
+	for(var i=0;i<this.set.length-this.offset;i++){
+		var a0=a0-ao;
+		var x=x0+r*Math.cos(a0);
+		var y=y0+r*Math.sin(a0);
+
+		this.ctx.beginPath();
+		this.ctx.moveTo(x0,y0);
+		this.ctx.lineTo(x,y);
+		this.ctx.stroke();
+		this.ctx.strokeStyle="red";	
+
+		// The glyph itself ought to be in the middle of this
+		var a1=a1-ao/2;
+		var x2=x0+r*Math.cos(a1);
+		var y2=y0+r*Math.sin(a1);
+
+		var dx=x2-x0;
+		var dy=y2-y0;
+		var d=Math.floor(Math.sqrt(dx*dx+dy*dy))/4;
+
+		this.ctx.font=d+"px serif";
+		
+		this.ctx.fillText(this.set[i+this.offset],x2,y2+d);
+		
+		ao*=0.95;
+		r*=0.98;
+			
+//		if(i>8) break;
+	}
+}
+
 function __lin_render(p){
 
 	// Clear what's previously been drawn 
@@ -44,13 +99,14 @@ function __lin_render(p){
 		if(this.y0+this.h < this.y0+yofs+fs) break;
 		if(typeof(this.set[yi])=="undefined") continue;
 
-
 		this.ctx.font=fs+"px "+this.font;
 
 		yofs+=fs;
 
 		this.ctx.fillText(this.set[yi],this.x0+64,this.y0+yofs);
 	}
+
+	this.spiral();
 }
 
 function __lin_anim(s,e){
@@ -155,6 +211,7 @@ function linboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 		repeats: [],
 		rep_start: __rep_start,
 		rep_stop: __rep_stop,
-		keyrep:__rep_wrap
+		keyrep:__rep_wrap,
+		spiral:__spiral
 		}
 }
