@@ -21,7 +21,6 @@ function __render_quad(branch,dim,fs,d){
 	var w=dim.w/QUAD_COLS;
 	var h=dim.h/QUAD_ROWS;
 
-
 	var x0=dim.x;
 	var y0=dim.y;
 
