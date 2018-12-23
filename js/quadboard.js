@@ -26,12 +26,12 @@ function __render_quad(branch,dim,fs,d){
 	var y0=dim.y;
 
 	if(!d){
-		x0+=dim.w*0.05;
-		y0+=dim.h*0.05+72;
+		x0+=dim.w*0.025;
+		y0+=dim.h*0.025;
 	}
 
-	var w1=w*0.9;
-	var h1=h*0.9;
+	var w1=w*0.95;
+	var h1=h*0.95;
 
 	for(var y=0;y<QUAD_ROWS;y++){
 		for(var x=0;x<QUAD_COLS;x++){
@@ -40,14 +40,33 @@ function __render_quad(branch,dim,fs,d){
 			var y1=y0+h1*y;
 
 			if(typeof(branch[o])=="string"){
-				this.ctx.font=fs+"px "+this.font;
-				console.log("ctx_font:"+this.ctx.font);
-				this.ctx.fillText(branch[o],x1,y1);
+				var ptota=ptot.trim();
+
+				var sfs=getSymSize(ptota,branch[o],fs);
+				var scol=getSymColor(ptota,branch[o]);
+
+//				this.ctx.font=fs+"px "+this.font;
+				this.ctx.font=sfs+"px "+this.font;
+				this.ctx.fillStyle=scol;
+				this.ctx.strokeStyle=scol;
+	
+		
+//				console.log(branch[o]+" "+sfs);
+/*				if(branch[o]=="已"){
+					this.ctx.font=fs+"px "+this.font;
+					this.ctx.fillStyle="rgb(0,255,0)";
+					this.ctx.strokeStyle="rgb(0,255,0)";
+				}
+				*/
+
+//				console.log("ctx_font:"+this.ctx.font);
+				this.ctx.fillText(branch[o],x1,y1+fs);
+				this.ctx.strokeRect(x1,y1,w1,h1);
+
 			}else if(typeof(branch[o])=="object"){
 				var ndim={x:x1,y:y1,w:w1,h:h1};
 				
 				if(!d){
-					
 				}
 				this.__render_quad(branch[o],ndim,fs/QUAD_ROWS,d+1);
 			}
