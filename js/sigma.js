@@ -160,7 +160,7 @@ function getSymLog(pstr,a){
 		return sym_log_cache[pstr+a];
 	var str=pstr.substr(0-PRED_LEN);
 
-	var mult=Math.E;
+	var mult=Math.E*800;
 	var s;
 	var tot_s=0;
 	var res;
@@ -295,6 +295,7 @@ function doKey(key){
 	if(pword.toLowerCase() == cword.trimEnd().toLowerCase()){
 		if(!mute) hit.play();
 		console.log("Match!");
+		clearSymCache();
 		ptot+=" ";
 		words++;
 		doWPM();

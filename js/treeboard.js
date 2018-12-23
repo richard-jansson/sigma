@@ -72,10 +72,11 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		if(typeof(branch[k])!="string") continue;
 		if(i==n) break;
 
-
 	   a=i*2*Math.PI/n - Math.PI/2;	
 		dy=Math.sin(a)*ro/4;
 		dx=Math.cos(a)*ro/4;
+
+		var ptota=ptot.trim();
 	
 /*		var s=branch[k];
 		var f=freq_prof["ha"][s]*Math.E*Math.E
@@ -85,13 +86,13 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		var l=Math.pow(Math.E,fn)/Math.E;
 		var c=Math.floor(255*l);
 		*/
-		ctx.font=getSymSize(ptot,branch[k],fs)+"px "+font_family;
+		ctx.font=getSymSize(ptota,branch[k],fs)+"px "+font_family;
 
 		if(!getSymBold(ptot,branch[k])){
-			ctx.strokeStyle=getSymColor(ptot,branch[k]);
+			ctx.strokeStyle=getSymColor(ptota,branch[k]);
 			ctx.strokeText(branch[k],x+dx,y+dy);
 		} else {
-			ctx.fillStyle=getSymColor(ptot,branch[k]);
+			ctx.fillStyle=getSymColor(ptota,branch[k]);
 			ctx.fillText(branch[k],x+dx,y+dy);
 		}
 
