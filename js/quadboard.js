@@ -149,7 +149,7 @@ function __qboard_kdown(e){
 	var code=e.code.toUpperCase();	
 
 	if(code==bcksp){
-		doDelete();		
+		game.delSym();
 		return true;
 	}
 	return false;
