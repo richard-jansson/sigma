@@ -69,3 +69,6 @@ var lin_up="Q";
 var lin_down="F";
 var lin_sel="E";
 
+var ling_up="J";
+var ling_down="P";
+var ling_sel="I";

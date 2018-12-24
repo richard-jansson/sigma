@@ -17,10 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-function __spiral(){
-	var x0=this.w/4+this.x0;
-	var y0=this.h/2+this.y0;
-
+function __spiral(set,x0,y0,offset,dir,col){
 	var r=this.h/2-this.font_size;
 
 	var ao=Math.PI/4;
@@ -32,17 +29,16 @@ function __spiral(){
 	var y=y0+r*Math.sin(a0);
 
 
-	this.ctx.strokeStyle="green";	
 	this.ctx.beginPath();
 	this.ctx.moveTo(x0,y0);
 	this.ctx.lineTo(x,y);
 	this.ctx.stroke();
-	this.ctx.strokeStyle="blue";	
 
+	this.ctx.strokeStyle=col;	
+	this.ctx.fillStyle=col;	
 
-	var ptota=ptot.trim();
-	for(var i=0;i<this.set.length-this.offset;i++){
-		var a0=a0-ao;
+	for(var i=0;i<set.length-offset;i++){
+		var a0=a0+dir*ao;
 		var x=x0+r*Math.cos(a0);
 		var y=y0+r*Math.sin(a0);
 
@@ -50,10 +46,10 @@ function __spiral(){
 		this.ctx.moveTo(x0,y0);
 		this.ctx.lineTo(x,y);
 		this.ctx.stroke();
-		this.ctx.strokeStyle="red";	
 
 		// The glyph itself ought to be in the middle of this
-		var a1=a1-ao/2;
+		var a1=a1+dir*ao/2;
+		var a1=a0;
 		var x2=x0+r*Math.cos(a1);
 		var y2=y0+r*Math.sin(a1);
 
@@ -63,9 +59,9 @@ function __spiral(){
 
 		this.ctx.font=d+"px serif";
 		
-		this.ctx.fillText(this.set[i+this.offset],x2,y2+d);
+		this.ctx.fillText(set[i+offset],x2,y2+d);
 		
-		ao*=0.95;
+		ao*=0.9;
 		r*=0.98;
 			
 //		if(i>8) break;
@@ -107,7 +103,24 @@ function __lin_render(p){
 		this.ctx.fillText(this.set[yi],this.x0+64,this.y0+yofs);
 	}
 
-	this.spiral();
+	this.spiral(this.set,
+		this.w/4+this.x0,
+		this.h/2+this.y0,
+		this.offset,
+		-1,
+		"red"
+		);
+
+	// Green is the dynamic spiral, changes after each stroke
+//	this.dynset=sortX(freq_prof[ptota]);
+
+	this.spiral(this.dynset,
+		3*this.w/4+this.x0,
+		this.h/2+this.y0,
+		this.greenoffset,
+		1,
+		"green"
+		);
 }
 
 function __lin_anim(s,e){
@@ -124,15 +137,39 @@ function __lin_kdown(e){
 	var code=e.key.toUpperCase();	
 	var e_code=e.code.toUpperCase();	
 
-	if(lin_up==code){
+
+	if(ling_up==code){
+		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
+		this.rep_start(e,code);
+	}else if(ling_down==code){
+		this.greenoffset=this.greenoffset>=this.set.length+this.set.length?this.length-1:this.greenoffset+1;
+		this.rep_start(e,code);
+	}else if(ling_sel==code){
+		doKey(this.dynset[this.offset]);	
+		// recalculate the new dynamic set 
+		var ptota=ptot.trim();
+		this.dynset=sortX(freq_prof[ptota]);
+
+		this.greenoffset=0;
+		this.offset=0;
+		this.clear();
+		this.render();
+		this.rep_start(e,code);
+		return false;
+	}else if(lin_up==code){
 		this.offset=this.offset>1?this.offset-1:0;
 		this.rep_start(e,code);
 	}else if(lin_down==code){
 		this.offset=this.offset>=this.set.length+this.set.length?this.length-1:this.offset+1;
-	this.rep_start(e,code);
+		this.rep_start(e,code);
 	}else if(lin_sel==code){
 		doKey(this.set[this.offset]);	
+		// recalculate the new dynamic set 
+		var ptota=ptot.trim();
+		this.dynset=sortX(freq_prof[ptota]);
+
 		this.offset=0;
+		this.greenoffset=0;
 		this.clear();
 		this.render();
 		this.rep_start(e,code);
@@ -188,12 +225,14 @@ function linboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 //	var ftop=freq_prof[""][set[0]];
 //	tree=setToTree(set,N,M);
 	var __offset=0;
+	var __goffset=0;
 
 	return {ctx:ctx,
 		font: ft,
 		font_size: fts,
 		freq_prof: freq_prof,
 		set: set,
+		dynset: set,
 //		tree: tree,
 //		ftop: ftop,
 		render:__lin_render,
@@ -205,6 +244,7 @@ function linboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 		keydown: __lin_kdown,
 		keyup: __lin_kup,
 		offset: __offset,
+		greenoffset: __goffset,
 		// Handling keys called internally via key{up,down}
 		__rst: __lin_rst,
 //		__sel_node:__qboard_sel_node,
