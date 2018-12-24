@@ -34,6 +34,7 @@ var show_keys=false;
 var font_family="serif";
 var keyboard=false;
 var game=false;
+var freq_prof;
 
 var sym_log_cache=[];
 
@@ -48,9 +49,11 @@ function __drawString(s){
 	var tdim=ctx.measureText(s);
 
 	this.ctx.strokeStyle=this.style;
+
+	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 	this.ctx.font=this.fontsize+"px "+font_family;
 
-	if( tdim.width + this.x > W ){
+	if( tdim.width + this.x > this.w+this.x0 ){
 		this.x=this.x0;
 		this.y+=this.fontsize;
 	}
@@ -121,15 +124,23 @@ function getFreqProf(cnt){
 }
 
 function doWord(){
-	var i=curr.indexOf(" ");
+	console.log("print: "+curr);
+	gametext.print(curr);
+	curr=levels[level][++paragraph];
+	cword=curr;
+
+/*	var i=curr.indexOf(" ");
 	if(i==-1){
 		ia=curr.indexOf("，");
 		ib=curr.indexOf("。");
 		i=ia<ib?ia:ib;
 	}
-	var w=curr.substr(0,i+1);
+	if(i!=-1) w=curr.substr(0,i+1);
+	else{
+		i=curr.length;
+		w=curr;
+	}
 
-	this.ctx
 
 	if(curr.length==0) curr=levels[level][++paragraph];
 	if(curr.length==0) curr=levels[++level][0];
@@ -137,12 +148,10 @@ function doWord(){
 		// FIXME 
 		console.log("GaMe OvEr!");
 	}
-
-
-	curr=curr.substr(i+1);
 	
 	gametext.print(w);
 	cword=w;
+	*/
 }
 
 function getMax(freqs){
@@ -217,17 +226,34 @@ function genTraining(t){
 function init(){
 	curr=genTraining();
 
-	game=new gamexx();
-
-	setInterval(doWPM,100);
-	var freq_prof=getFreqProf(game.content);
-
 	if(!mute){
 		tih=new Audio("gnilb.wav");
 		hit=new Audio("bling.wav");
 		err=new Audio("boop.wav");
 		rot=new Audio("rotate.wav");
 	}
+	game=new gamexx(function(){
+		if(!mute) hit.play();
+
+		console.log("match");
+		
+		gametext.print(game.cword);
+
+		playertext.clear();
+	},
+	function(){
+		if(!mute) hit.play();
+	},function(){
+		playertext.clear();
+	}
+	);
+
+	setInterval(doWPM,100);
+
+	if(typeof(game.freq_prof)=="undefined") 
+		freq_prof=getFreqProf(game.content);
+	else freq_prof=game.freq_prof;
+
 
 	for(var k in levels) n_levels++;
 
@@ -247,11 +273,11 @@ function init(){
 
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
-	gametext=new textArea(ctx,280,36,W,36*3,"white");
-	playertext=new textArea(ctx,280,36*4,W/2,36*3,"red",72,true);
+	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
+	playertext=new textArea(ctx,280,36*3,W-280,72,"red",36,true);
 
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
-	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*19,W-36*2,36*17,"red");
+	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*16,W-36*2,36*16,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
 	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",144,"serif");
 	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*12,W-36*4,36*10,"red",72,"serif");
@@ -280,8 +306,9 @@ function doWPM(){
 }
 
 function doKey(key){
-
-	ptot+=key;
+	playertext.print(key);
+	game.addSym(key);
+/*	ptot+=key;
 	pword+=key;
 	playertext.print(pword);
 	
@@ -305,7 +332,8 @@ function doKey(key){
 		
 		doWPM();
 	}
-	while(cword.trim().length == 0) doWord();
+	*/
+//	while(cword.trim().length == 0) doWord();
 }
 
 function doDelete(){

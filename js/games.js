@@ -14,13 +14,84 @@ function __get_args(){
 	return args;
 }
 
-function gamexx(){
+function __onMatch(){
+	console.log("match");
+
+	this.input="";
+	
+	if(typeof(this.content[this.leveln][this.paragraph+1])!="undefined"){
+		this.cword=this.content[this.leveln][this.paragraph+1];
+		this.paragraph++;
+	} else if(typeof(this.content[this.leveln+1][0])!="undefined"){
+		this.cword=this.content[this.leveln][0];
+		this.leveln++;	
+		this.paragraph=0;
+	}else{
+		console.log("YOU WON");
+	}
+
+	this.matchcback();
+}
+
+function __onPartial(){
+	console.log("partial match");
+
+	this.partialcback();
+}
+
+function addSym(sym){
+	this.input+=sym;
+
+	if(this.cword.substr(0,pword.length).toLowerCase()==this.input.toLowerCase()) 
+		this.onPartial();
+
+	if(this.input.toLowerCase()==this.cword.trimEnd().toLowerCase())
+		this.onMatch();
+}
+
+function delSym(){
+	var l=this.input.length;
+	l--;
+	l=l<0;0;l;
+	this.input=this.input.substr(0,l);
+
+	this.delcback();
+}
+
+function gamexx(match,partial,del){
 	var args=__get_args();
 	var level=parseInt(args["l"]);
 
 	console.log("level=" + level);
 	
-	if(typeof(books[level])=="undefined") throw "Level "+level+" does not exist";
+	if(typeof(books[level])=="undefined") {
+//		alert("No such level: "+level);
+//		window.location.pathname="/start.html";
+		throw "Level "+level+" does not exist";
+	}
+	
+	// current input word 
+	var input="";
+	// all that the player has written
+	// used for statistical prediction
+	var ptot=false;
 
-	return {level:level,content:books[level]};
+	var leveln=0;
+	var paragraphn=0;
+
+	var cword=books[level][leveln][paragraphn];
+
+	return {level:level,
+		leveln:0,
+		paragraphn:0,
+		content:books[level],freq_prof:books[level].freq_prof,
+		addSym:addSym,
+		delSym:delSym,
+		partialcback: partial,
+		matchcback: match,
+		delcback: del,
+		onPartial:__onPartial,
+		onMatch: __onMatch,
+		cword: cword,
+		input:input,ptot: ptot};
 }

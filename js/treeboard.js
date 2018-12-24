@@ -63,6 +63,8 @@ function setToTree(set,n,m){
 }
 function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	var i=0;
+	ctx.strokeStyle="red";
+	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x,this.y,this.w,this.h);
 //	var r=72;
 //	ctx.strokeStyle="green";
 	ctx.strokeStyle="rgb(0,255,0)";
@@ -261,7 +263,8 @@ function __tboard_kdown(e){
 	var code=e.code.toUpperCase();	
 
 	if(code==bcksp){
-		doDelete();		
+//		doDelete();		
+		game.delSym();
 		return true;
 	}
 	return false;

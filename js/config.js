@@ -72,3 +72,5 @@ var lin_sel="E";
 var ling_up="J";
 var ling_down="P";
 var ling_sel="I";
+
+var DEBUG_OUTLINE=true;
