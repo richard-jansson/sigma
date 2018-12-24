@@ -180,7 +180,8 @@ function __lin_kdown(e){
 		return true;
 	}else if(e_code==bcksp){
 		console.log("deleeete!!");
-		doDelete();
+		game.delSym();
+//		doDelete();
 		return true;
 	}
 	
