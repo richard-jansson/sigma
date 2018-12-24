@@ -308,8 +308,8 @@ function doWPM(){
 }
 
 function doKey(key){
-	playertext.print(key);
 	game.addSym(key);
+	playertext.print(game.input);
 /*	ptot+=key;
 	pword+=key;
 	playertext.print(pword);
