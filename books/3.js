@@ -1,3 +1,8 @@
+/*
+ *	道德經 by Laozi
+ *	http://www.gutenberg.org/ebooks/7337
+ *
+ */
 books[3]={
 0 : [
 "道可道，非常道。名可名，非常名。無，名天地之始﹔有，名萬物之母。",
