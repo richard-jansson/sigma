@@ -118,7 +118,12 @@ function gamexx(match,partial,del){
 	var curr=books[level][leveln][paragraphn];
 	var cword=splitWord(curr,wordn);
 
+	var lowercase=true;
+	if(typeof(books[level].lowercase)!="undefined" && !books[level].lowercase)
+		lowercase=false;
+
 	return {
+		lowercase:lowercase, 
 		curr: curr,
 		level:level,
 		leveln:leveln,
