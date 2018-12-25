@@ -22,7 +22,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
-var PRED_LEN=11;
+var PRED_LEN=3;
 var W=1024;
 var H=768;
 var input_lock=false;
@@ -124,10 +124,13 @@ function getFreqProf(cnt){
 }
 
 function doWord(){
-	console.log("print: "+curr);
+	gametext.print(game.cword);
+
+/*	console.log("print: "+curr);
 	gametext.print(curr);
 	curr=levels[level][++paragraph];
 	cword=curr;
+	*/
 
 /*	var i=curr.indexOf(" ");
 	if(i==-1){
@@ -239,6 +242,7 @@ function init(){
 
 		words++;
 		
+		gametext.print(" ");
 		gametext.print(game.cword);
 
 		playertext.clear();

@@ -335,7 +335,7 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 		set: set,
 		tree: tree,
 		ftop: ftop,
-		font_size: 54,
+		font_size: 72,
 		render:__render_treeboard,
 		anim:__animate_treeboard,
 		animstep:__treeboard_anim_step,

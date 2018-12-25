@@ -3,6 +3,11 @@ var levels=["Tutorial",
 			  "ΙΛΙΑΔΑ",
 			  "道德經"];
 
+function splitWord(inp,n){
+	var t=inp.split(" ");		
+	return t[n];
+}
+
 function __get_args(){
 	var search=window.location.search.substr(1);
 	var tmp=search.split("&");
@@ -18,8 +23,13 @@ function __onMatch(){
 	console.log("match");
 
 	this.input="";
-	
-	if(typeof(this.content[this.leveln][this.paragraph+1])!="undefined"){
+
+	var nxtwrd=splitWord(this.curr,this.wordn+1);
+
+	if(typeof(nxtwrd)!="undefined"){
+		this.cword=nxtwrd;	
+		this.wordn++;
+	}else if(typeof(this.content[this.leveln][this.paragraph+1])!="undefined"){
 		this.cword=this.content[this.leveln][this.paragraph+1];
 		this.paragraph++;
 	} else if(typeof(this.content[this.leveln+1][0])!="undefined"){
@@ -78,13 +88,19 @@ function gamexx(match,partial,del){
 
 	var leveln=0;
 	var paragraphn=0;
+	var wordn=0;
 
-	var cword=books[level][leveln][paragraphn];
+	var curr=books[level][leveln][paragraphn];
+	var cword=splitWord(curr,wordn);
 
-	return {level:level,
-		leveln:0,
-		paragraphn:0,
+	return {
+		curr: curr,
+		level:level,
+		leveln:leveln,
+		paragraphn:paragraphn,
+		wordn:wordn,
 		content:books[level],freq_prof:books[level].freq_prof,
+		splitWord: splitWord,
 		addSym:addSym,
 		delSym:delSym,
 		partialcback: partial,
