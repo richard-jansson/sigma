@@ -17,6 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 var canvas;
+var ctx;
 var tracks=[
 "audio/amelodyforthosewhoseekthetruth_lo.mp3",
 "audio/samsara_lo.mp3",
@@ -144,7 +145,7 @@ function getFreqProf(cnt){
 }
 
 function doWord(){
-	gametext.print(game.cword);
+	gametext.print(game.cword.toLowerCase());
 
 /*	console.log("print: "+curr);
 	gametext.print(curr);
@@ -328,7 +329,7 @@ function init(){
 
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,0,H-36*15.5,W,36*16,"red");
-	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
+	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
 	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",108,"serif");
 	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");
 	else  throw "Error!";
@@ -371,15 +372,17 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
+	if(waiting) return;
 	if(keyboard.keydown(e)) e.preventDefault();
 }
 
 window.onkeyup=function(e){ 
 	if(waiting){
-		init();
 		waiting=false;
-		canvas.filStyle="black";
-		canvas.fillRect(0,0,W,H);
+		ctx.fillStyle="black";
+		ctx.fillRect(0,0,W,H);
+
+		init();
 		return;
 	}
 	if(!input_lock) doInput(e);
