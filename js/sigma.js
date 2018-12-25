@@ -90,7 +90,7 @@ function textArea(ctx,x,y,w,h,style,size,center){
 function doAnalysis(freq_prof,inptext,depth){
 	// Make prediction lower case and strip spaces as we don't use them
 	text=inptext.toLowerCase();
-	text=text.replace(" ","");
+	text=text.replace(/ /g,"");
 
 	for(var p=0;p<text.length-depth-1;p++){
 		var cs=text.substr(p,depth);
@@ -258,7 +258,8 @@ function init(){
 	function(){
 		if(!mute) hit.play();
 	},function(){
-		playertext.clear();
+//		playertext.clear();
+		playertext.print(this.input);
 	}
 	);
 

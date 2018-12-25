@@ -83,7 +83,7 @@ function addSym(sym){
 function delSym(){
 	var l=this.input.length;
 	l--;
-	l=l<0;0;l;
+	l=l<0?0:l;
 	this.input=this.input.substr(0,l);
 
 	this.delcback();
