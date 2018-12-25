@@ -59,7 +59,10 @@ function __render_quad(branch,dim,fs,d){
 				*/
 
 //				console.log("ctx_font:"+this.ctx.font);
-				this.ctx.fillText(branch[o],x1,y1+fs);
+				var tdim=this.ctx.measureText(branch[o]);
+				var mleft=(w-tdim.width)/2
+
+				this.ctx.fillText(branch[o],x1+mleft,y1+fs);
 				this.ctx.strokeRect(x1,y1,w1,h1);
 
 			}else if(typeof(branch[o])=="object"){
