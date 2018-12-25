@@ -71,6 +71,8 @@ function __onPartial(){
 }
 
 function addSym(sym){
+	if(this.input.length>37) return;
+
 	this.input+=sym;
 
 	if(this.cword.substr(0,pword.length).toLowerCase()==this.input.toLowerCase()) 
