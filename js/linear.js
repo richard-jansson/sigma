@@ -112,8 +112,8 @@ function __spiral(set,x0,y0,offset,dir,col){
 		
 		this.ctx.fillText(set[i+offset],x2,y2+d);
 		
-		ao*=0.9;
-		r*=0.98;
+		ao*=0.95;
+		r*=0.95;
 			
 //		if(i>8) break;
 	}
@@ -128,7 +128,7 @@ function __lin_render(p){
 	this.ctx.fillStyle=this.style;
 
 	// Draw a border rectangle around the keyboard 
-	this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
+	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 	
 	var l=this.set.length;	
 
