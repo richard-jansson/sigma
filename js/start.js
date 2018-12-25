@@ -323,6 +323,11 @@ function init(){
 
 		music=new Audio("audio/wherethereisnodarkness_lo.mp3");
 
+		music.addEventListener("ended",function(){
+			this.currentTime=0;
+			this.play();
+		},false);
+
 		music.play();
 	}
 
