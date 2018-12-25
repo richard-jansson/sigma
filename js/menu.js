@@ -128,7 +128,7 @@ function __menu_render(p){
   }
 
   function gmenu(ctx,x,y,w,h,style,fts,ft){
-	  var weapons={"tree":0,"quad":1,"classic":2,"linear":3};
+	  var weapons={"tree":0,"quad":1,"classic":2,"lin":3};
 
 	  var menu={"Start":
 			  {
@@ -136,7 +136,6 @@ function __menu_render(p){
 			  "Wuthering heights": weapons,
 			  "ΙΛΙΑΔΑ":weapons
 			  },
-			  "Config":{},
 			  "About":{}};
 	var mposts=0;
 	for(var k in menu) mposts++;
