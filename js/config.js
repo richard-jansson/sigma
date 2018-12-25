@@ -69,8 +69,9 @@ var lin_up="Q";
 var lin_down="F";
 var lin_sel="E";
 
-var ling_up="J";
-var ling_down="P";
+var ling_up="P";
+var ling_down="J";
 var ling_sel="I";
 
 var DEBUG_OUTLINE=true;
+var LINEAR_SPOKES=false;
