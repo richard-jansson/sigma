@@ -86,7 +86,7 @@ function __kboard_kdown(e) {
 	if(bcksp==code){
 		game.delSym();
 		return true;
-	} if(kb_sel==code){
+	} if(kb_sel==code || code=="KEYE"){
 		doKey(this.rows[this.cur_y][this.cur_x]);
 		return false;
 	}else {
@@ -102,12 +102,28 @@ function __kboard_kdown(e) {
 		if(kb_up==code){
 //			if(this.cur_y == 3) this.cur_x=4;
 			this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+		} else if(kb_sel==code){
 		} else if(kb_dwn==code){
 			this.cur_y = (this.cur_y+1 > 2) ? 2 : this.cur_y +1; 
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+// 		} 
+//k		else if(kb_sel==code){
+//			doKey(this.rows[this.cur_y][this.cur_x]);
+//			return false;
 //			if(this.cur_y==3) this.cur_x=0;
 		} else if(kb_lft==code) this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
-		else if(kb_rgt==code) this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1; 
-		else if(kb_sel==code){
+		else if(kb_rgt==code){
+//			this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1;
+			this.cur_x++;
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+		} else if(kb_sel==code){
 			doKey(this.rows[this.cur_y][this.cur_x]);
 			return false;
 		}
@@ -122,13 +138,19 @@ function __kboard_kdown(e) {
 	}
 }
 
-function vkeyboard(ctx,x,y,w,h,style,font_size){
-	return {
-		rows:[
-		["q","w","e","r","t","y","u","i","o","p"],
+function vkeyboard(ctx,x,y,w,h,style,font_size,greek){
+	var enrows=[["q","w","e","r","t","y","u","i","o","p"],
 		["a","s","d","f","g","h","j","k","l",":"],
-		["z","x","c","v","b","n","m",",",".","?"]
-		],
+		["z","x","c","v","b","n","m",",",".","?"]];
+	var greekrows=[
+		[";","ς","ε","ρ","τ","υ","ύ","θ","ι","ο","ό","π"],
+		["α","σ","δ","φ","γ","η","ξ","κ","λ"],
+		["ζ","χ","ψ","ω","β","ν","μ",","]];
+
+	var rows=typeof(greek)=="undefined"||greek==false?enrows:greekrows;
+
+	return {
+		rows:rows,
 		native_repeat: false,
 		ctx:ctx,
 		render:__render_keyboard,
