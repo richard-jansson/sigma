@@ -1,3 +1,7 @@
+body {
+	padding: 0;
+	margin: 0;
+}
 .go {
 	padding: 7px 15px;
 	background-color: black;
@@ -69,4 +73,25 @@
 
 .board {
 	margin-bottom: 80px;
+}
+
+#footer {
+	width: 100%;	
+	margin: 20px 0;
+	background-color: black;
+	height: 192px;
+	float: left;
+}
+
+.footcont {
+	width: 480px;
+	color: white;
+	margin: 0 auto;
+	margin-top: 40px;
+	font-size: 10px;
+	line-height: 24px;
+}
+
+.footcont a,.footcont a:visited{
+	color: white;
 }
