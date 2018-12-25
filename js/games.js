@@ -5,7 +5,21 @@ var levels=["Tutorial",
 
 function splitWord(inp,n){
 	var t=inp.split(" ");		
+	if(n>=t.length) return undefined;
 	return t[n];
+}
+
+function nxtWord(){
+	var nxt=this.splitWord(this.curr,this.wordn+1);
+	if(typeof(nxt)=="undefined") return undefined;
+	this.wordn++;
+
+	while(nxt.length==0){
+		 nxt=this.splitWord(this.curr,this.wordn+1);
+		 this.wordn++;
+	}
+
+	return nxt;
 }
 
 function __get_args(){
@@ -24,16 +38,23 @@ function __onMatch(){
 
 	this.input="";
 
-	var nxtwrd=splitWord(this.curr,this.wordn+1);
+//	var nxtwrd=splitWord(this.curr,this.wordn+1);
+//	this.wordn++;
+	
+	var nxtwrd=this.nxtWord();
 
 	if(typeof(nxtwrd)!="undefined"){
 		this.cword=nxtwrd;	
-		this.wordn++;
+//		this.wordn++;
 	}else if(typeof(this.content[this.leveln][this.paragraph+1])!="undefined"){
-		this.cword=this.content[this.leveln][this.paragraph+1];
+		this.curr=this.content[this.leveln][this.paragraph+1];
+		this.wordn=0;
+		this.cword=this.nxtWord();
 		this.paragraph++;
 	} else if(typeof(this.content[this.leveln+1][0])!="undefined"){
-		this.cword=this.content[this.leveln][0];
+		this.curr=this.content[this.leveln][0];
+		this.wornd=0;
+		this.cword=this.nxtWord();
 		this.leveln++;	
 		this.paragraph=0;
 	}else{
@@ -100,6 +121,7 @@ function gamexx(match,partial,del){
 		paragraphn:paragraphn,
 		wordn:wordn,
 		content:books[level],freq_prof:books[level].freq_prof,
+		nxtWord: nxtWord,
 		splitWord: splitWord,
 		addSym:addSym,
 		delSym:delSym,
