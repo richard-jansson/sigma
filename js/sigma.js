@@ -22,7 +22,7 @@ var cword="";
 var paragraph=0;
 var level=0;
 var n_levels=0;
-var PRED_LEN=3;
+var PRED_LEN=10;
 var W=1024;
 var H=768;
 var input_lock=false;
@@ -87,11 +87,17 @@ function textArea(ctx,x,y,w,h,style,size,center){
 		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:""};
 }
 
-function doAnalysis(freq_prof,text,depth){
-//	console.log("analysis on "+text.length+" depth: "+depth);
+function doAnalysis(freq_prof,inptext,depth){
+	// Make prediction lower case and strip spaces as we don't use them
+	text=inptext.toLowerCase();
+	text=text.replace(" ","");
+
 	for(var p=0;p<text.length-depth-1;p++){
 		var cs=text.substr(p,depth);
 		var c=text.charAt(p+depth);
+
+		if(typeof(c)=="undefined") continue;
+		if(typeof(cs)=="undefined") continue;
 
 		if(typeof(freq_prof[cs])=="undefined"){
 			freq_prof[cs]={};
@@ -171,8 +177,10 @@ function getSymLog(pstr,a){
 	if(typeof(sym_log_cache[pstr+a])!="undefined") 
 		return sym_log_cache[pstr+a];
 	var str=pstr.substr(0-PRED_LEN);
+	str=str.toLowerCase();
+	str=str.replace(" ","");
 
-	var mult=Math.E*800;
+	var mult=Math.E;
 	var s;
 	var tot_s=0;
 	var res;
@@ -314,6 +322,7 @@ function doWPM(){
 function doKey(key){
 	game.addSym(key);
 	playertext.print(game.input);
+	ptot+=key;
 /*	ptot+=key;
 	pword+=key;
 	playertext.print(pword);
