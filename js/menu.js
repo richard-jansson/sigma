@@ -128,14 +128,13 @@ function __menu_render(p){
   }
 
   function gmenu(ctx,x,y,w,h,style,fts,ft){
-	  var weapons={"tree":0,"quad":1,"bore":2,"lin":3};
+	  var weapons={"tree":0,"quad":1,"classic":2,"linear":3};
 
 	  var menu={"Start":
 			  {
 			  "Tutorial":weapons,
 			  "Wuthering heights": weapons,
-			  "ΙΛΙΑΔΑ":weapons,
-			  "道德經":weapons
+			  "ΙΛΙΑΔΑ":weapons
 			  },
 			  "Config":{},
 			  "About":{}};
