@@ -36,6 +36,8 @@ var keyboard=false;
 var game=false;
 var freq_prof;
 
+var lowercase=true;
+
 var sym_log_cache=[];
 
 var avg_wordlength=false;
@@ -89,7 +91,9 @@ function textArea(ctx,x,y,w,h,style,size,center){
 
 function doAnalysis(freq_prof,inptext,depth){
 	// Make prediction lower case and strip spaces as we don't use them
-	text=inptext.toLowerCase();
+	if(lowercase) text=inptext.toLowerCase();
+	else text=inptext;
+
 	text=text.replace(/ /g,"");
 
 	for(var p=0;p<text.length-depth-1;p++){
@@ -177,7 +181,7 @@ function getSymLog(pstr,a){
 	if(typeof(sym_log_cache[pstr+a])!="undefined") 
 		return sym_log_cache[pstr+a];
 	var str=pstr.substr(0-PRED_LEN);
-	str=str.toLowerCase();
+	if(lowercase) str=str.toLowerCase();
 	str=str.replace(" ","");
 
 	var mult=Math.E;
@@ -271,6 +275,9 @@ function init(){
 	}
 	);
 
+	// For the greek text we don't lowercase the letters	
+	lowercase=game.lowercase;
+
 	setInterval(doWPM,100);
 
 	if(typeof(game.freq_prof)=="undefined") 
@@ -300,9 +307,9 @@ function init(){
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",36,true);
 
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
-	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,H-36*16,W-36*2,36*16,"red");
+	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,0,H-36*15.5,W,36*16,"red");
 	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36);
-	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",144,"serif");
+	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",108,"serif");
 	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");
 	else  throw "Error!";
 	
@@ -332,32 +339,6 @@ function doKey(key){
 	game.addSym(key);
 	playertext.print(game.input);
 	ptot+=key;
-/*	ptot+=key;
-	pword+=key;
-	playertext.print(pword);
-	
-	console.log("{"+pword+"} = {"+cword+"}");
-
-	var pmatch=cword.substr(0,pword.length);	
-	if(pmatch == pword){
-		console.log("partial match...");
-	}
-
-	if(pword.toLowerCase() == cword.trimEnd().toLowerCase()){
-		if(!mute) hit.play();
-		console.log("Match!");
-		clearSymCache();
-		ptot+=" ";
-		words++;
-		doWPM();
-		doWord();
-		pword="";
-		playertext.clear();
-		
-		doWPM();
-	}
-	*/
-//	while(cword.trim().length == 0) doWord();
 }
 
 function doDelete(){

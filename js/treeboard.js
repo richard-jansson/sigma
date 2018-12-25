@@ -64,7 +64,7 @@ function setToTree(set,n,m){
 function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	var i=0;
 	ctx.strokeStyle="red";
-	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x,this.y,this.w,this.h);
+	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x-1,this.y-1,this.w+2,this.h+2);
 //	var r=72;
 //	ctx.strokeStyle="green";
 	ctx.strokeStyle="rgb(0,255,0)";
@@ -75,8 +75,8 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		if(i==n) break;
 
 	   a=i*2*Math.PI/n - Math.PI/2;	
-		dy=Math.sin(a)*ro/4;
-		dx=Math.cos(a)*ro/4;
+		dy=Math.sin(a)*ro/3;
+		dx=Math.cos(a)*ro/3;
 
 		var ptota=ptot.trim();
 	
@@ -122,7 +122,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		this.ctx.lineTo(x+x0,y+y0);
 		this.ctx.stroke();
 
-		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs/2,a,ro*0.75);	
+		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs*0.6,a,ro*0.9);	
 
 		i++;
 //		if(i==1) break;
@@ -132,7 +132,7 @@ function __render_treeboard(p){
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
 
-	var r=54;
+	var r=108;
 	var x=this.w/2;
 	var y=this.h;
 	var N=4,M=2;
@@ -156,8 +156,8 @@ function __render_treeboard(p){
 
   for(var i=0;i<N;i++){
 	  a=i*2*Math.PI/N+o;
-	  x0=Math.cos(a)*r+x;
-	  y0=Math.sin(a)*r+y;
+	  x0=Math.cos(a)*r*1.0+x;
+	  y0=Math.sin(a)*r*1.0+y;
 
 		ctx.font=getSymSize(ptot,this.tree[i],fs)+"px "+font_family;
 		
@@ -201,7 +201,7 @@ function __render_treeboard(p){
 		this.ctx.stroke();
 
 		s2coords.push({x:(x+x0),y:(y+y0),a:a});
-		__render_tree(ctx,this.tree[4+i],x+x0,y+y0,N,M,fs,a,r*2);
+		__render_tree(ctx,this.tree[4+i],x+x0,y+y0,N,M,fs,a,r);
 	}
 		
 	if(typeof(p)=="undefined"){
@@ -239,6 +239,8 @@ function __treeboard_anim_step(o){
 
 		o.clear();
 		o.render();
+
+		playertext.print(game.input);
 	}
 }
 function __animate_treeboard(s,e){
@@ -335,7 +337,7 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 		set: set,
 		tree: tree,
 		ftop: ftop,
-		font_size: 72,
+		font_size: 144,
 		render:__render_treeboard,
 		anim:__animate_treeboard,
 		animstep:__treeboard_anim_step,
