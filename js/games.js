@@ -83,10 +83,11 @@ function addSym(sym){
 function delSym(){
 	var l=this.input.length;
 	l--;
+	var a=l;
 	l=l<0?0:l;
 	this.input=this.input.substr(0,l);
 
-	this.delcback();
+	this.delcback(!(a<0));
 }
 
 function gamexx(match,partial,del){

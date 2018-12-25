@@ -234,6 +234,13 @@ function genTraining(t){
 	return ret;
 }
 
+function delPtotSym(){
+	var l=ptot.length;
+	l--;
+	l=l<0?0:l;
+	ptot=ptot.substr(0,l);
+}
+
 function init(){
 	curr=genTraining();
 
@@ -257,8 +264,9 @@ function init(){
 	},
 	function(){
 		if(!mute) hit.play();
-	},function(){
+	},function(l){
 //		playertext.clear();
+		if(l) delPtotSym();
 		playertext.print(this.input);
 	}
 	);
