@@ -32,7 +32,7 @@ var bcksp="SPACE";
 var N=4,M=2;
 
 // 
-var mute=true;
+var mute=false;
 
 /* 
  *  Keybindings for classic keyboard.

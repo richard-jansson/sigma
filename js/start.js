@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+var waiting=true;
 var curr;
 var pword="";
 var cword="";
@@ -304,6 +305,15 @@ function genTraining(t){
 	return ret;
 }
 
+function inito(){
+	var canvas=document.getElementById("canvas");
+	ctx=canvas.getContext("2d");
+	
+	ctx.font="54px serif";
+	ctx.fillStyle="white";
+	ctx.fillText("Press any key to play",W*0.3,H/2);
+}
+
 function init(){
 	if(!mute){
 		tih=new Audio("gnilb.wav");
@@ -311,7 +321,7 @@ function init(){
 		err=new Audio("boop.wav");
 		rot=new Audio("rotate.wav");
 
-		music=new Audio("audio/wherethereisnodarkness.mp3");
+		music=new Audio("audio/wherethereisnodarkness_lo.mp3");
 
 		music.play();
 	}
@@ -380,6 +390,12 @@ window.onkeydown=function(e){
 }
 
 window.onkeyup=function(e){ 
+	if(waiting){
+		init();
+		waiting=false;
+		return;
+	}
+
 	if(!input_lock) doInput(e);
 	else input_queue.push(e);
 }
@@ -397,5 +413,5 @@ function doInput(e){
 	if(menu.keyup(key,code)) e.preventDefault();
 };
 
-if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) init();
-else document.addEventListener("DOMContentLoaded",init);
+if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) inito();
+else document.addEventListener("DOMContentLoaded",inito);
