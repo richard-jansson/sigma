@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 // Time in ms for animation 
-var ANIMT=5;
-var FPS=5;
+var ANIMT=100;
+var FPS=60;
 // keys to select leaves 
 var dkeys=["W","D","S","A"];
 // keys to select branches
@@ -73,5 +73,5 @@ var ling_up="P";
 var ling_down="J";
 var ling_sel="I";
 
-var DEBUG_OUTLINE=true;
+var DEBUG_OUTLINE=false;
 var LINEAR_SPOKES=false;
