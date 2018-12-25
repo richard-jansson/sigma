@@ -10,12 +10,12 @@ function splitWord(inp,n){
 }
 
 function nxtWord(){
-	var nxt=this.splitWord(this.curr,this.wordn+1);
+	var nxt=this.splitWord(this.curr,this.wordn);
 	if(typeof(nxt)=="undefined") return undefined;
-	this.wordn++;
 
 	while(nxt.length==0){
 		 nxt=this.splitWord(this.curr,this.wordn+1);
+		 if(typeof(nxt)=="undefined") return undefined;
 		 this.wordn++;
 	}
 
@@ -41,19 +41,20 @@ function __onMatch(){
 //	var nxtwrd=splitWord(this.curr,this.wordn+1);
 //	this.wordn++;
 	
+	this.wordn++;
 	var nxtwrd=this.nxtWord();
 
 	if(typeof(nxtwrd)!="undefined"){
 		this.cword=nxtwrd;	
 //		this.wordn++;
-	}else if(typeof(this.content[this.leveln][this.paragraph+1])!="undefined"){
-		this.curr=this.content[this.leveln][this.paragraph+1];
+	}else if(typeof(this.content[this.leveln][this.paragraphn+1])!="undefined"){
+		this.paragraphn++;
+		this.curr=this.content[this.leveln][this.paragraphn];
 		this.wordn=0;
 		this.cword=this.nxtWord();
-		this.paragraph++;
 	} else if(typeof(this.content[this.leveln+1][0])!="undefined"){
 		this.curr=this.content[this.leveln][0];
-		this.wornd=0;
+		this.wordn=0;
 		this.cword=this.nxtWord();
 		this.leveln++;	
 		this.paragraph=0;
