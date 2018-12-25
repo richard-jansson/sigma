@@ -16,6 +16,16 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+var canvas;
+var tracks=[
+"audio/amelodyforthosewhoseekthetruth_lo.mp3",
+"audio/samsara_lo.mp3",
+"audio/theauthorneverdies_lo.mp3",
+"audio/reawakeningmemoriesclosedupinhischestless_lo.mp3"
+];
+
+var music=false;
+var waiting=true;
 var curr;
 var pword="";
 var cword="";
@@ -275,6 +285,16 @@ function init(){
 	}
 	);
 
+	if(!mute){ 
+		music=new Audio(tracks[game.level]);
+		music.addEventListener("ended",function(){
+			this.currentTime=0;
+			this.play();
+		},false);
+
+		music.play();
+	}
+
 	// For the greek text we don't lowercase the letters	
 	lowercase=game.lowercase;
 
@@ -355,6 +375,13 @@ window.onkeydown=function(e){
 }
 
 window.onkeyup=function(e){ 
+	if(waiting){
+		init();
+		waiting=false;
+		canvas.filStyle="black";
+		canvas.fillRect(0,0,W,H);
+		return;
+	}
 	if(!input_lock) doInput(e);
 	else input_queue.push(e);
 }
@@ -371,6 +398,16 @@ function doInput(e){
 	
 	if(keyboard.keyup(key,code)) e.preventDefault();
 };
+function inito(){
+	canvas=document.getElementById("canvas");
+	ctx=canvas.getContext("2d");
+	
+	ctx.font="54px serif";
+	ctx.fillStyle="white";
+	ctx.fillText("Press any key to play",W*0.3,H/2);
+	ctx.font="36px serif";
+	ctx.fillText("music by nihilore",W*0.5,3*H/4);
+}
 
-if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) init();
-else document.addEventListener("DOMContentLoaded",init);
+if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) inito();
+else document.addEventListener("DOMContentLoaded",inito);
