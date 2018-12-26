@@ -65,11 +65,12 @@ function __drawString(s){
 //	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
 
 	this.ctx.strokeStyle=this.style;
+	this.ctx.fillStyle=this.style;
 
 	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
 	this.ctx.font=this.fontsize+"px "+font_family;
 
-	if( tdim.width + this.x > this.w+this.x0 ){
+	if(  tdim.width + this.x > this.w+this.x0 ){
 		this.x=this.x0;
 		this.y+=this.fontsize;
 	}
@@ -81,8 +82,12 @@ function __drawString(s){
 		var x=(this.w-tdim.width)/2;		
 		if(x<0) x=0;
 		this.clear();
-		this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
-	}else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
+		
+		if(this.fill) 
+			this.ctx.fillText(s,this.x+x,this.y+this.fontsize);
+		else this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
+	}else if(!this.fill) this.ctx.strokeText(s,this.x,this.y+this.fontsize);
+	else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
 
 	var tdim=ctx.measureText(s);
 	this.x+=tdim.width;
@@ -99,8 +104,9 @@ function __clearString(){
 function textArea(ctx,x,y,w,h,style,size,center){
 	var fontsize=typeof(size)=="undefined"?36:size;
 	var center_text=typeof(center)=="undefined"?false:center;
+	var fill=false;
 	return {ctx:ctx,x0:x,y0:y,w:w,h:h,print:__drawString,x:x,y:y,style:style,
-		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:""};
+		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:"",fill:fill};
 }
 
 function doAnalysis(freq_prof,inptext,depth){
