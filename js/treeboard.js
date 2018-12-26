@@ -90,6 +90,8 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		*/
 		ctx.font=getSymSize(ptota,branch[k],fs)+"px "+font_family;
 
+		if(y< this.y0) continue;
+
 		if(!getSymBold(ptot,branch[k])){
 			ctx.strokeStyle=getSymColor(ptota,branch[k]);
 			ctx.strokeText(branch[k],x+dx,y+dy);
@@ -122,7 +124,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 		this.ctx.lineTo(x+x0,y+y0);
 		this.ctx.stroke();
 
-		__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs*0.6,a,ro*0.9);	
+		this.__render_tree(ctx,branch[k],x+x0,y+y0,n,m,fs*0.6,a,ro*0.9);	
 
 		i++;
 //		if(i==1) break;
@@ -158,6 +160,8 @@ function __render_treeboard(p){
 	  a=i*2*Math.PI/N+o;
 	  x0=Math.cos(a)*r*1.0+x;
 	  y0=Math.sin(a)*r*1.0+y;
+
+	  if(typeof(this.tree[i])=="undefined") continue;
 
 		ctx.font=getSymSize(ptot,this.tree[i],fs)+"px "+font_family;
 		
@@ -283,7 +287,11 @@ function __tboard_rst(){
 // select that is input leaf nr node_n 
 function __tboard_sel_node(node_n){
 	this.set=sortX(freq_prof[""]);	
-	doKey(this.tree[node_n]);
+	if(typeof(this.tree[node_n])!="undefined"){
+		doKey(this.tree[node_n]);
+	}else{
+		if(!mute) err.play();
+	}
 
 	this.set=sortX(freq_prof[""]);	
 	this.tree=setToTree(this.set,N,M);
@@ -351,7 +359,8 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 		// Handling keys called internally via key{up,down}
 		__rst: __tboard_rst,
 		__sel_node:__tboard_sel_node,
-		__sel_branch:__tboard_sel_branch
+		__sel_branch:__tboard_sel_branch,
+		__render_tree_int: __render_tree
 		}
 }
 
