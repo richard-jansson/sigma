@@ -61,6 +61,9 @@ var hit;
 function __drawString(s){
 	var tdim=ctx.measureText(s);
 
+//	this.ctx.fillStyle="black";
+//	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+
 	this.ctx.strokeStyle=this.style;
 
 	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
@@ -273,7 +276,7 @@ function init(){
 		words++;
 		
 		gametext.print(" ");
-		gametext.print(game.cword);
+		gametext.print(game.cword.toLowerCase());
 
 		playertext.clear();
 	},
