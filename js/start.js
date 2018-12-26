@@ -42,31 +42,6 @@ var t0;
 
 var hit,music;
 
-function __drawString(s){
-	var tdim=ctx.measureText(s);
-
-	this.ctx.strokeStyle=this.style;
-	this.ctx.font=this.fontsize+"px "+font_family;
-
-	if( tdim.width + this.x > W ){
-		this.x=this.x0;
-		this.y+=this.fontsize;
-	}
-	if( this.fontsize + this.y> this.h+this.y0){
-		this.clear();
-	}
-	if(this.center_text){
-		var tdim=ctx.measureText(s);
-		var x=(this.w-tdim.width)/2;		
-		if(x<0) x=0;
-		this.clear();
-		this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
-	}else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
-
-	var tdim=ctx.measureText(s);
-	this.x+=tdim.width;
-}
-
 function __clearString(){
 	this.ctx.fillStyle="black";
 	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
@@ -350,7 +325,7 @@ function init(){
 	t0=new Date();
 	
 	W*0.20
-   menu=new gmenu(ctx,0.65*W,0.7*H,0.3*W,0.2*H,"red",24,"serif");
+   menu=new gmenu(ctx,0.65*W,0.6*H,0.3*W,0.3*H,"red",24,"serif");
 		
 	menu.render();
 }
