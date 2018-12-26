@@ -16,14 +16,19 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+var weapon;
 var canvas;
 var ctx;
 var tracks=[
 "audio/amelodyforthosewhoseekthetruth_lo.mp3",
 "audio/samsara_lo.mp3",
 "audio/theauthorneverdies_lo.mp3",
-"audio/reawakeningmemoriesclosedupinhischestless_lo.mp3"
-];
+"audio/reawakeningmemoriesclosedupinhischestless_lo.mp3" ];
+var tracks2=[
+"audio/telematixblackmoon.mp3",
+"audio/telematixflashback.mp3",
+"audio/telematixkeepflying.mp3",
+"audio/telematixlasttraintonowhere.mp3"];
 
 var music=false;
 var waiting=true;
@@ -295,15 +300,6 @@ function init(){
 	}
 	);
 
-	if(!mute){ 
-		music=new Audio(tracks[game.level]);
-		music.addEventListener("ended",function(){
-			this.currentTime=0;
-			this.play();
-		},false);
-
-		music.play();
-	}
 
 	// For the greek text we don't lowercase the letters	
 	lowercase=game.lowercase;
@@ -336,12 +332,39 @@ function init(){
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",36,true);
 
+	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
-	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,0,H-36*15.5,W,36*16,"red");
-	else if(typeof(vkeyboard)!="undefined") keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
-	else if(typeof(quadboard)!="undefined") keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",108,"serif");
-	else if(typeof(linboard)!="undefined") keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");
+	if(typeof(treeboard)!="undefined"){
+		weapon=0;
+		keyboard=new treeboard(freq_prof,playertext,ctx,0,H-36*15.5,W,36*16,"red");
+	} else if(typeof(vkeyboard)!="undefined"){
+		weapon=1;
+		keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
+	}
+	else if(typeof(quadboard)!="undefined"){
+		weapon=2;
+		keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",108,"serif");
+	} else if(typeof(linboard)!="undefined"){
+		weapon=3;
+		keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");
+	}
 	else  throw "Error!";
+
+	if(!mute){ 
+		var track;
+		if(weapon==0 || weapon == 3) track=tracks2[game.level];	
+		else track=tracks[game.level];	
+
+		music=new Audio(track);
+
+		console.log("Playing: "+ track);
+		music.addEventListener("ended",function(){
+			this.currentTime=0;
+			this.play();
+		},false);
+
+		music.play();
+	}
 	
 	doWord();
 
