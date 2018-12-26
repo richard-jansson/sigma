@@ -303,7 +303,7 @@ function __tboard_sel_node(node_n){
 // select the branch_n:t branch  
 function __tboard_sel_branch(branch_n){
 	// FIXME check
-	if(this.tree[N+branch_n].length==0){
+	if(typeof(this.tree[N+branch_n])=="undefined" || this.tree[N+branch_n].length==0){
 		if(!mute) err.play();	
 		return;
 	}

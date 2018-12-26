@@ -10,11 +10,13 @@ function splitWord(inp,n){
 }
 
 function nxtWord(){
-	var nxt=this.splitWord(this.curr,this.wordn);
+	var curr=this.content[this.leveln][this.paragraphn];
+
+	var nxt=this.splitWord(curr,this.wordn);
 	if(typeof(nxt)=="undefined") return undefined;
 
 	while(nxt.length==0){
-		 nxt=this.splitWord(this.curr,this.wordn+1);
+		 nxt=this.splitWord(curr,this.wordn+1);
 		 if(typeof(nxt)=="undefined") return undefined;
 		 this.wordn++;
 	}
@@ -34,16 +36,51 @@ function __get_args(){
 }
 
 function __onMatch(){
-	console.log("match");
+//	console.log("match");
 
 	this.input="";
 
 //	var nxtwrd=splitWord(this.curr,this.wordn+1);
 //	this.wordn++;
 	
-	this.wordn++;
-	var nxtwrd=this.nxtWord();
+	console.log("l:"+this.level+" p:"+this.paragraphn+" w: "+this.wordn);
 
+	this.wordn++;
+	var nxtword=this.nxtWord();
+
+	if(typeof(nxtword)!="undefined"){
+		this.cword=nxtword;
+		this.matchcback();
+		return;
+	}
+
+	if(typeof(this.content[this.leveln][this.paragraphn+1])!="undefined"){
+		this.paragraphn++;
+		this.wordn=0;
+		var nxtword=this.nxtWord();
+		if(typeof(nxtword)!="undefined"){
+			this.cword=nxtword;
+			this.matchcback();
+			return;
+		}
+	}
+	if(typeof(this.content[this.leveln+1])=="undefined"){
+		console.log("game over!");
+		return;
+	}
+	if(typeof(this.content[this.leveln+1][0])!="undefined"){
+		this.leveln++;
+		this.paragraphn=0;
+		this.wordn=0;
+		var nxtword=this.nxtWord();
+		if(typeof(nxtword)!="undefined"){
+			this.cword=nxtword;
+			this.matchcback();
+			return;
+		}
+	}
+
+/*
 	if(typeof(nxtwrd)!="undefined"){
 		this.cword=nxtwrd;	
 //		this.wordn++;
@@ -53,7 +90,7 @@ function __onMatch(){
 		this.wordn=0;
 		this.cword=this.nxtWord();
 	} else if(typeof(this.content[this.leveln+1][0])!="undefined"){
-		this.curr=this.content[this.leveln][0];
+		this.curr=this.content[this.leveln+1][0];
 		this.wordn=0;
 		this.cword=this.nxtWord();
 		this.leveln++;	
@@ -61,8 +98,8 @@ function __onMatch(){
 	}else{
 		console.log("YOU WON");
 	}
+	*/
 
-	this.matchcback();
 }
 
 function __onPartial(){
