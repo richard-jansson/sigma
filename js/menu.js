@@ -39,13 +39,31 @@ function __menu_render(p){
 	  
 	  var h=this.font_size;
 	  var y=0,i=0;
-	  for(var k in this.cmenu){
-		  y+=h*1.5;
-		  this.ctx.font=this.font_size+"px "+this.font;
-		  var txt=(i==this.cursor?"→":"    ")+k;
-		  this.ctx.fillText(txt,this.x0+32,this.y0+y);
-		  i++;
-	  }
+		
+		if(typeof(this.cmenu)=="object"){
+		  for(var k in this.cmenu){
+			  y+=h*1.5;
+			  this.ctx.font=this.font_size+"px "+this.font;
+			  var txt=(i==this.cursor?"→":"    ")+k;
+			  this.ctx.fillText(txt,this.x0+32,this.y0+y);
+			  i++;
+		  }
+		 }else if(typeof(this.cmenu)=="string"){
+			  var text=new textArea(this.ctx,this.x0+32,
+			  		this.y0,this.w,this.h,
+					"red",24);
+			text.fill=true;
+			  var toprint=this.cmenu.split(" ");
+			  for(var k in toprint){
+			  		if(toprint[k]=="#br#"){
+						text.y+=text.fontsize;
+						text.x=this.x0+32;
+					}else{
+					  text.print(toprint[k]);
+"		",			  text.print(" ");
+					}
+			  }
+		 }
 	  
   }
 
@@ -68,15 +86,42 @@ function __menu_render(p){
 	  if(code=="SPACE" || code=="ENTER"){
 		  var i=0;
 
+		  // when on about page just skip back
+		  if(typeof(this.cmenu)=="string"){
+		  		this.cmenu=this.omenu;
+		  		this.cursor=0;
+				this.clear();
+				this.render();
+				this.path=[];
+
+				  var mposts=0;
+				  for(var k in this.cmenu) mposts++;
+				  this.mposts=mposts;
+
+				return true;
+		  }
+
 		  this.path.push(this.cursor);
 		  for(var k in this.cmenu){
 			  if(i==this.cursor) this.cmenu=this.cmenu[k];	
 			  i++;
-
 		  }
 		  var mposts=0;
 		  for(var k in this.cmenu) mposts++;
 		  this.mposts=mposts;
+
+		  if(typeof(this.cmenu)=="object" && this.cmenu.back==true){
+		  		this.cmenu=this.omenu;
+		  		this.cursor=0;
+				this.path=[];
+				this.clear();
+				this.render();
+
+				  var mposts=0;
+				  for(var k in this.cmenu) mposts++;
+				  this.mposts=mposts;
+				return true;
+		  }
 
 		  this.cursor=0;
 		  this.clear();
@@ -97,6 +142,7 @@ function __menu_render(p){
 				  window.location.href=window.location.origin+url;
 			  },500)
 		  }
+
 
 		  return true;
 	  }if(key=="W" || key=="ARROWUP"){
@@ -128,15 +174,17 @@ function __menu_render(p){
   }
 
   function gmenu(ctx,x,y,w,h,style,fts,ft){
-	  var weapons={"tree":0,"quad":1,"classic":2,"lin":3};
+	  var weapons={"tree":0,"quad":1,"classic":2,"lin":3,
+	  		"back":{back:true}};
 
 	  var menu={"Start":
 			  {
 			  "Tutorial":weapons,
 			  "Wuthering heights": weapons,
-			  "ΙΛΙΑΔΑ":weapons
+			  "ΙΛΙΑΔΑ":weapons,
+			  "back": {back:true}
 			  },
-			  "About":{}};
+			  "About":"Sigma is a game exploring different keyboard methods that could've been. #br# Music by nihilore and Telematix #br# made by Erudite Now"};
 	var mposts=0;
 	for(var k in menu) mposts++;
 		
@@ -145,6 +193,7 @@ function __menu_render(p){
 		path: [],
 		ctx:ctx,
 		font: ft,
+		omenu: menu,
 		cmenu: menu,
 		cursor: 0,
 		mposts: mposts,
