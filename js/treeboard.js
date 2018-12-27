@@ -237,6 +237,7 @@ function __treeboard_anim_step(o){
 
 	if(o.frame==FPS){
 		clearInterval(o.intId);
+		input_lock=false;
 		procInpQueue();
 		o.frame=0;
 		this.inamin=false;
@@ -320,6 +321,7 @@ function __tboard_sel_branch(branch_n){
 	p1.a=0;
 
 	console.log("animate from "+JSON.stringify(p0)+" to "+ JSON.stringify(p1));
+	if(this.inanim) throw "Already animating...";
 
 	this.anim(p0,p1);
 }
