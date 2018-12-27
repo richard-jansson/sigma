@@ -17,7 +17,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 // Time in ms for animation 
-var ANIMT=100;
+var ANIMT=5;
 var FPS=60;
 // keys to select leaves 
 var dkeys=["W","D","S","A"];
