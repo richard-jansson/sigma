@@ -43,7 +43,10 @@ function maketree(i,r,c,n,m){
 		var sq=[];
 		for(var j=0;j<r*c;j++){	
 			var v=set.shift();
-			if(typeof(v)=="undefined") return ret;
+			if(typeof(v)=="undefined"){
+				ret.push(sq);
+				return ret;
+			}
 			sq.push(v);
 		}
 		ret.push(sq);
