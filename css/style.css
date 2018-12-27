@@ -1,12 +1,3 @@
-@font-face {
-	font-family: PressStart2P;
-	src: url('../fonts/PressStart2P-Regular.ttf');
-}
-
-body {
-	font-family: PressStart2P;
-}
-
 #logo img {
 	height: 128px;
 	position: absolute;
