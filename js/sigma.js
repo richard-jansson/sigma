@@ -422,9 +422,18 @@ window.onkeyup=function(e){
 }
 
 function procInpQueue(){
-	var ce=input_queue.shift();
+	while(input_queue.length){
+		if(input_lock) break;
+		var ce=input_queue.shift();
+		console.log("pulling from queue");
+		if(typeof(ce)!="undefined") doInput(ce);
+	}
+
 	if(input_queue.length==0) input_lock=false;
-	else doInput(ce);
+
+//	if(typeof(ce)!="undefined") doInput(ce);
+
+//	if(input_queue.length==0) input_lock=false;
 }
 
 function doInput(e){
@@ -441,7 +450,7 @@ function inito(){
 	ctx.fillStyle="white";
 	ctx.fillText("Press any key to play",W*0.3,H/2);
 	ctx.font="36px serif";
-	ctx.fillText("music by nihilore",W*0.5,3*H/4);
+	ctx.fillText("music by nihilore and Telematix",W*0.5,3*H/4);
 }
 
 if(document.readyState=="complete" || (document.readyState!="loading" && document.documentElement.doScroll)) inito();
