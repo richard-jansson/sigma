@@ -3,6 +3,12 @@ var levels=["Tutorial",
 			  "ΙΛΙΑΔΑ",
 			  "道德經"];
 
+function winning(){
+	var victorytext=new textArea(keyboard.ctx,W*0.2,H*0.2,W*0.6,H*0.6,"red",72,true);
+	victorytext.print("Victory");
+}
+
+
 function splitWord(inp,n){
 	var t=inp.split(" ");		
 	if(n>=t.length) return undefined;
@@ -65,7 +71,15 @@ function __onMatch(){
 		}
 	}
 	if(typeof(this.content[this.leveln+1])=="undefined"){
-		console.log("game over!");
+		console.log("Victory!");
+		var victorytext=new textArea(keyboard.ctx,W*0.2,H*0.2,W*0.6,H*0.6,"red",72,true);
+		victorytext.print("Victory");
+
+		input_lock=true;
+		playing=false;
+
+		setInterval(winning,500);
+		setTimeout(function(){ window.location.pathname="/start.html"; },3000);
 		return;
 	}
 	if(typeof(this.content[this.leveln+1][0])!="undefined"){
