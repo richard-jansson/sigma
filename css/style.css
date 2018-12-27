@@ -56,3 +56,7 @@
 
 #credits a,#credits a:visited{
 }
+
+#content a, #content a:visited{
+	color: black;
+}
