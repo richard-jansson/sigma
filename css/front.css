@@ -67,12 +67,15 @@ body {
 }
 
 #content img {
-	width: 480px;
+	width: 640px;
+	position: relative;
+	left: -80px;
 }
 
 #content p {
 	font-size: 16px;
 	line-height: 24px;
+	width: 480px;
 }
 
 .board {
@@ -119,3 +122,22 @@ body {
 	left: -10px;
 }
 
+
+.cta a, cta a:visited {
+	color: white !important;
+	font-family: serif;
+	font-weight: bold;
+}
+
+.cta-2 {
+	height: 90px;
+	position: relative;
+	top: -5px;
+	line-height: 82px;
+	font-size: 32px;
+}
+
+a.go {
+	display: none;
+	color: white !important;
+}
