@@ -95,3 +95,23 @@ body {
 .footcont a,.footcont a:visited{
 	color: white;
 }
+.ctam {
+	width:30%;
+	height: 42px;
+	border: 3px solid black;
+	border-radius: 5px;
+	font-size: 12px;
+	line-height: 42px;
+	padding: 0 20px;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0 5%;
+	float: left;
+	cursor: pointer;
+	background-color: green;
+	margin-top: 20px;
+	color: white;
+	position: relative;
+	left: -10px;
+}
+
