@@ -19,16 +19,16 @@ body {
 }
 
 .cta {
-	width:30%;
-	height: 120px;
+	width:17%;
+	height: 80px;
 	border: 3px solid black;
 	border-radius: 5px;
-	font-size: 30px;
-	line-height: 110px;
+	font-size: 27px;
+	line-height: 72px;
 	padding: 0 20px;
 	text-transform: uppercase;
 	text-align: center;
-	margin: 0 5%;
+	margin: 0 3%;
 	float: left;
 	cursor: pointer;
 }
@@ -39,6 +39,10 @@ body {
 }
 .cta-0 {
 	background-color: green;
+	color: white;
+}
+.cta-2 {
+	background-color: red;
 	color: white;
 }
 
@@ -59,7 +63,7 @@ body {
 }
 #content {
 	width: 480px;
-	margin: 20px auto 10px;
+	margin: 120px auto 10px;
 }
 
 #content img {
