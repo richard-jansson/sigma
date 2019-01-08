@@ -330,7 +330,7 @@ function init(){
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
-	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",36,true);
+	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
 
 	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
@@ -343,7 +343,7 @@ function init(){
 	}
 	else if(typeof(quadboard)!="undefined"){
 		weapon=2;
-		keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",108,"serif");
+		keyboard=new quadboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*14,"red",216,"serif");
 	} else if(typeof(linboard)!="undefined"){
 		weapon=3;
 		keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");

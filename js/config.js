@@ -64,8 +64,9 @@ var QUAD_COLS=3;
 var QUAD_ROWS=2;
 var QUAD_TOPPAD=20;
 var QUAD_RPAD=5;
-var QUAD_N_SHALLOW=6;
-var QUAD_N_DEEP=2;
+// FIXME throw error if less than QUAD_COLS * QUAD_ROWS
+var QUAD_N_SHALLOW=5;
+var QUAD_N_DEEP=1;
 
 // Config for quad keyboard tree
 
