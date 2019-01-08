@@ -79,14 +79,6 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 
 		var ptota=ptot.trim();
 	
-/*		var s=branch[k];
-		var f=freq_prof["ha"][s]*Math.E*Math.E
-
-		
-		var fn=f/ftop;
-		var l=Math.pow(Math.E,fn)/Math.E;
-		var c=Math.floor(255*l);
-		*/
 		ctx.font=getSymSize(ptota,branch[k],fs)+"px "+font_family;
 
 		if(y< this.y0) continue;
@@ -131,6 +123,7 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 }
 // Outer function
 function __render_treeboard(p){
+//	var tree_rad_mult=0.8;
 
 	if(DEBUG_OUTLINE){
 		ctx.strokeStyle="red";
@@ -152,19 +145,19 @@ function __render_treeboard(p){
 		// rendering data 
 		this.coords=[];
 		x=this.x0+this.w/2;
-		y=this.y0+this.h/2;
+		y=this.y0+this.h/2+this.yofs;
 		this.coords.push({x:x,y:y,a:0});
 	}else{
 		x=p.x;
-		y=p.y;
+		y=p.y+this.yofs;
 		o=p.a-Math.PI/2;
 	}
 
 
   for(var i=0;i<N;i++){
 	  a=i*2*Math.PI/N+o;
-	  x0=Math.cos(a)*r*1.0+x;
-	  y0=Math.sin(a)*r*1.0+y;
+	  x0=Math.cos(a)*r*treeN1_mult+x;
+	  y0=Math.sin(a)*r*treeN1_mult+y;
 
 	  if(typeof(this.tree[i])=="undefined") continue;
 
@@ -186,8 +179,7 @@ function __render_treeboard(p){
 
 	
 
-	o=Math.PI/4;
-	o=0;
+//	o=Math.PI/4;
 	o=-3*Math.PI/4;
 
 	if(typeof(p)!="undefined"){
@@ -201,8 +193,8 @@ function __render_treeboard(p){
 	for(var i=0;i<M;i++){
 		a=o+i*2*Math.PI/4;	
 		
-		y0=Math.sin(a)*r*2;
-		x0=Math.cos(a)*r*2;
+		y0=Math.sin(a)*r*tree_rad_mult;
+		x0=Math.cos(a)*r*tree_rad_mult;
 		
 		this.ctx.beginPath();
 		this.ctx.moveTo(x,y);
@@ -342,7 +334,7 @@ function __tboard_kup(code){
 	return false;
 }
 
-function treeboard(freq_prof,target,ctx,x,y,w,h,style){
+function treeboard(freq_prof,target,ctx,x,y,w,h,style,fs,yofs){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=setToTree(set,N,M);
@@ -350,9 +342,10 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style){
 	return {ctx:ctx,
 		freq_prof: freq_prof,
 		set: set,
+		yofs: yofs,
 		tree: tree,
 		ftop: ftop,
-		font_size: 144,
+		font_size: fs,
 		render:__render_treeboard,
 		anim:__animate_treeboard,
 		animstep:__treeboard_anim_step,

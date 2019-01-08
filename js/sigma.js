@@ -336,7 +336,7 @@ function init(){
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined"){
 		weapon=0;
-		keyboard=new treeboard(freq_prof,playertext,ctx,12,H-36*15,W-24,36*14,"red");
+		keyboard=new treeboard(freq_prof,playertext,ctx,12,H-36*15,W-24,36*14,"red",108,40);
 	} else if(typeof(vkeyboard)!="undefined"){
 		weapon=1;
 		keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
