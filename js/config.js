@@ -58,9 +58,9 @@ var KB_INT=150;
 /*var selq=["Q","W","E",
 			"A","S","D",
 			"Z","X","C"]; */
-var selq=["Y","U","I","O",
-			"J","K","L",";"];
-var QUAD_COLS=4;
+var selq=["Y","U","I",
+			"H","J","K"];
+var QUAD_COLS=3;
 var QUAD_ROWS=2;
 var QUAD_TOPPAD=20;
 var QUAD_RPAD=5;
