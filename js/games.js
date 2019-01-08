@@ -10,9 +10,28 @@ function winning(){
 
 
 function splitWord(inp,n){
+/*
+		"，"
+		"。"
+	*/
 	var t=inp.split(" ");		
-	if(n>=t.length) return undefined;
-	return t[n];
+	var s=[];
+	for(var i=0;i<t.length;i++){
+		var t2=t[i].split("，");
+		for(var j=0;j<t2.length;j++){
+			s.push(t2[j]);
+		}
+	}
+	var u=[];
+	for(var i=0;i<s.length;i++){
+		var t2=s[i].split("。");
+		for(var j=0;j<t2.length;j++){
+			u.push(t2[j]);
+		}
+	}
+
+	if(n>=u.length) return undefined;
+	return u[n];
 }
 
 function nxtWord(){
