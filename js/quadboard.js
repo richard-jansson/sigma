@@ -34,7 +34,7 @@ function __render_quad(branch,dim,fs,d){
 
 	for(var y=0;y<QUAD_ROWS;y++){
 		for(var x=0;x<QUAD_COLS;x++){
-			var o=y*QUAD_ROWS+x;
+			var o=y*QUAD_COLS+x;
 			var x1=x0+w1*x;
 			var y1=y0+h1*y;
 
@@ -77,6 +77,8 @@ function __render_quad(branch,dim,fs,d){
 
 }
 
+/*
+Dead code I presume
 function __render_quad19(branch,dim,fs,d){
 	var th=Math.floor(QUAD_TOPPAD*dim.h/100);
 	var tr=Math.floor(QUAD_RPAD*dim.w/100);
@@ -88,7 +90,7 @@ function __render_quad19(branch,dim,fs,d){
 
 	for(var y=0;y<QUAD_ROWS;y++){
 		for(var x=0;x<QUAD_ROWS;x++){
-			var o=y*QUAD_ROWS+x;
+			var o=y*QUAD_COLS+x;
 			if(typeof(branch[o])=="string"){
 //				console.log("str"+branch[o]+" fs:"+fs);
 				
@@ -115,6 +117,7 @@ function __render_quad19(branch,dim,fs,d){
 		}
 	}
 }
+*/
 
 function __render_quadboard(p){
 	// Clear what's previously been drawn 

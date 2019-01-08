@@ -55,15 +55,17 @@ var KB_INT=150;
 /* 
  *  Keybindings for quad keyboard.
  */ 
-var selq=["Q","W","E",
+/*var selq=["Q","W","E",
 			"A","S","D",
-			"Z","X","C"];
-var QUAD_COLS=3;
-var QUAD_ROWS=3;
+			"Z","X","C"]; */
+var selq=["Y","U","I","O",
+			"J","K","L",";"];
+var QUAD_COLS=4;
+var QUAD_ROWS=2;
 var QUAD_TOPPAD=20;
 var QUAD_RPAD=5;
 var QUAD_N_SHALLOW=6;
-var QUAD_N_DEEP=3;
+var QUAD_N_DEEP=2;
 
 // Config for quad keyboard tree
 
