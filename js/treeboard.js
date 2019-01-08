@@ -61,10 +61,9 @@ function setToTree(set,n,m){
 
 	return ret;
 }
+// inner function
 function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 	var i=0;
-	ctx.strokeStyle="red";
-	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x-1,this.y-1,this.w+2,this.h+2);
 //	var r=72;
 //	ctx.strokeStyle="green";
 	ctx.strokeStyle="rgb(0,255,0)";
@@ -130,14 +129,20 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 //		if(i==1) break;
 	}
 }
+// Outer function
 function __render_treeboard(p){
+
+	if(DEBUG_OUTLINE){
+		ctx.strokeStyle="red";
+		ctx.strokeRect(this.x0,this.y0,this.w+2,this.h+2);
+	}
 	this.ctx.fillStyle=this.style;
 	this.ctx.strokeStyle=this.style;
 
+
 	var r=108;
-	var x=this.w/2;
-	var y=this.h;
-	var N=4,M=2;
+	var x,y;
+//	var N=4,M=2;
 	var o=-Math.PI/2;
 //	var fs=108;
 	fs=this.font_size;
@@ -146,8 +151,8 @@ function __render_treeboard(p){
 	if(typeof(p)=="undefined"){
 		// rendering data 
 		this.coords=[];
-		x=this.w/2+this.x0;
-		y=this.y0+this.h-fs;
+		x=this.x0+this.w/2;
+		y=this.y0+this.h/2;
 		this.coords.push({x:x,y:y,a:0});
 	}else{
 		x=p.x;

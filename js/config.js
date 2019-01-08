@@ -20,19 +20,23 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 var ANIMT=5;
 var FPS=60;
 // keys to select leaves 
-var dkeys=["W","D","S","A"];
+//var dkeys=["W","D","S","A"];
 // keys to select branches
-var sel_m=["Q","F"];
+//var sel_m=["Q","F"];
+// keys to select leaves 
+var dkeys=["I","L","K","J"];
+// keys to select branches
+var sel_m=["U","O",".","M"];
 // back to root branch 
 var rst="SHIFT";
 // backspace 
 var bcksp="SPACE";
 // N - amount of leaves per node 
 // M - branches from each and every node
-var N=4,M=2;
+var N=4,M=4;
 
 // 
-var mute=false;
+var mute=true;
 
 /* 
  *  Keybindings for classic keyboard.
@@ -73,5 +77,5 @@ var ling_up="P";
 var ling_down="J";
 var ling_sel="I";
 
-var DEBUG_OUTLINE=false;
+var DEBUG_OUTLINE=true;
 var LINEAR_SPOKES=false;
