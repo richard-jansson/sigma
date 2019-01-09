@@ -21,7 +21,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     <meta charset="UTF-8" />
     	<link href="css/style.css" rel="stylesheet" />
     	<link href="css/settings.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 		<script type="text/javascript" src="js/config.js"></script>
+		<script type="text/javascript" src="js/settings.js"></script>
 
 		<title>The Brave Future of Text</title>
 	</head>
@@ -29,6 +31,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<div id="logo">
 			<a href="/"><img src="img/home.png" alt="logo" /></a>
 		</div>
+		<div id="settingswrap">
+			<div id="keydialog">
+				<span>Press key:</span>
+				<span id="newkey"></span>
+				<input type="submit" id="kmodalclose" value="close" />
+				<input type="submit" id="kmodalreset" value="reset" />
+			</div>
 		<div id="settings">
 			<div class="conf">
 				<h1>Settings</h1>
@@ -106,6 +115,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<div class="conf">
 				<label for="KB_INT">Keyboard repeat interval:</label>
 				<input type="text" id="KB_INT" value="150" />
+			</div>
 			</div>
 		</div>
 	</body>
