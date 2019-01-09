@@ -1,0 +1,14 @@
+#settings {
+	width: 1024px;
+	margin: 2% 5% 0%;
+	float: left;
+}
+#settings div.conf label {
+	display: block;
+	width: 29%;
+	float: left;
+}
+#settings div.conf input {
+	width: 69%;
+	float: left;
+}
