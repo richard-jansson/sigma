@@ -15,7 +15,7 @@
 }
 #settings div.conf input {
 	width: 69%;
-	float: left;
+	float: right;
 }
 
 #keydialog {
@@ -39,4 +39,14 @@
 	line-height: 30px;
 	font-size: 25px;
 	font-weight: bold;
+}
+
+label.ckey2 {
+	width: 19% !important;
+	float: right !important;
+}
+input.ckey2 {
+	width: 50% !important;
+	float: right !important;
+	clear: right;
 }
