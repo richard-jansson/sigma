@@ -68,12 +68,14 @@ function __render_tree(ctx,branch,x,y,n,m,fs,ao,ro){
 //	ctx.strokeStyle="green";
 	ctx.strokeStyle="rgb(0,255,0)";
 	ctx.font=fs+"px "+font_family;
+	
+	var oa=-Math.PI/2;
 
 	for(var k in branch){
 		if(typeof(branch[k])!="string") continue;
 		if(i==n) break;
 
-	   a=i*2*Math.PI/n - Math.PI/2;	
+	   a=i*2*Math.PI/n +oa;	
 		dy=Math.sin(a)*ro/3;
 		dx=Math.cos(a)*ro/3;
 
@@ -139,6 +141,8 @@ function __render_treeboard(p){
 	var o=-Math.PI/2;
 //	var fs=108;
 	fs=this.font_size;
+
+	var oa=-Math.PI/2;
 	  
    this.ctx.font=fs+"px serif";
 	if(typeof(p)=="undefined"){
@@ -146,14 +150,15 @@ function __render_treeboard(p){
 		this.coords=[];
 		x=this.x0+this.w/2;
 		y=this.y0+this.h/2+this.yofs;
-		this.coords.push({x:x,y:y,a:0});
+		this.coords.push({x:x,y:y,a:oa});
 	}else{
 		x=p.x;
 		y=p.y+this.yofs;
-		o=p.a-Math.PI/2;
+		o=p.a+oa;
 	}
 
 
+  // code duplication
   for(var i=0;i<N;i++){
 	  a=i*2*Math.PI/N+o;
 	  x0=Math.cos(a)*r*treeN1_mult+x;
@@ -326,15 +331,23 @@ function __tboard_sel_branch(branch_n){
 function __tboard_kup(code){
 	var keyn=-1;
 
-	if(key==rst) this.__rst();
-	else if(-1!=(keyn=has_el(key,dkeys))) this.__sel_node(keyn);
-	else if(-1!=(keyn=has_el(key,sel_m))) this.__sel_branch(keyn);
+	if(key==rst){
+		this.__rst();
+		this.stat.logact("rst",undefined);
+	}
+	else if(-1!=(keyn=has_el(key,dkeys))){
+		this.__sel_node(keyn);
+		this.stat.logact("node",keyn);
+	} else if(-1!=(keyn=has_el(key,sel_m))){
+		this.__sel_branch(keyn);
+		this.stat.logact("branch",keyn);
+	}
 
 	// do not prevent event 
 	return false;
 }
 
-function treeboard(freq_prof,target,ctx,x,y,w,h,style,fs,yofs){
+function treeboard(freq_prof,stat,target,ctx,x,y,w,h,style,fs,yofs){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=setToTree(set,N,M);
@@ -356,6 +369,7 @@ function treeboard(freq_prof,target,ctx,x,y,w,h,style,fs,yofs){
 		keydown: __tboard_kdown,
 		keyup: __tboard_kup,
 		inanim: false,
+		stat: stat,
 		// Handling keys called internally via key{up,down}
 		__rst: __tboard_rst,
 		__sel_node:__tboard_sel_node,

@@ -26,9 +26,8 @@ var FPS=60;
 // keys to select leaves 
 var dkeys=["I","L","K","J"];
 // keys to select branches
-var sel_m=["U","O",".","M"];
-// back to root branch 
-var rst="SHIFT";
+var sel_m=["U","O",";","H"]; // back to root branch 
+var rst="N";
 // backspace 
 var bcksp="SPACE";
 // N - amount of leaves per node 
@@ -84,3 +83,4 @@ var ling_sel="I";
 
 var DEBUG_OUTLINE=true;
 var LINEAR_SPOKES=false;
+var SHOW_STATS=true;

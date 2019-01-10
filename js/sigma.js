@@ -51,6 +51,7 @@ var font_family="serif";
 var keyboard=false;
 var game=false;
 var freq_prof;
+var stat=false;
 
 var lowercase=true;
 
@@ -62,57 +63,6 @@ var words=0;
 var t0;
 
 var hit;
-
-function __drawString(s){
-	var tdim=ctx.measureText(s);
-
-//	this.ctx.fillStyle="black";
-//	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
-
-	this.ctx.strokeStyle=this.style;
-	this.ctx.fillStyle=this.style;
-
-	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
-	this.ctx.font=this.fontsize+"px "+font_family;
-
-	if(  tdim.width + this.x > this.w+this.x0 ){
-		this.x=this.x0;
-		this.y+=this.fontsize;
-	}
-	if( this.fontsize + this.y> this.h+this.y0){
-		this.clear();
-	}
-	if(this.center_text){
-		var tdim=ctx.measureText(s);
-		var x=(this.w-tdim.width)/2;		
-		if(x<0) x=0;
-		this.clear();
-		
-		if(this.fill) 
-			this.ctx.fillText(s,this.x+x,this.y+this.fontsize);
-		else this.ctx.strokeText(s,this.x+x,this.y+this.fontsize);
-	}else if(!this.fill) this.ctx.strokeText(s,this.x,this.y+this.fontsize);
-	else this.ctx.strokeText(s,this.x,this.y+this.fontsize);
-
-	var tdim=ctx.measureText(s);
-	this.x+=tdim.width;
-}
-
-function __clearString(){
-	this.ctx.fillStyle="black";
-	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
-	this.x=this.x0;
-	this.y=this.y0;
-	this.cnt="";
-}
-
-function textArea(ctx,x,y,w,h,style,size,center){
-	var fontsize=typeof(size)=="undefined"?36:size;
-	var center_text=typeof(center)=="undefined"?false:center;
-	var fill=false;
-	return {ctx:ctx,x0:x,y0:y,w:w,h:h,print:__drawString,x:x,y:y,style:style,
-		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:"",fill:fill};
-}
 
 function doAnalysis(freq_prof,inptext,depth){
 	// Make prediction lower case and strip spaces as we don't use them
@@ -304,7 +254,7 @@ function init(){
 	// For the greek text we don't lowercase the letters	
 	lowercase=game.lowercase;
 
-	setInterval(doWPM,100);
+	setInterval(doWPM,1000);
 
 	if(typeof(game.freq_prof)=="undefined") 
 		freq_prof=getFreqProf(game.content);
@@ -332,11 +282,13 @@ function init(){
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
 
+	stat=new stats(ctx,game,23+36*14,H-36*15,36*14-24,36*14,"red",18);
+	
 	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined"){
 		weapon=0;
-		keyboard=new treeboard(freq_prof,playertext,ctx,12,H-36*15,W-24,36*14,"red",108,40);
+		keyboard=new treeboard(freq_prof,stat,playertext,ctx,12,H-36*15,36*14,36*14,"red",108,40);
 	} else if(typeof(vkeyboard)!="undefined"){
 		weapon=1;
 		keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
@@ -392,6 +344,8 @@ function doKey(key){
 	game.addSym(key);
 	playertext.print(game.input);
 	ptot+=key;
+
+	stat.render();
 }
 
 function doDelete(){
@@ -401,10 +355,13 @@ function doDelete(){
 
 	playertext.clear();
 	playertext.print(pword);
+
+	stat.render();
 }
 
 window.onkeydown=function(e){
 	if(waiting) return;
+	if(stat) stat.logkey(e);
 	if(keyboard.keydown(e)) e.preventDefault();
 }
 
@@ -417,6 +374,7 @@ window.onkeyup=function(e){
 		init();
 		return;
 	}
+	if(stat) stat.logkey(e);
 	if(!input_lock) doInput(e);
 	else input_queue.push(e);
 }
@@ -441,6 +399,8 @@ function doInput(e){
 	code=e.code.toUpperCase();
 	
 	if(keyboard.keyup(key,code)) e.preventDefault();
+
+	stat.render();
 };
 function inito(){
 	canvas=document.getElementById("canvas");

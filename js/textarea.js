@@ -17,7 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 function __drawString(s){
-	var tdim=ctx.measureText(s);
+	this.ctx.font=this.fontsize+"px "+this.font_family;
+
+	var tdim=this.ctx.measureText(s);
 
 //	this.ctx.fillStyle="black";
 //	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
@@ -25,8 +27,9 @@ function __drawString(s){
 	this.ctx.strokeStyle=this.style;
 	this.ctx.fillStyle=this.style;
 
+//	this.ctx.font=this.fontsize+"px "+this.fon
+
 	if(DEBUG_OUTLINE) this.ctx.strokeRect(this.x0,this.y0,this.w,this.h);
-	this.ctx.font=this.fontsize+"px "+font_family;
 
 	if(32+ tdim.width + this.x > this.w+this.x0 ){
 		this.x=this.x0;
@@ -35,8 +38,9 @@ function __drawString(s){
 	if( this.fontsize + this.y> this.h+this.y0){
 		this.clear();
 	}
+	this.ctx.font=this.fontsize+"px "+this.font_family;
 	if(this.center_text){
-		var tdim=ctx.measureText(s);
+		var tdim=this.ctx.measureText(s);
 		var x=(this.w-tdim.width)/2;		
 		if(x<0) x=0;
 		this.clear();
@@ -47,6 +51,23 @@ function __drawString(s){
 	}else if(!this.fill) this.ctx.strokeText(s,this.x,this.y+this.fontsize);
 	else this.ctx.fillText(s,this.x,this.y+this.fontsize);
 
-	var tdim=ctx.measureText(s);
+	var tdim=this.ctx.measureText(s);
 	this.x+=tdim.width;
+}
+
+function __clearString(){
+	this.ctx.fillStyle="black";
+	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+	this.x=this.x0;
+	this.y=this.y0;
+	this.cnt="";
+}
+
+function textArea(ctx,x,y,w,h,style,size,center){
+	var fontsize=typeof(size)=="undefined"?36:size;
+	var center_text=typeof(center)=="undefined"?false:center;
+	var fill=false;
+	return {ctx:ctx,x0:x,y0:y,w:w,h:h,print:__drawString,x:x,y:y,style:style,
+		clear:__clearString,fontsize:fontsize,center_text:center_text,cnt:"",fill:fill,
+		font_family:"serif"};
 }
