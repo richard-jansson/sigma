@@ -1,6 +1,6 @@
 var conf=[];
-var values=[];
-var defaults=[];
+var values={};
+var defaults={};
 
 // callbacks 
 function adjust_dkeys(){
@@ -84,7 +84,7 @@ function ckeygroup(id,def,quant){
 // parent constructor
 function setting(id,label,type,def,quant,cback,n){
 	var d1="<div class=\"conf\">";
-	var d2=(typeof(quant)=="undefined"?"":quant)+"</div>";
+	var d2=(typeof(quant)=="undefined"?"":"<span class=\"quant\">"+quant+"</span>")+"</div>";
 	var lbl="<label for=\""+id+"\">"+label+"</label>";
 	
 	var inp="unknown type: "+type;
@@ -95,20 +95,20 @@ function setting(id,label,type,def,quant,cback,n){
 	return {html:d1+lbl+inp+d2};	
 }
 
-var settings=[
-	["ANIMT","Animation time","int","5","ms"],
-	["FPS","Frames per second","int","60","fps"],
-	["NUM_LEAVES","Leaves per node","int","4",undefined,adjust_dkeys],
-	["NUM_BRANCHES","Branches per node","int","4",undefined,adjust_mkeys],
-	["DKEYS","Select leave-keys","keygroup", ["I","L","K","J"] ,undefined,undefined,4],
-	["MKEYS","Select branch-keys","keygroup",["U","O",".","M"],undefined,undefined,4],
+var settings={
+	"ANIMT":["ANIMT","Animation time","int","5","ms"],
+	"FPS":["FPS","Frames per second","int","60","fps"],
+	"NUM_LEAVES":["NUM_LEAVES","Leaves per node","int","4",undefined,adjust_dkeys],
+	"NUM_BRANCHES":["NUM_BRANCHES","Branches per node","int","4",undefined,adjust_mkeys],
+	"DKEYS":["DKEYS","Select leave-keys","keygroup", ["I","L","K","J"] ,undefined,undefined,4],
+	"MKEYS":["MKEYS","Select branch-keys","keygroup",["U","O",".","M"],undefined,undefined,4],
 
-	["kbd_up","Classic cursor up","key","W"],
-	["kbd_right","Classic cursor right","key","D"],
-	["kbd_down","Classic cursor down","key","S"],
-	["kbd_left","Classic cursor left","key","D"],
-	["kbd_sel","Classic cursor select","key","E"]
-	]
+	"kbd_up":["kbd_up","Classic cursor up","key","W"],
+	"kbd_right":["kbd_right","Classic cursor right","key","D"],
+	"kbd_down":["kbd_down","Classic cursor down","key","S"],
+	"kbd_left":["kbd_left","Classic cursor left","key","D"],
+	"kbd_sel":["kbd_sel","Classic cursor select","key","E"]
+}
 
 function render(){
 	var html="";
@@ -129,6 +129,11 @@ function inito(){
 		
 	}
 	init();
+	$("#save").click(function(){
+		jQuery.get("/save",JSON.stringify(values),function(res){
+			console.log("success");
+		});
+	});
 }
 
 function init(){

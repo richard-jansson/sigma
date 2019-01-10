@@ -14,8 +14,13 @@
 	float: left;
 }
 #settings div.conf input {
-	width: 69%;
-	float: right;
+	width: 70%;
+}
+
+#savesettings {
+	border: 1px solid;
+	width: 100%;
+	float: left;
 }
 
 #keydialog {
@@ -49,4 +54,9 @@ input.ckey2 {
 	width: 50% !important;
 	float: right !important;
 	clear: right;
+}
+
+span.quant {
+	float: right;
+	width: 5%;
 }
