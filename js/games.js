@@ -164,7 +164,8 @@ function addSym(sym){
 
 	this.input+=sym;
 
-	if(this.cword.substr(0,pword.length).toLowerCase()==this.input.toLowerCase()) 
+	this.charmatches++;
+	if(this.cword.substr(0,pword.length).toLowerCase()==this.input.toLowerCase())
 		this.onPartial();
 
 	if(this.input.toLowerCase()==this.cword.trimEnd().toLowerCase())
@@ -175,6 +176,7 @@ function delSym(){
 	var l=this.input.length;
 	l--;
 	var a=l;
+	if(l>0) this.charmisses++;
 	l=l<0?0:l;
 	this.input=this.input.substr(0,l);
 
@@ -230,5 +232,8 @@ function gamexx(match,partial,del){
 		onPartial:__onPartial,
 		onMatch: __onMatch,
 		cword: cword,
-		input:input,ptot: ptot};
+		input:input,ptot: ptot,
+		charmatches: 0,
+		charmisses: 0
+		};
 }
