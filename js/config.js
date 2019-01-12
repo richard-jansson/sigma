@@ -84,3 +84,5 @@ var ling_sel="I";
 var DEBUG_OUTLINE=true;
 var LINEAR_SPOKES=false;
 var SHOW_STATS=true;
+
+var GAMEPAD_POLL_INT=120

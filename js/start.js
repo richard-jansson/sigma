@@ -289,6 +289,8 @@ function inito(){
 	ctx.fillText("Press any key to play",W*0.3,H/2);
 	ctx.font="36px serif";
 	ctx.fillText("music by nihilore",W*0.5,3*H/4);
+
+	initgamepad();
 }
 
 function init(){
