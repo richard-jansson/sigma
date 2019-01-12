@@ -34,8 +34,13 @@ var buttomap={
 	14:"H"};
 
 var axismap={
+	// left stick on playstation
 	"U":{0:-1,1:-1}, "O":{0: 1,1:-1},
-	"H":{0:-1,1: 1}, ";":{0: 1,1: 1}
+	"H":{0:-1,1: 1}, ";":{0: 1,1: 1},
+	// left stick on playstation
+		"I":{0:0,1:-1}, 
+	"J":{0: -1,1:0}, "L":{0:1,1:0},
+		"K":{0:0,1: 1}
 }
 
 
@@ -66,6 +71,11 @@ function pollgamepads(){
 				
 				var a=th*v;
 				var b=Math.abs(v)-Math.abs(th);
+				
+				if(th ==0 && Math.abs(v) > (1.0-GAMEPAD_AXIS_TRESH)) {
+					match=false;
+					break;
+				}
 
 				if(a<0 || b<0) {
 					match=false;

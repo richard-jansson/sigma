@@ -83,6 +83,7 @@ var ling_sel="I";
 
 var DEBUG_OUTLINE=true;
 var LINEAR_SPOKES=false;
-var SHOW_STATS=true;
+var SHOW_STATS=false;
 
-var GAMEPAD_POLL_INT=120
+var GAMEPAD_POLL_INT=150
+var GAMEPAD_AXIS_TRESH=0.5;
