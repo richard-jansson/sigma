@@ -33,6 +33,8 @@ var buttomap={
 	13:";",
 	14:"H"};
 
+// lefthanded
+/*
 var axismap={
 	// left stick on playstation
 	"U":{0:-1,1:-1}, "O":{0: 1,1:-1},
@@ -41,6 +43,18 @@ var axismap={
 		"I":{0:0,1:-1}, 
 	"J":{0: -1,1:0}, "L":{0:1,1:0},
 		"K":{0:0,1: 1}
+}
+*/
+
+// the right hand path
+var axismap={
+	// left stick on playstation
+	"U":{2:-1,3:-1}, "O":{2: 1,3:-1},
+	"H":{2:-1,3: 1}, ";":{2: 1,3: 1},
+	// left stick on playstation
+		"I":{2:0,3:-1}, 
+	"J":{2: -1,3:0}, "L":{2:1,3:0},
+		"K":{2:0,3: 1}
 }
 
 
@@ -59,6 +73,7 @@ function pollgamepads(){
 				console.log(buttomap[i]);
 				var e={key:buttomap[i],code:buttomap[i]};
 				console.log(buttomap[i]);
+				// FIXME
 				if(i==7) window.onkeydown(e);
 				else window.onkeyup(e);
 			}
@@ -66,13 +81,13 @@ function pollgamepads(){
 		for(var i in axismap){
 			var match=true;
 			for(var axis in axismap[i]){
-				var th=axismap[i][axis]*GAMEPAD_AXIS_TRESH;
+				var th=axismap[i][axis]*GAMEPAD_AXIS_TRESH0;
 				var v=axes[axis];
 				
 				var a=th*v;
 				var b=Math.abs(v)-Math.abs(th);
 				
-				if(th ==0 && Math.abs(v) > (1.0-GAMEPAD_AXIS_TRESH)) {
+				if(th ==0 && Math.abs(v) > (GAMEPAD_AXIS_TRESH1)) {
 					match=false;
 					break;
 				}
@@ -85,7 +100,9 @@ function pollgamepads(){
 			if(match){
 				console.log(i);
 				var e={key:i,code:i};
-				window.onkeyup(e);
+				// FIXME
+				if(i==7) window.onkeydown(e);
+				else window.onkeyup(e);
 			}
 		}
 			
