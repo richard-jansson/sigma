@@ -29,4 +29,8 @@ if($row["c"] < 1) {
 
 $msg=array("status"=>"success");
 echo json_encode($msg);
+
+session_start();
+
+$_SESSION["username"]=$uname;
 ?>
