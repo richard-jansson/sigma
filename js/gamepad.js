@@ -62,14 +62,14 @@ var axismap={
 	// left stick on playstation
 	"U":{2:-1,3:-1},
 	"O":{2: 1,3:-1},
-	"H":{2:-1,3: 1},
-    ";":{2: 1,3: 1}
-	// left stick on playstation
-    /*
-		"I":{2:0,3:-1}, 
-	"J":{2: -1,3:0}, "L":{2:1,3:0},
-		"K":{2:0,3: 1}
+	"H":{2:-1,3: 1}
+/*    ";":{2: 1,3: 1},
     */
+	// left stick on playstation
+//		"I":{2:0,3:-1}, 
+/*	"J":{2: -1,3:0}, "L":{2:1,3:0},
+		"K":{2:0,3: 1}
+        */
 }
 
 var axis_val=[];
@@ -111,17 +111,25 @@ function pollgamepads(){
             // 2d for now, ought to be enough
             var x = triggerv[0]
             var y = triggerv[1]
-            var a = Math.atan(x,y);
+            var a = Math.atan2(x,y);
             var ad = 180.0*a/Math.PI;
+
 
             // input
             var xi = inpv[0]
             var yi = inpv[1] 
             var ri = Math.sqrt(xi*xi+yi*yi)
-            var ra = Math.atan2(xi,yi);
+            var ra = 0-Math.atan2(xi,yi)+Math.PI/2;
+            var rad = 180.0*ra/Math.PI;
 
-            var x0 = ri*Math.cos(a-ra) 
-            var y0 = ri*Math.sin(a-ra) 
+            var x0 = ri*Math.cos(ra+a) 
+            var y0 = ri*Math.sin(ra+a) 
+            
+
+            console.log("checking against"+i);
+            console.log("deg: "+rad+ " v. " + ad);
+//            console.log(a + " " + ad)
+//            console.log(ra + " " + rad)
             
 /*            console.log(xi + " " + yi)
             console.log(x0 + " " + y0)
