@@ -1,0 +1,56 @@
+<!--
+Sigma Text input experiment 
+Copyright (C) 2018 Richard J. Jansson 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<html>
+	<head>
+    <meta charset="UTF-8" />
+    	<link href="css/style.css" rel="stylesheet" />
+    	<link href="css/settings.css" rel="stylesheet" />
+    	<link href="css/login.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+
+		<title>The Brave Future of Text</title>
+	</head>
+	<body>
+		<div id="logo">
+			<a href="/"><img src="img/home.png" alt="logo" /></a>
+		</div>
+		<div id="settingswrap">
+            <h1>Login / Register</h1>
+            <p>In order to save your settings you'll have to sign up. Obviously we're using cookies to keep track of your session.</p>
+            <div class="reglogin">
+                <h2>Login</h2>
+                <div id="login_msg"></div>
+                <label for="uname">User name: </label> <input type="text" id="luname" /></br>
+                <label for="password">Password: </label> <input type="password" id="lpassword" /></br>
+                <input id="login" type="submit" value="login" />
+            </div>
+            <div class="reglogin">
+                <h2>Register</h2>
+                <div id="register_msg"></div>
+                <label for="uname">User name*:</label> <input type="text" id="runame" /></br>
+                <label for="password">Password*:</label> <input type="password" id="rpassword" /></br>
+                <span:>Enter e-mail if you want to receive updates.</span></br>
+                <label for="email">E-mail:</label> <input type="text" id="email" /></br> 
+                <p>* = mandatory</p> 
+                <input id="register" type="submit" value="register" /></br>
+            </div>
+		</div>
+	</body>
+</html>

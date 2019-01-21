@@ -1,0 +1,24 @@
+.reglogin {
+    float: left;
+    width: 35%;
+    border: 1px solid black;
+    padding: 0 5% 5%;
+    margin: 0% 2% 2% 0;
+}
+
+.reglogin label {
+    width: 40%;
+    display: block;
+    float: left;
+}
+.reglogin input {
+    width: 50%;
+    display: block;
+    float: left;
+}
+
+#register_msg {
+    background-color: #b01e1e;
+    border:2px solid #920505;
+    display: none;
+}
