@@ -81,10 +81,15 @@ var ling_up="P";
 var ling_down="J";
 var ling_sel="I";
 
-var DEBUG_OUTLINE=true;
+var DEBUG_OUTLINE=false;
 var LINEAR_SPOKES=false;
 var SHOW_STATS=false;
 
-var GAMEPAD_POLL_INT=120
+var GAMEPAD_POLL_INT=5
 var GAMEPAD_AXIS_TRESH0=0.4;
-var GAMEPAD_AXIS_TRESH1=0.2;
+var GAMEPAD_AXIS_TRESH1=0.4;
+
+var GAMEPAD_MIN_T=64
+var BTN_MIN_T=80
+
+var SHOW_AXIS=true;
