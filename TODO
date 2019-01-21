@@ -1,3 +1,6 @@
 WPM as character per minute divided by average word length
 Training levels
 text typical keyboard layout with frequency arranged data 
+More dynamic symlog rendering for quad, take only into account set beneath the current view
+inner and outer join on treeboard rendering
+colorengine
