@@ -57,6 +57,21 @@ var axismap={
 		"K":{2:0,3: 1}
 }
 
+// testing one at the time
+var axismap={
+	// left stick on playstation
+	"U":{2:-1,3:-1},
+	"O":{2: 1,3:-1},
+	"H":{2:-1,3: 1},
+    ";":{2: 1,3: 1}
+	// left stick on playstation
+    /*
+		"I":{2:0,3:-1}, 
+	"J":{2: -1,3:0}, "L":{2:1,3:0},
+		"K":{2:0,3: 1}
+    */
+}
+
 var axis_val=[];
 
 function pollgamepads(){
@@ -84,7 +99,50 @@ function pollgamepads(){
 
 		for(var i in axismap){
 			var match=true;
+
+// use angles instead 
+            var triggerv=[];
+            var inpv=[];
 			for(var axis in axismap[i]){
+                triggerv.push(axismap[i][axis])
+                inpv.push(axes[axis])
+            }
+            console.log(triggerv);
+            // 2d for now, ought to be enough
+            var x = triggerv[0]
+            var y = triggerv[1]
+            var a = Math.atan(x,y);
+            var ad = 180.0*a/Math.PI;
+
+            // input
+            var xi = inpv[0]
+            var yi = inpv[1] 
+            var ri = Math.sqrt(xi*xi+yi*yi)
+            var ra = Math.atan2(xi,yi);
+
+            var x0 = ri*Math.cos(a-ra) 
+            var y0 = ri*Math.sin(a-ra) 
+            
+/*            console.log(xi + " " + yi)
+            console.log(x0 + " " + y0)
+            */
+
+
+            if( y0 > GAMEPAD_AXIS_TRESH0 
+                && 
+                Math.abs(x0) < Math.abs(GAMEPAD_AXIS_TRESH1)
+            ){
+                console.log("k: "+i);
+				var e={key:i,code:i};
+				// FIXME
+//				if(i==7) window.onkeydown(e);
+//				else 
+                window.onkeyup(e);
+            }
+
+
+
+/*			for(var axis in axismap[i]){
 				var th=axismap[i][axis]*GAMEPAD_AXIS_TRESH0;
 				var v=axes[axis];
 				
@@ -108,6 +166,7 @@ function pollgamepads(){
 				if(i==7) window.onkeydown(e);
 				else window.onkeyup(e);
 			}
+            */
 		}
 			
 	}
@@ -178,7 +237,7 @@ function __render_axe(){
 	var xA=axis_val[this.ind[0]];
 	var yA=axis_val[this.ind[1]];
 
-	console.log(xA+" / "+yA);
+//	console.log(xA+" / "+yA);
 
 	this.vect("orange",xA,yA);
 }
