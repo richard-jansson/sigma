@@ -20,6 +20,7 @@ function login(){
         }else{
             $("#login_msg").html("");
             console.log("success");
+            window.location="conf.html";
         }
     }).fail(function(){
         $("#login_msg").html("Failed to submit request, please try again.");
@@ -49,7 +50,7 @@ function register(){
             $("#register_msg").html(ro.msg);
             $("#register_msg").show();
         }else{
-//            window.location="conf.html";
+            window.location="conf.html";
         }
     }
     ).fail(function(){

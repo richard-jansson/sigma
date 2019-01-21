@@ -29,7 +29,10 @@ function ckey_change(id){
 			values[id]=defaults[id];
 			init();
 		});
-		$("#kmodalclose").click(function(){ $("#keydialog").hide(); });
+		$("#kmodalclose").click(function(){ 
+            $("#keydialog").hide(); 
+            window.onkeyup = function() {} 
+        });
 //		$("#ckey_change").click(function(){ $("#keydialog").hide(); });
 	}
 }
@@ -55,10 +58,13 @@ function ckey_change2(id,i){
 }
 
 function cint_change(id){
+    console.log("change bladdi blaah");
+    var el=document.getElementById(id);
+    values[id]=el.value;
 }
 
 function cint(id,def){
-	return "<input type=\"number\" onchange=\"cint_change(\""+id+"\") value=\""+def+"\" />";
+	return "<input type=\"number\" id=\""+id+"\" onchange=\"cint_change('"+id+"')\" value='"+def+"' />";
 }
 
 function ckey(id,def){
@@ -91,7 +97,7 @@ function setting(id,label,type,def,quant,cback,n){
 	if(type=="int") inp=cint(id,def);
 	else if(type=="key") inp=ckey(id,def);
 	else if(type=="keygroup") inp=ckeygroup(id,def,n);
-	
+    
 	return {html:d1+lbl+inp+d2};	
 }
 
@@ -103,11 +109,11 @@ var settings={
 	"DKEYS":["DKEYS","Select leave-keys","keygroup", ["I","L","K","J"] ,undefined,undefined,4],
 	"MKEYS":["MKEYS","Select branch-keys","keygroup",["U","O",".","M"],undefined,undefined,4],
 
-	"kbd_up":["kbd_up","Classic cursor up","key","W"],
-	"kbd_right":["kbd_right","Classic cursor right","key","D"],
-	"kbd_down":["kbd_down","Classic cursor down","key","S"],
-	"kbd_left":["kbd_left","Classic cursor left","key","D"],
-	"kbd_sel":["kbd_sel","Classic cursor select","key","E"]
+	"kb_up":["kb_up","Classic cursor up","key","W"],
+	"kb_rgt":["kb_rgt","Classic cursor right","key","D"],
+	"kb_dwn":["kb_dwn","Classic cursor down","key","S"],
+	"kb_lft":["kb_lft","Classic cursor left","key","D"],
+	"kb_sel":["kb_sel","Classic cursor select","key","E"]
 }
 
 function render(){
@@ -116,10 +122,22 @@ function render(){
 		html+=conf[k].html;	
 	}
 	var settings=document.getElementById("settings");
+    console.log(html);
 	settings.innerHTML=html;
 }
 
 function inito(){
+    jQuery.get("getuser.php",{},function(d){
+        var uo=JSON.parse(d);
+        if(!uo.loggedin){
+            window.location="login.html";
+        }else{
+            inita();
+        }
+    });
+}
+
+function inita(){
 	// save default values
 	for(var k in settings){
 		var s=settings[k];
@@ -130,7 +148,7 @@ function inito(){
 	}
 	init();
 	$("#save").click(function(){
-		jQuery.get("/save",JSON.stringify(values),function(res){
+		jQuery.get("save.php",values,function(res){
 			console.log("success");
 		});
 	});
