@@ -17,9 +17,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 var levels=["Tutorial",
-			  "Wuthering heights",
+			  "Baseline Test",
 			  "ΙΛΙΑΔΑ",
-			  "道德經"];
+              "Дама с собачкой",
+			  "道德經"
+              ];
 
 function winning(){
 	var victorytext=new textArea(keyboard.ctx,W*0.2,H*0.2,W*0.6,H*0.6,"red",72,true);

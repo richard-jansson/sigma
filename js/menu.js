@@ -180,8 +180,9 @@ function __menu_render(p){
 	  var menu={"Start":
 			  {
 			  "Tutorial":weapons,
-			  "Wuthering heights": weapons,
+			  "Baseline test": weapons,
 			  "ΙΛΙΑΔΑ":weapons,
+              "Дама с собачкой":weapons,
 			  "back": {back:true}
 			  },
 			  "About":"Sigma is a game exploring different keyboard methods that could've been. #br# Music by nihilore and Telematix #br# made by Erudite Now"};

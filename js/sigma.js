@@ -23,12 +23,12 @@ var tracks=[
 "audio/amelodyforthosewhoseekthetruth_lo.mp3",
 "audio/samsara_lo.mp3",
 "audio/theauthorneverdies_lo.mp3",
-"audio/reawakeningmemoriesclosedupinhischestless_lo.mp3" ];
+"audio/telematixblackmoon.mp3"];
 var tracks2=[
 "audio/telematixblackmoon.mp3",
 "audio/telematixflashback.mp3",
 "audio/telematixkeepflying.mp3",
-"audio/telematixlasttraintonowhere.mp3"];
+"audio/telematixblackmoon.mp3"];
 
 var music=false;
 var waiting=true;

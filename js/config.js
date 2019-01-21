@@ -37,7 +37,7 @@ var N=4,M=4;
 var treeN1_mult=0.4;
 var tree_rad_mult=1.6;
 // 
-var mute=true;
+var mute=false;
 
 /* 
  *  Keybindings for classic keyboard.
