@@ -57,6 +57,7 @@ var axismap={
 		"K":{2:0,3: 1}
 }
 
+var axis_val=[];
 
 function pollgamepads(){
 	var npads=navigator.getGamepads();
@@ -78,6 +79,9 @@ function pollgamepads(){
 				else window.onkeyup(e);
 			}
 		}
+
+		axis_val=axes;
+
 		for(var i in axismap){
 			var match=true;
 			for(var axis in axismap[i]){
@@ -126,4 +130,70 @@ function initgamepad(){
 		}
 	});
 	setInterval(pollgamepads,GAMEPAD_POLL_INT);
+}
+
+function __render_vect(c,x,y,mx,my){
+	var x=this.x1+x*this.r;
+	var y=this.y1+y*this.r;
+	var mxd=mx*this.r;
+	var myd=my*this.r;
+	
+	ctx.strokeStyle=c;
+
+	this.ctx.beginPath();
+	this.ctx.moveTo(this.x1,this.y1);
+	this.ctx.lineTo(x,y);
+	this.ctx.stroke();
+
+	if(typeof(mx)!="undefined"){
+		this.ctx.beginPath();
+		this.ctx.moveTo(x-mxd,y-myd);
+		this.ctx.lineTo(x+mxd,y+myd);
+		this.ctx.stroke();
+	}
+}
+
+function __clear_axe(){
+	if(!SHOW_AXIS) return;
+
+	this.ctx.fillStyle="black";
+	this.ctx.fillRect(this.x0,this.y0,this.w,this.h);
+}
+
+function __render_axe(){
+	if(!SHOW_AXIS) return;
+	this.clear();
+
+	if(DEBUG_OUTLINE){
+		this.ctx.strokeStyle="red";
+		this.ctx.strokeRect(this.x0,this.y0,this.w+2,this.h+2);
+	}
+	
+	this.vect("blue",0,GAMEPAD_AXIS_TRESH0,GAMEPAD_AXIS_TRESH1,0);
+	this.vect("green",0,-GAMEPAD_AXIS_TRESH0,GAMEPAD_AXIS_TRESH1,0);
+
+	this.vect("yellow",GAMEPAD_AXIS_TRESH0,0,0,GAMEPAD_AXIS_TRESH1);
+	this.vect("red",-GAMEPAD_AXIS_TRESH0,0,0,GAMEPAD_AXIS_TRESH1);
+	
+	var xA=axis_val[this.ind[0]];
+	var yA=axis_val[this.ind[1]];
+
+	console.log(xA+" / "+yA);
+
+	this.vect("orange",xA,yA);
+}
+
+// visualize axes  
+function gaxes(ctx,x,y,w0,h0,ind){
+	var x1=x+w0/2;
+	var y1=y+h0/2;
+	var r=Math.min(w0/2,h0/2)*0.9;
+
+	return {
+		x0:x,y0:y,
+		x1:x1,y1:y1,
+		w:w0,h:h0,
+		r:r,
+		ind:ind,
+		ctx:ctx,clear:__clear_axe,render:__render_axe,vect:__render_vect};
 }

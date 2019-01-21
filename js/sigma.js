@@ -52,6 +52,8 @@ var keyboard=false;
 var game=false;
 var freq_prof;
 var stat=false;
+var axes_l=false;
+var axes_r=false;
 
 var lowercase=true;
 
@@ -255,6 +257,7 @@ function init(){
 	lowercase=game.lowercase;
 
 	setInterval(doWPM,1000);
+	setInterval(doAxes,50);
 
 	if(typeof(game.freq_prof)=="undefined") 
 		freq_prof=getFreqProf(game.content);
@@ -283,6 +286,9 @@ function init(){
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
 
 	stat=new stats(ctx,game,23+36*14,H-36*15,36*14-24,36*14,"red",18);
+
+//	axes_l=gaxes(ctx,W-400,H-400,360,360,[0,1]);
+	axes_r=gaxes(ctx,W-W/2,H-36*15,W/2,H/2,[2,3]);
 	
 	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
@@ -321,6 +327,11 @@ function init(){
 	doWord();
 
 	keyboard.render();
+}
+
+function doAxes(){
+	if(axes_l) axes_l.render();
+	if(axes_r) axes_r.render();
 }
 
 function doWPM(){
