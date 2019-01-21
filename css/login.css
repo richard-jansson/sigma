@@ -17,7 +17,7 @@
     float: left;
 }
 
-#register_msg {
+#register_msg,#login_msg {
     background-color: #b01e1e;
     border:2px solid #920505;
     display: none;

@@ -1,12 +1,35 @@
 function login(){
+    var uname=$("#luname").val();
+    var rpassword=$("#lpassword").val();
+
+    if(typeof(uname)=="undefined" || uname.length==0){ 
+        $("#login_msg").html("Enter an username");
+        $("#login_msg").show();
+        return
+    }
+    if(typeof(rpassword)=="undefined" || rpassword.length==0){ 
+        $("#login_msg").html("Enter a password");
+        $("#login_msg").show();
+        return
+    }
+    jQuery.get("login.php",{uname: uname, pass: rpassword},function(d){
+        var ro=JSON.parse(d);
+        if(ro.status=="failed"){
+            $("#login_msg").html(ro.msg);
+            $("#login_msg").show();
+        }else{
+            $("#login_msg").html("");
+            console.log("success");
+        }
+    }).fail(function(){
+        $("#login_msg").html("Failed to submit request, please try again.");
+        $("#login_msg").show();
+    })
 }
 function register(){
     var uname=$("#runame").val();
     var rpassword=$("#rpassword").val();
     var mail=$("#rmail").val();
-
-    console.log("register");
-    console.log(uname)
     
     if(typeof(uname)=="undefined" || uname.length==0){ 
         $("#register_msg").html("Enter an username");
@@ -26,7 +49,7 @@ function register(){
             $("#register_msg").html(ro.msg);
             $("#register_msg").show();
         }else{
-            window.location="conf.html";
+//            window.location="conf.html";
         }
     }
     ).fail(function(){
