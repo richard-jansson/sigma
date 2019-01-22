@@ -64,7 +64,36 @@ var avg_wordlength=false;
 var words=0;
 var t0;
 
+var sess_id=false;
+
 var hit;
+
+function updateStats(){
+    if(!sess_id) return;
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','stats.php?sid='+sess_id
+        +'&tot='+game.chartot
+        +'&match='+game.charmatches
+        +'&acts='+stat.alog.length);
+    xhr.send();
+}
+
+function updateStatsO(){
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','stats.php?uid='+user_id);
+
+    xhr.onreadystatechange=function(){
+        if(this.readyState!=XMLHttpRequest.DONE) return;
+        console.log("ready state change");
+        var ro=JSON.parse(this.response);
+        if(ro.status!="success") return;
+        sess_id=ro.sess_id;
+
+        setInterval(updateStats,5000);
+    }
+    xhr.send();
+}
+
 
 function doAnalysis(freq_prof,inptext,depth){
 	// Make prediction lower case and strip spaces as we don't use them
@@ -286,6 +315,8 @@ function init(){
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
 
 	stat=new stats(ctx,game,23+36*14,H-36*15,36*14-24,36*14,"red",18);
+
+    if(is_loggedin) updateStatsO();
 
 //	axes_l=gaxes(ctx,W-400,H-400,360,360,[0,1]);
 	axes_r=gaxes(ctx,W-W/2,H-36*15,W/2,H/2,[2,3]);

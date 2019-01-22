@@ -11,3 +11,9 @@ CREATE TABLE config(
     cfg_key char(64),
     cfg_val char(64)
 );
+
+CREATE TABLE stats(
+    sess_id INT AUTO_INCREMENT PRIMARY KEY, 
+    ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    req char(255) 
+);

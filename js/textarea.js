@@ -17,6 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 function __drawString(s){
+    if(this.fontsize==false){
+        console.log("print "+this.fontsize+":"+s);
+    }
 	this.ctx.font=this.fontsize+"px "+this.font_family;
 
 	var tdim=this.ctx.measureText(s);

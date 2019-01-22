@@ -48,8 +48,10 @@ function __render_stats(){
 	this.acts.print("board actions: "+this.alog.length);
 	this.wordstats.print("words: "+this.game.wordn);
 	this.charstats.print("chars: "+
-		this.game.charmatches
-		+" hits:"+this.game.charmatches+" misses: "+this.game.charmisses);
+		this.game.chartot
+		+" hits: "+this.game.charmatches
+        +" misses: "+
+        (this.game.chartot- this.game.charmisses));
 }
 
 function __addkey_stats(e){
@@ -73,12 +75,15 @@ function stats(ctx,game,x,y,w,h,style,size){
 	var fontsize=typeof(size)=="undefined"?36:size;
 	var t0=new Date();	
 
-	var fs=18;;
+	var fs=36;
 
-	var raw=new textArea(ctx,x,y+2*fs,w,fs,fs,false);
-	var acts=new textArea(ctx,x,y+2*2*fs,w,fs,fs,false);
-	var wordstats=new textArea(ctx,x,y+3*2*fs,w,fs,fs,false);
-	var charstats=new textArea(ctx,x,y+4*2*fs,w,fs*2,fs,false);
+	var raw=new textArea(ctx,x,y+2*fs,w,fs,"green",fs,false);
+	var acts=new textArea(ctx,x,y+2*2*fs,w,fs,"green",fs,false);
+	var wordstats=new textArea(ctx,x,y+3*2*fs,w,fs,"green",fs,false);
+	var charstats=new textArea(ctx,x,y+4*2*fs,w,fs*2,"green",fs,false);
+
+    if(is_loggedin){
+    }
 	
 	return {
 		rlog: [],alog: [],

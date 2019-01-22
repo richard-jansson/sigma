@@ -37,7 +37,7 @@ var N=4,M=4;
 var treeN1_mult=0.4;
 var tree_rad_mult=1.6;
 // 
-var mute=false;
+var mute=true;
 
 /* 
  *  Keybindings for classic keyboard.
@@ -83,7 +83,7 @@ var ling_sel="I";
 
 var DEBUG_OUTLINE=false;
 var LINEAR_SPOKES=false;
-var SHOW_STATS=false;
+var SHOW_STATS=true;
 
 var GAMEPAD_POLL_INT=5
 var GAMEPAD_AXIS_TRESH0=0.4;
@@ -92,4 +92,4 @@ var GAMEPAD_AXIS_TRESH1=0.4;
 var GAMEPAD_MIN_T=64
 var BTN_MIN_T=80
 
-var SHOW_AXIS=true;
+var SHOW_AXIS=false;

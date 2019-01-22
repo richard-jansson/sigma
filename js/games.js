@@ -165,10 +165,12 @@ function addSym(sym){
 	if(this.input.length>37) return;
 
 	this.input+=sym;
-
-	this.charmatches++;
-	if(this.cword.substr(0,pword.length).toLowerCase()==this.input.toLowerCase())
+    
+    this.chartot++;
+	if(this.cword.substr(0,this.input.length).toLowerCase()==this.input.toLowerCase()){
+	    this.charmatches++;
 		this.onPartial();
+    }
 
 	if(this.input.toLowerCase()==this.cword.trimEnd().toLowerCase())
 		this.onMatch();
@@ -235,6 +237,7 @@ function gamexx(match,partial,del){
 		onMatch: __onMatch,
 		cword: cword,
 		input:input,ptot: ptot,
+        chartot: 0,
 		charmatches: 0,
 		charmisses: 0
 		};

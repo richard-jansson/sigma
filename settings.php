@@ -27,12 +27,13 @@ while($row=mysqli_fetch_assoc($r)){
 
 
 ?>
-var is_logged_in = true;
-var user_name = <?php echo $_SESSION["username"]; ?>;
+var is_loggedin = true;
+var user_name = "<?php echo $_SESSION["username"]; ?>";
+var user_id = <?php echo $_SESSION["user_id"]; ?>;
 <?php
 foreach($cfgs as $k => $v){ 
 ?>
-var <?php echo $k ?> = <?php echo $v; ?>;
+var <?php echo $k ?> = "<?php echo $v; ?>";
 <?php
 }
 ?>
