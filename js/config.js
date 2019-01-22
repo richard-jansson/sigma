@@ -62,12 +62,13 @@ var KB_INT=150;
 			"Z","X","C"]; */
 var selq=["Y","U","I",
 			"H","J","K"];
-var QUAD_COLS=3;
+var NUM_LEAVES=4;
+var QUAD_COLS=4;
 var QUAD_ROWS=2;
 var QUAD_TOPPAD=20;
 var QUAD_RPAD=5;
 // FIXME throw error if less than QUAD_COLS * QUAD_ROWS
-var QUAD_N_SHALLOW=5;
+var QUAD_N_SHALLOW=7;
 var QUAD_N_DEEP=1;
 
 // Config for quad keyboard tree
@@ -101,3 +102,12 @@ var dkeys=["I","L","K","J"];
 
 
 var gp_sel = 0;
+
+/* iteration II conf values */
+var gplin0_dwn = "6";
+var gplin0_up = "4";
+var gplin1_dwn = "7";
+var gplin1_up = "5";
+var gplin0_sel = "13";
+var gplin1_sel = "0";
+var gplin_del = "1";
