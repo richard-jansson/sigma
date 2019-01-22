@@ -18,6 +18,10 @@ $allowed=
     "QUAD_COLS","QUAD_ROWS","QUAD_N_SHALLOW","QUAD_N_DEEP",
     "gplin0_dwn", "gplin0_up", "gplin1_dwn", "gplin1_up",
     "gplin0_sel","gplin1_sel",
-    "gplin_del","gplin_rst"
+    "gplin_del","gplin_rst",
+
+    "gptl_0","gptl_1","gptl_2","gptl_4",
+    "gptb_0","gptb_1","gptb_2","gptb_4",
+    "gpt_rst","gpt_del"
     ];
 ?>

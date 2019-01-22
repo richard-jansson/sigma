@@ -332,10 +332,10 @@ function init(){
 	}
 	else if(typeof(quadboard)!="undefined"){
 		weapon=2;
-		keyboard=new quadboard(stat,freq_prof,playertext,ctx,36,H-36*15,W-36*14,36*10,"red",108,"serif");
+		keyboard=new quadboard(stat,game,freq_prof,playertext,ctx,36,H-36*15,W-36*14,36*10,"red",108,"serif");
 	} else if(typeof(linboard)!="undefined"){
 		weapon=3;
-		keyboard=new linboard(freq_prof,playertext,ctx,36,H-36*15,W-36*4,36*13,"red",72,"serif");
+		keyboard=new linboard(freq_prof,stat,playertext,ctx,36,H-36*15,W-36*14,36*13,"red",72,"serif");
 	}
 	else  throw "Error!";
 

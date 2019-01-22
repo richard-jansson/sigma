@@ -34,8 +34,8 @@ var dkeys=[kb_up,kb_rgt,kb_dwn,kb_lft];
 
 var sel_m=[kb_0,kb_1,kb_2,kb_3];
 
-var dbtns= ["G0","G1","G2","G3"];
-var sel_mbtn= ["GN","GE","GS","GW"];
+var dbtns= ["GTB_0","GTB_1","GTB_2","GTB_3"];
+var sel_mbtn= ["GTL_0","GTL_1","GTL_2","GTL_3"];
 
 
 function setToTree(set,n,m){
@@ -280,7 +280,7 @@ function __tboard_kdown(e){
 	var code=e.code.toUpperCase();	
 	var key=e.key.toUpperCase();	
 
-	if(code==bcksp || key=="GDEL" ){
+	if(code==bcksp || key=="GT_DEL" ){
 //		doDelete();		
 		game.delSym();
 		return true;
@@ -343,7 +343,7 @@ function __tboard_kup(code){
 
     console.log(code);
 
-	if(key==rst || key == "GRST"){
+	if(key==rst || key == "GT_RST"){
 		this.__rst();
 		this.stat.logact("rst",undefined);
 	}
@@ -367,6 +367,19 @@ function __tboard_kup(code){
 }
 
 function treeboard(freq_prof,stat,target,ctx,x,y,w,h,style,fs,yofs){
+    buttomap[gptl_0]="GTL_0";
+    buttomap[gptl_1]="GTL_1";
+    buttomap[gptl_2]="GTL_2";
+    buttomap[gptl_3]="GTL_3";
+
+    buttomap[gptb_0]="GTB_0";
+    buttomap[gptb_1]="GTB_1";
+    buttomap[gptb_2]="GTB_2";
+    buttomap[gptb_3]="GTB_3";
+
+    buttomap[gpt_rst]="GT_RST";
+    buttomap[gpt_del]="GT_DEL";
+
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=setToTree(set,N,M);

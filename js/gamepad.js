@@ -202,6 +202,7 @@ function pollgamepads(){
 }
 
 function initgamepad(conf){
+/*
     buttomap[gp_dwn]="GS";
     buttomap[gp_rgt]="GE";
     buttomap[gp_lft]="GW";
@@ -221,7 +222,11 @@ function initgamepad(conf){
 
     buttomap[gp_sel]="GSEL";
     buttomap[gp_rst]="GRST";
-
+    */ 
+// tree
+    
+    // linear config 
+    /*9
     buttomap[gplin0_dwn]="GLLS";
     buttomap[gplin0_up]="GLLN";
     buttomap[gplin0_sel]="GLLSEL";
@@ -231,6 +236,7 @@ function initgamepad(conf){
     buttomap[gplin1_sel]="GLRSEL";
 
     buttomap[gplin_del]="GLDEL";
+    */
 
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");

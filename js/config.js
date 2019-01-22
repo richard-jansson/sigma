@@ -111,3 +111,17 @@ var gplin1_up = "5";
 var gplin0_sel = "13";
 var gplin1_sel = "0";
 var gplin_del = "1";
+
+// tree
+var gptl_0 = "3";
+var gptl_1 = "1";
+var gptl_2 = "0";
+var gptl_3 = "22";
+
+var gptb_0 = "12";
+var gptb_1 = "15";
+var gptb_2 = "13";
+var gptb_3 = "14";
+
+var gpt_rst = "6"; 
+var gpt_del = "7"; 

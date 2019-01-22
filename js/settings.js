@@ -142,14 +142,14 @@ function setting(id,label,type,def,quant,cback,n){
 }
 
 var settings={
-	"ANIMT":["ANIMT","Animation time","int","5","ms"],
-	"FPS":["FPS","Frames per second","int","60","fps"],
-	"NUM_LEAVES":["NUM_LEAVES","Leaves per node","int","4",undefined,adjust_dkeys],
+	"ANIMT":["ANIMT","Animation time","int",ANIMT,"ms"],
+	"FPS":["FPS","Frames per second","int",FPS,"fps"],
+	"NUM_LEAVES":["NUM_LEAVES","Leaves per node","int",N,undefined,adjust_dkeys],
 
-	"QUAD_COLS":["QUAD_COLS","Columns for quad","int","4"],
-	"QUAD_ROWS":["QUAD_ROWS","Rows for quad","int","2"],
-	"QUAD_N_SHALLOW":["QUAD_N_SHALLOW","shallow boxes","int","7"],
-	"QUAD_N_DEEP":["QUAD_N_DEEP","deep boxes","int","1"],
+	"QUAD_COLS":["QUAD_COLS","Columns for quad","int",QUAD_COLS],
+	"QUAD_ROWS":["QUAD_ROWS","Rows for quad","int",QUAD_ROWS],
+	"QUAD_N_SHALLOW":["QUAD_N_SHALLOW","shallow boxes","int",QUAD_N_SHALLOW],
+	"QUAD_N_DEEP":["QUAD_N_DEEP","deep boxes","int",QUAD_N_DEEP],
 
 
 	"kb_up":["kb_up","Keyboard up","key","W"],
@@ -168,26 +168,30 @@ var settings={
     "gp_dwn":["gp_dwn","Gamepad down","btn","0"],
     "gp_lft":["gp_lft","Gamepad left","btn","2"],
 
-    "gp_0":["gp_0","Select quad / branch 0","btn","12"],
-    "gp_1":["gp_1","Select quad / branch 1","btn","15"],
-    "gp_2":["gp_2","Select quad / branch 2","btn","13"],
-    "gp_3":["gp_3","Select quad / branch 3","btn","14"],
+// Tree select leaves / symbols
+    "gptl_0":["gptl_0","Select leaf 0","btn",gptl_0],
+    "gptl_1":["gptl_1","Select leaf 1","btn",gptl_1],
+    "gptl_2":["gptl_2","Select leaf 2","btn",gptl_2],
+    "gptl_3":["gptl_3","Select leaf 3","btn",gptl_3],
 
-    "gp_4":["gp_4","Select quad / branch 4","btn","3"],
-    "gp_5":["gp_5","Select quad / branch 5","btn","1"],
-    "gp_6":["gp_6","Select quad / branch 6","btn","0"],
-    "gp_7":["gp_7","Select quad / branch 7","btn","2"],
+    "gptb_0":["gptb_0","Select branch 0","btn",gptb_0],
+    "gptb_1":["gptb_1","Select branch 1","btn",gptb_1],
+    "gptb_2":["gptb_2","Select branch 2","btn",gptb_2],
+    "gptb_3":["gptb_3","Select branch 3","btn",gptb_3],
 
-    "gp_rst":["gp_rst","gamepad reset","btn","6"],
-    "gp_del":["gp_del","gamepad delete","btn","7"],
+    "gpt_rst":["gp_rst","tree gamepad reset","btn",gpt_rst],
+    "gpt_del":["gp_del","tree gamepad delete","btn",gpt_del],
 
-    "gp_sel":["gp_sel","gamepad select","btn","0"],
+// Linear configuration
+    "gplin0_dwn":["gplin0_dwn","Linear left down button","btn",gplin0_dwn],
+    "gplin0_up":["gplin0_up","Linear left up button","btn",gplin0_up],
+    "gplin0_sel":["gplin0_sel","Linear left select button","btn",gplin0_sel],
 
-    "gplin0_dwn":["gplin0_dwn","Linear left down button","btn","12"],
-    "gplin0_up":["gplin0_up","Linear left up button","btn","12"],
+    "gplin1_dwn":["gplin1_dwn","Linear down right button","btn",gplin1_dwn],
+    "gplin1_up":["gplin1_up","Linear up right button","btn",gplin1_up],
+    "gplin1_sel":["gplin1_sel","Linear right select button","btn",gplin1_sel],
 
-    "gplin1_dwn":["gplin1_dwn","Linear down right button","btn","12"],
-    "gplin1_up":["gplin1_up","Linear up right button","btn","12"],
+    "gplin_del":["gplin_del","Linear delete button","btn",gplin_del],
 }
 
 function render(){
