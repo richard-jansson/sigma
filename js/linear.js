@@ -220,16 +220,26 @@ function __lin_kdown(e){
 		this.render();
     }
     if(code=="GLLN"){
-		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
         this.stat.logact("leftnorth");
+		this.offset=this.offset>1?this.offset-1:0;
     }
     if(code=="GLLS"){
-		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
         this.stat.logact("leftsouth");
+		if(this.offset>this.set.length-5){
+			console.log("BEEEP");
+		}else{
+			this.offset++;	
+		}
     }
     if(code=="GLLSEL"){
         this.stat.logact("leftsel");
-		doKey(this.dynset[this.greenoffset]);	
+		doKey(this.set[this.offset]);	
+		this.dynset=this.genDynSet();
+
+		this.offset=0;
+		this.greenoffset=0;
+		this.clear();
+		this.render();
     }
     if(code=="GLDEL"){
         this.stat.logact("del");
@@ -263,9 +273,11 @@ function __lin_kdown(e){
 		this.rep_start(e,code);
 		return false;
 	}else if(lin_up==code){
+        this.stat.logact("leftnorth");
 		this.offset=this.offset>1?this.offset-1:0;
 		this.rep_start(e,code);
 	}else if(lin_down==code){
+        this.stat.logact("leftsouth");
 		if(this.offset>this.set.length-5){
 			console.log("BEEEP");
 		}else{
@@ -274,13 +286,13 @@ function __lin_kdown(e){
 		this.rep_start(e,code);
 		this.rep_start(e,code);
 	}else if(lin_sel==code){
+        this.stat.logact("leftsel");
 		doKey(this.set[this.offset]);	
 		// recalculate the new dynamic set 
 //		var ptota=ptot.trim();
 //		this.dynset=sortX(freq_prof[ptota]);
 
 		this.dynset=this.genDynSet();
-
 		this.offset=0;
 		this.greenoffset=0;
 		this.clear();
@@ -297,6 +309,7 @@ function __lin_kdown(e){
 		this.render();
 		return true;
 	}else if(e_code==bcksp){
+        this.stat.logact("del");
 		console.log("deleeete!!");
 		game.delSym();
 //		doDelete();
