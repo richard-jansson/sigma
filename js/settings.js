@@ -181,7 +181,13 @@ var settings={
     "gp_rst":["gp_rst","gamepad reset","btn","6"],
     "gp_del":["gp_del","gamepad delete","btn","7"],
 
-    "gp_sel":["gp_sel","gamepad select","btn","0"]
+    "gp_sel":["gp_sel","gamepad select","btn","0"],
+
+    "gplin0_dwn":["gplin0_dwn","Linear left down button","btn","12"],
+    "gplin0_up":["gplin0_up","Linear left up button","btn","12"],
+
+    "gplin1_dwn":["gplin1_dwn","Linear down right button","btn","12"],
+    "gplin1_up":["gplin1_up","Linear up right button","btn","12"],
 }
 
 function render(){

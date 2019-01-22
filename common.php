@@ -14,6 +14,7 @@ $allowed=
     "DEBUG_OUTLINE","LINEAR_SPOKES","SHOW_STATS",
     "GAMEPAD_POLL_INT","GAMEPAD_AXIS_TRESH0","GAMEPAD_TRESH1",
     "GAMEPAD_MIN_T","BTN_MIN_T","SHOW_AXIS",
-    "QUAD_COLS","QUAD_ROWS","QUAD_N_SHALLOW","QUAD_N_DEEP"
+    "QUAD_COLS","QUAD_ROWS","QUAD_N_SHALLOW","QUAD_N_DEEP",
+    "gplin0_dwn", "gplin0_up", "gplin1_dwn", "gplin1_up"
     ];
 ?>

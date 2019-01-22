@@ -217,10 +217,16 @@ function initgamepad(conf){
     buttomap[gp_6]="G6";
     buttomap[gp_7]="G7";
 
-    buttomap[gp_rst]="GRST";
     buttomap[gp_del]="GDEL";
 
     buttomap[gp_sel]="GSEL";
+    buttomap[gp_rst]="GRST";
+
+    buttomap[gplin0_dwn]="GLLS";
+    buttomap[gplin0_up]="GLLN";
+
+    buttomap[gplin1_dwn]="GLRS";
+    buttomap[gplin1_up]="GLRN";
 
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");
