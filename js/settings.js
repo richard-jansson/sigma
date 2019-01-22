@@ -1,6 +1,25 @@
 var conf=[];
 var values={};
 var defaults={};
+var curr_btn=false;
+var curr_id=false;
+
+// mashes togehter buttons from different controllers
+function conf_pollgamepads(){
+    if(!curr_id) return;
+	npads=navigator.getGamepads();
+    for(var k in npads){
+        if(npads[k]===null) continue;
+        for(var k1 in npads[k].buttons){
+            if(npads[k].buttons[k1].pressed){
+                curr_btn=k1;                 
+                $("#newkey").html(k1);
+                values[curr_id]=k1;
+                init();
+            }
+        }
+    }
+}
 
 // callbacks 
 function adjust_dkeys(){
@@ -10,6 +29,23 @@ function adjust_mkeys(){
 	console.log("adjust dkeys");
 }
 
+function cbtn_change(id){
+    curr_id=id;
+	$("#keydialog").show();
+
+	$("#newkey").html(values[id]);
+
+	$("#kmodalreset").click(function(){
+		$("#newkey").html(defaults[id]);
+		values[id]=defaults[id];
+		init();
+    });
+    curr_btn=id;
+	$("#kmodalclose").click(function(){ 
+        $("#keydialog").hide(); 
+        curr_id=false;
+    })
+}
 // standard onchange
 function ckey_change(id){
 	$("#keydialog").show();
@@ -67,6 +103,9 @@ function cint(id,def){
 	return "<input type=\"number\" id=\""+id+"\" onchange=\"cint_change('"+id+"')\" value='"+def+"' />";
 }
 
+function cbtn(id,def){
+	return "<input type=\"submit\" value=\""+def+"\" onclick=\"cbtn_change('"+id+"')\" />";
+}
 function ckey(id,def){
 	return "<input type=\"submit\" value=\""+def+"\" onclick=\"ckey_change('"+id+"')\" />";
 }
@@ -96,6 +135,7 @@ function setting(id,label,type,def,quant,cback,n){
 	var inp="unknown type: "+type;
 	if(type=="int") inp=cint(id,def);
 	else if(type=="key") inp=ckey(id,def);
+	else if(type=="btn") inp=cbtn(id,def);
 	else if(type=="keygroup") inp=ckeygroup(id,def,n);
     
 	return {html:d1+lbl+inp+d2};	
@@ -105,15 +145,27 @@ var settings={
 	"ANIMT":["ANIMT","Animation time","int","5","ms"],
 	"FPS":["FPS","Frames per second","int","60","fps"],
 	"NUM_LEAVES":["NUM_LEAVES","Leaves per node","int","4",undefined,adjust_dkeys],
-	"NUM_BRANCHES":["NUM_BRANCHES","Branches per node","int","4",undefined,adjust_mkeys],
-	"DKEYS":["DKEYS","Select leave-keys","keygroup", ["I","L","K","J"] ,undefined,undefined,4],
-	"MKEYS":["MKEYS","Select branch-keys","keygroup",["U","O",".","M"],undefined,undefined,4],
 
-	"kb_up":["kb_up","Classic cursor up","key","W"],
-	"kb_rgt":["kb_rgt","Classic cursor right","key","D"],
-	"kb_dwn":["kb_dwn","Classic cursor down","key","S"],
-	"kb_lft":["kb_lft","Classic cursor left","key","D"],
-	"kb_sel":["kb_sel","Classic cursor select","key","E"]
+	"kb_up":["kb_up","Keyboard up","key","W"],
+	"kb_rgt":["kb_rgt","Keyboard right","key","D"],
+	"kb_dwn":["kb_dwn","Keyboard down","key","S"],
+	"kb_lft":["kb_lft","Keyboard left","key","D"],
+	"kb_sel":["kb_sel","Keyboard select","key","E"],
+
+    "kb_0":["kb_0","Select quad / branch 0","key","Q"],
+    "kb_1":["kb_1","Select quad / branch 1","key","E"],
+    "kb_2":["kb_1","Select quad / branch 2","key","C"],
+    "kb_3":["kb_1","Select quad / branch 3","key","Z"],
+    
+    "gp_up":["gp_up","Gamepad up","btn","3"],
+    "gp_rgt":["gp_rgt","Gamepad right","btn","1"],
+    "gp_dwn":["gp_dwn","Gamepad down","btn","0"],
+    "gp_lft":["gp_lft","Gamepad left","btn","2"],
+
+    "gp_0":["gp_0","Select quad / branch 0","btn","12"],
+    "gp_1":["gp_1","Select quad / branch 1","btn","15"],
+    "gp_2":["gp_2","Select quad / branch 2","btn","13"],
+    "gp_3":["gp_3","Select quad / branch 3","btn","14"]
 }
 
 function render(){
@@ -122,7 +174,6 @@ function render(){
 		html+=conf[k].html;	
 	}
 	var settings=document.getElementById("settings");
-    console.log(html);
 	settings.innerHTML=html;
 }
 
@@ -154,7 +205,11 @@ function inita(){
 	});
 }
 
+var cback=null;
+
 function init(){
+    setInterval(conf_pollgamepads,GAMEPAD_POLL_INT);
+
 	for(var k in settings){
 //		console.log(settings[k]);
 		var s=settings[k];

@@ -200,7 +200,9 @@ function pollgamepads(){
 	}
 }
 
-function initgamepad(){
+function initgamepad(conf){
+    
+
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");
 		tmp=e;
@@ -216,7 +218,8 @@ function initgamepad(){
 			if(ind==gpads[k]) delete(gpads[k]);
 		}
 	});
-	setInterval(pollgamepads,GAMEPAD_POLL_INT);
+
+    setInterval(pollgamepads,GAMEPAD_POLL_INT);
 }
 
 function __render_vect(c,x,y,mx,my){
