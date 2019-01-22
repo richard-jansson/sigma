@@ -65,7 +65,7 @@ function __linear(set,x0,y0,offset,col){
 }
 
 function __spiral(set,x0,y0,offset,dir,col){
-	var r=this.w/3-32*1.3;
+	var r=this.w/4-24*0.9;
 
 	var ao=Math.PI/4;
 	var a=-Math.PI/2;
@@ -155,10 +155,10 @@ function __lin_render(p){
 	}
 	*/
 
-	this.linear(this.set,this.x0+this.w/2-32,this.y0,this.offset,"red");
+	this.linear(this.set,this.x0+this.w/2-96,this.y0,this.offset,"red");
 
 	this.linear(this.dynset,
-		this.x0+this.w/2,
+		this.x0+this.w/2-32-8,
 		this.y0,
 		this.greenoffset,
 		"green");
@@ -172,7 +172,7 @@ function __lin_render(p){
 		);
 
 	this.spiral(this.dynset,
-		5*this.w/6+this.x0,
+		5*this.w/6+this.x0-16,
 		this.h/2+this.y0,
 		this.greenoffset,
 		-1,
