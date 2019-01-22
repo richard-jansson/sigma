@@ -83,11 +83,13 @@ function __kboard_kdown(e) {
 	if(typeof(code)=="undefined") return false;
 
 
-	if(bcksp==code){
+	if(bcksp==code || code=="GDEL"){
 		game.delSym();
+        this.stat.logact("del");
 		return true;
-	} if(kb_sel==code || code=="KEYE"){
+	} if(kb_sel==code || code=="KEYE" || code=="GSEL"){
 		doKey(this.rows[this.cur_y][this.cur_x]);
+        this.stat.logact("sel");
 		return false;
 	}else {
 		var code=e.key.toUpperCase();
@@ -99,14 +101,16 @@ function __kboard_kdown(e) {
 			return true;
 		}
 
-		if(kb_up==code){
+		if(kb_up==code || "GN"==code){
 //			if(this.cur_y == 3) this.cur_x=4;
 			this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
 			if(this.cur_x>=this.rows[this.cur_y].length){
 				this.cur_x=this.rows[this.cur_y].length-1;
 			}
-		} else if(kb_sel==code){
-		} else if(kb_dwn==code){
+            this.stat.logact("movenorth");
+		} else if(kb_sel==code || "GSEL"==code){
+		} else if(kb_dwn==code || "GS"==code){
+            this.stat.logact("movesouth");
 			this.cur_y = (this.cur_y+1 > 2) ? 2 : this.cur_y +1; 
 			if(this.cur_x>=this.rows[this.cur_y].length){
 				this.cur_x=this.rows[this.cur_y].length-1;
@@ -116,15 +120,19 @@ function __kboard_kdown(e) {
 //			doKey(this.rows[this.cur_y][this.cur_x]);
 //			return false;
 //			if(this.cur_y==3) this.cur_x=0;
-		} else if(kb_lft==code) this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
-		else if(kb_rgt==code){
+		} else if(kb_lft==code || "GW"==code){
+            this.stat.logact("movewest");
+            this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
+		}else if(kb_rgt==code || "GE"==code){
+            this.stat.logact("moveeast");
 //			this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1;
 			this.cur_x++;
 			if(this.cur_x>=this.rows[this.cur_y].length){
 				this.cur_x=this.rows[this.cur_y].length-1;
 			}
-		} else if(kb_sel==code){
+		} else if(kb_sel==code || "GSEL"==code){
 			doKey(this.rows[this.cur_y][this.cur_x]);
+            this.stat.logact("sel");
 			return false;
 		}
 		
@@ -138,8 +146,8 @@ function __kboard_kdown(e) {
 	}
 }
 
-function vkeyboard(ctx,x,y,w,h,style,font_size,greek){
-	var enrows=[["q","w","e","r","t","y","u","i","o","p"],
+function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek){
+	var enrows=[["q","w","e","r","t","y","u","i","o","p","'"],
 		["a","s","d","f","g","h","j","k","l",":"],
 		["z","x","c","v","b","n","m",",",".","?"]];
 	var greekrows=[
@@ -150,6 +158,7 @@ function vkeyboard(ctx,x,y,w,h,style,font_size,greek){
 	var rows=typeof(greek)=="undefined"||greek==false?enrows:greekrows;
 
 	return {
+        stat: stat,
 		rows:rows,
 		native_repeat: false,
 		ctx:ctx,

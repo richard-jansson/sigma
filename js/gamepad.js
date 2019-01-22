@@ -215,6 +215,8 @@ function initgamepad(conf){
     buttomap[gp_rst]="GRST";
     buttomap[gp_del]="GDEL";
 
+    buttomap[gp_sel]="GSEL";
+
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");
 		tmp=e;

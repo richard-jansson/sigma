@@ -84,7 +84,7 @@ var ling_up="P";
 var ling_down="J";
 var ling_sel="I";
 
-var DEBUG_OUTLINE=false;
+var DEBUG_OUTLINE=true;
 var LINEAR_SPOKES=false;
 var SHOW_STATS=true;
 
@@ -98,3 +98,6 @@ var BTN_MIN_T=80
 var SHOW_AXIS=false;
 // keys to select leaves 
 var dkeys=["I","L","K","J"];
+
+
+var gp_sel = 0;

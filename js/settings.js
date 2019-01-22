@@ -168,7 +168,9 @@ var settings={
     "gp_3":["gp_3","Select quad / branch 3","btn","14"],
 
     "gp_rst":["gp_rst","gamepad reset","btn","6"],
-    "gp_del":["gp_del","gamepad delete","btn","7"]
+    "gp_del":["gp_del","gamepad delete","btn","7"],
+
+    "gp_sel":["gp_sel","gamepad select","btn","0"]
 }
 
 function render(){

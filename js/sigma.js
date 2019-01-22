@@ -314,7 +314,7 @@ function init(){
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
 
-	stat=new stats(ctx,game,23+36*14,H-36*15,36*14-24,36*14,"red",18);
+	stat=new stats(ctx,game,23+39*14,H-36*15,36*12-24,36*10,"red",18);
 
     if(is_loggedin) updateStatsO();
 
@@ -328,7 +328,7 @@ function init(){
 		keyboard=new treeboard(freq_prof,stat,playertext,ctx,12,H-36*15,36*14,36*14,"red",108,40);
 	} else if(typeof(vkeyboard)!="undefined"){
 		weapon=1;
-		keyboard=new vkeyboard(ctx,36,H-36*12,W-36*4,36*10,"red",36,game.greek);
+		keyboard=new vkeyboard(stat,ctx,36,H-36*12,W-36*14,36*10,"red",36,game.greek);
 	}
 	else if(typeof(quadboard)!="undefined"){
 		weapon=2;
