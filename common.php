@@ -6,12 +6,14 @@ $allowed=
     "kb_up","kb_rgt","kb_dwn","kb_lft","kb_sel",
     "kb_0","kb_1","kb_2","kb_3",
     "gp_up","gp_rgt","gp_dwn","gp_lft",
-    "gp_0","gp_1","gp_2","gp_3",
+    "gp_0","gp_1","gp_2","gp_3", "gp_4","gp_5","gp_6","gp_7",
     "gp_rst","gp_del","gp_sel",
     "KB_INT","selq",
     "QUAD_COLS","QUAD_ROWS","QUAD_TOPPAD","QUAD_RPAD","QUAD_N_SHALLOW","QUAD_N_DEEP",
     "lin_up","lin_down","lin_sel","ling_up","ling_down","ling_sel",
     "DEBUG_OUTLINE","LINEAR_SPOKES","SHOW_STATS",
     "GAMEPAD_POLL_INT","GAMEPAD_AXIS_TRESH0","GAMEPAD_TRESH1",
-    "GAMEPAD_MIN_T","BTN_MIN_T","SHOW_AXIS"];
+    "GAMEPAD_MIN_T","BTN_MIN_T","SHOW_AXIS",
+    "QUAD_COLS","QUAD_ROWS","QUAD_N_SHALLOW","QUAD_N_DEEP"
+    ];
 ?>

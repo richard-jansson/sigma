@@ -212,6 +212,11 @@ function initgamepad(conf){
     buttomap[gp_2]="G2";
     buttomap[gp_3]="G3";
 
+    buttomap[gp_4]="G4";
+    buttomap[gp_5]="G5";
+    buttomap[gp_6]="G6";
+    buttomap[gp_7]="G7";
+
     buttomap[gp_rst]="GRST";
     buttomap[gp_del]="GDEL";
 

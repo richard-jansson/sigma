@@ -35,7 +35,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 */
 
-function maketree(i,r,c,n,m){
+function maketree(i,r,c,ns,ms){
+    var n=parseInt(ns);
+    var m=parseInt(ms);
 	var ret=[],queue=[];	
 	
 	for(var i=0;i<n;i++){

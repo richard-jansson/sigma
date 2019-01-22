@@ -17,6 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+var dbtns= ["G0","G1","G2","G3","G4","G5","G6","G7"];
+
 function __render_quad(branch,dim,fs,d){
 	var w=dim.w/QUAD_COLS;
 	var h=dim.h/QUAD_ROWS;
@@ -154,7 +156,8 @@ function __clear_quadboard(){
 function __qboard_kdown(e){
 	var code=e.code.toUpperCase();	
 
-	if(code==bcksp){
+	if(code==bcksp || code=="GDEL"){
+        this.stat.logact("del");
 		game.delSym();
 		return true;
 	}
@@ -164,14 +167,22 @@ function __qboard_kdown(e){
 function __qboard_kup(code){
 	var keyn=has_el(code,selq);
 
-	if(code==rst) this.__rst();
+	if(code==rst || code=="GRST" ){
+        this.stat.logact("rst");
+        this.__rst();
+    }
+	if(keyn==-1){
+	    keyn=has_el(code,dbtns);
+    }
 	if(keyn==-1) return;
 
 	if(typeof(this.tree[keyn])=="string"){
+        this.stat.logact("selleaf",keyn);
 		doKey(this.tree[keyn]);
 		this.tree=this.otree;
 		this.render();
 	}else if(typeof(this.tree[keyn])=="object"){
+        this.stat.logact("selbranch",keyn);
 		this.tree=this.tree[keyn];	
 		this.render();
 	}else{
@@ -188,7 +199,7 @@ function __qboard_sel(n){
 	console.log("stub");
 }
 
-function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
+function quadboard(stat,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=maketree(set,QUAD_ROWS,QUAD_COLS,QUAD_N_SHALLOW,QUAD_N_DEEP);
@@ -196,6 +207,7 @@ function quadboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	console.log("jhwui");
 
 	return {ctx:ctx,
+        stat: stat,
 		font: ft,
 		font_size: fts,
 		freq_prof: freq_prof,

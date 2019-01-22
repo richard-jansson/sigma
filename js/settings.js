@@ -146,6 +146,12 @@ var settings={
 	"FPS":["FPS","Frames per second","int","60","fps"],
 	"NUM_LEAVES":["NUM_LEAVES","Leaves per node","int","4",undefined,adjust_dkeys],
 
+	"QUAD_COLS":["QUAD_COLS","Columns for quad","int","4"],
+	"QUAD_ROWS":["QUAD_ROWS","Rows for quad","int","2"],
+	"QUAD_N_SHALLOW":["QUAD_N_SHALLOW","shallow boxes","int","7"],
+	"QUAD_N_DEEP":["QUAD_N_DEEP","deep boxes","int","1"],
+
+
 	"kb_up":["kb_up","Keyboard up","key","W"],
 	"kb_rgt":["kb_rgt","Keyboard right","key","D"],
 	"kb_dwn":["kb_dwn","Keyboard down","key","S"],
@@ -166,6 +172,11 @@ var settings={
     "gp_1":["gp_1","Select quad / branch 1","btn","15"],
     "gp_2":["gp_2","Select quad / branch 2","btn","13"],
     "gp_3":["gp_3","Select quad / branch 3","btn","14"],
+
+    "gp_4":["gp_4","Select quad / branch 4","btn","3"],
+    "gp_5":["gp_5","Select quad / branch 5","btn","1"],
+    "gp_6":["gp_6","Select quad / branch 6","btn","0"],
+    "gp_7":["gp_7","Select quad / branch 7","btn","2"],
 
     "gp_rst":["gp_rst","gamepad reset","btn","6"],
     "gp_del":["gp_del","gamepad delete","btn","7"],
