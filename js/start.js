@@ -281,8 +281,11 @@ function genTraining(t){
 }
 
 function inito(){
+
 	var canvas=document.getElementById("canvas");
 	ctx=canvas.getContext("2d");
+
+    initgamepad();
 	
 	ctx.font="54px serif";
 	ctx.fillStyle="white";
@@ -370,7 +373,9 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
-	if(menu.keydown(e)) e.preventDefault();
+	if(menu.keydown(e)){
+        if(typeof(e.preventDefault)!="undefined") e.preventDefault();
+    }
 }
 
 window.onkeyup=function(e){ 

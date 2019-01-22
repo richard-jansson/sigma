@@ -30,6 +30,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
 
+var dkeys=[kb_up,kb_rgt,kb_dwn,kb_lft];
+
+var sel_m=[kb_0,kb_1,kb_2,kb_3];
+
+var dbtns= ["G0","G1","G2","G3"];
+var sel_mbtn= ["GN","GE","GS","GW"];
+
+
 function setToTree(set,n,m){
 	var ret=[];
 
@@ -270,8 +278,9 @@ function __animate_treeboard(s,e){
 // of said event
 function __tboard_kdown(e){
 	var code=e.code.toUpperCase();	
+	var key=e.key.toUpperCase();	
 
-	if(code==bcksp){
+	if(code==bcksp || key=="GDEL" ){
 //		doDelete();		
 		game.delSym();
 		return true;
@@ -330,8 +339,11 @@ function __tboard_sel_branch(branch_n){
 
 function __tboard_kup(code){
 	var keyn=-1;
+    var key = code;
 
-	if(key==rst){
+    console.log(code);
+
+	if(key==rst || key == "GRST"){
 		this.__rst();
 		this.stat.logact("rst",undefined);
 	}
@@ -339,6 +351,13 @@ function __tboard_kup(code){
 		this.__sel_node(keyn);
 		this.stat.logact("node",keyn);
 	} else if(-1!=(keyn=has_el(key,sel_m))){
+		this.__sel_branch(keyn);
+		this.stat.logact("branch",keyn);
+	}
+	else if(-1!=(keyn=has_el(key,dbtns))){
+		this.__sel_node(keyn);
+		this.stat.logact("node",keyn);
+	} else if(-1!=(keyn=has_el(key,sel_mbtn))){
 		this.__sel_branch(keyn);
 		this.stat.logact("branch",keyn);
 	}

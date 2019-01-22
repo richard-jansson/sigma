@@ -82,8 +82,8 @@ function __menu_render(p){
   function __menu_kdown(e){
 	  var code=e.code.toUpperCase();	
 	  var key=e.key.toUpperCase();	
-
-	  if(code=="SPACE" || code=="ENTER"){
+        
+	  if(code=="SPACE" || code=="ENTER" || key == "G0"){
 		  var i=0;
 
 		  // when on about page just skip back
@@ -145,7 +145,7 @@ function __menu_render(p){
 
 
 		  return true;
-	  }if(key=="W" || key=="ARROWUP"){
+	  }if(key=="W" || key=="ARROWUP" || key == "GN"){
 		  this.cursor=this.cursor-1;
 		  if(this.cursor<0) this.cursor=this.mposts-1;
 
@@ -154,7 +154,7 @@ function __menu_render(p){
 		  this.render();
 
 		  return true;
-	  }else if(key=="S" || key=="ARROWDOWN"){
+	  }else if(key=="S" || key=="ARROWDOWN" || key == "GS"){
 		  this.cursor=(this.cursor+1)%this.mposts;
 		  if(!mute) hit.play();
 		  this.clear();

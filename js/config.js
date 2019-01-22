@@ -23,8 +23,6 @@ var FPS=60;
 //var dkeys=["W","D","S","A"];
 // keys to select branches
 //var sel_m=["Q","F"];
-// keys to select leaves 
-var dkeys=["I","L","K","J"];
 // keys to select branches
 var sel_m=["U","O",";","H"]; // back to root branch 
 var rst="N";
@@ -48,6 +46,11 @@ var kb_rgt="D";
 var kb_dwn="S";
 var kb_lft="A";
 var kb_sel="E";
+
+var kb_0="Q";
+var kb_1="E";
+var kb_2="C";
+var kb_3="Z";
 
 var KB_INT=150;
 
@@ -93,3 +96,5 @@ var GAMEPAD_MIN_T=64
 var BTN_MIN_T=80
 
 var SHOW_AXIS=false;
+// keys to select leaves 
+var dkeys=["I","L","K","J"];

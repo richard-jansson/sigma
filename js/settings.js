@@ -154,8 +154,8 @@ var settings={
 
     "kb_0":["kb_0","Select quad / branch 0","key","Q"],
     "kb_1":["kb_1","Select quad / branch 1","key","E"],
-    "kb_2":["kb_1","Select quad / branch 2","key","C"],
-    "kb_3":["kb_1","Select quad / branch 3","key","Z"],
+    "kb_2":["kb_2","Select quad / branch 2","key","C"],
+    "kb_3":["kb_3","Select quad / branch 3","key","Z"],
     
     "gp_up":["gp_up","Gamepad up","btn","3"],
     "gp_rgt":["gp_rgt","Gamepad right","btn","1"],
@@ -165,7 +165,10 @@ var settings={
     "gp_0":["gp_0","Select quad / branch 0","btn","12"],
     "gp_1":["gp_1","Select quad / branch 1","btn","15"],
     "gp_2":["gp_2","Select quad / branch 2","btn","13"],
-    "gp_3":["gp_3","Select quad / branch 3","btn","14"]
+    "gp_3":["gp_3","Select quad / branch 3","btn","14"],
+
+    "gp_rst":["gp_rst","gamepad reset","btn","6"],
+    "gp_del":["gp_del","gamepad delete","btn","7"]
 }
 
 function render(){

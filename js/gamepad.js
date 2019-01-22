@@ -19,11 +19,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 var gpads=[];
 
-var buttomap={
-	0:"K",
-	1:"L",
-	2:"J",
-	3:"I",
+var buttomap={}
+/*	gp_dwn:"GS",
+	gp_rgt:"GE",
+	gp_lft:"GW",
+	gp_up:"GN",
 
 	6:"N",
 	7:"SPACE",
@@ -32,6 +32,7 @@ var buttomap={
 	15:"O",
 	13:";",
 	14:"H"};
+    */
 
 // lefthanded
 /*
@@ -54,7 +55,7 @@ var axismap={
 	// left stick on playstation
 		"I":{2:0,3:-1}, 
 	"J":{2: -1,3:0}, "L":{2:1,3:0},
-		"K":{2:0,3: 1}
+		"K":{2:0,3: 1},
 }
 
 var axisstate=[];
@@ -63,14 +64,14 @@ var btnstate=[];
 // testing one at the time
 var axismap={
 	// left stick on playstation
-	"U":{2:-1,3:-1},
-	"O":{2: 1,3:-1},
-	"H":{2:-1,3: 1},
-    ";":{2: 1,3: 1},
+	"GNW":{2:-1,3:-1},
+	"GNE":{2: 1,3:-1},
+	"GSW":{2:-1,3: 1},
+    "GSE":{2: 1,3: 1},
 	// left stick on playstation
-		"I":{2:0,3:-1},
-	"J":{2: -1,3:0}, "L":{2:1,3:0},
-		"K":{2:0,3: 1}
+		"GN":{2:0,3:-1},
+	"GW":{2: -1,3:0}, "GE":{2:1,3:0},
+		"GS":{2:0,3: 1},
 }
 
 var axis_val=[];
@@ -96,8 +97,8 @@ function pollgamepads(){
                         delete btnstate[k];
 
 				        var e={key:buttomap[i],code:buttomap[i]};
-        				if(i==7) window.onkeydown(e);
-        				else window.onkeyup(e);
+        				window.onkeydown(e);
+        				window.onkeyup(e);
                     }
                 }
 			}else{
@@ -155,7 +156,6 @@ function pollgamepads(){
 				var e={key:i,code:i};
                 window.onkeyup(e);
                 */
-                console.log("hit on " + i);
                 if(typeof(axisstate[i])=="undefined"){
                     axisstate[i]=new Date();
                 }else{
@@ -164,6 +164,7 @@ function pollgamepads(){
                         delete axisstate[i];
 				        var e={key:i,code:i};
                         window.onkeyup(e);
+                        window.onkeydown(e);
                     }
                 }
             }else{
@@ -201,7 +202,18 @@ function pollgamepads(){
 }
 
 function initgamepad(conf){
-    
+    buttomap[gp_dwn]="GS";
+    buttomap[gp_rgt]="GE";
+    buttomap[gp_lft]="GW";
+    buttomap[gp_up]="GN";
+
+    buttomap[gp_0]="G0";
+    buttomap[gp_1]="G1";
+    buttomap[gp_2]="G2";
+    buttomap[gp_3]="G3";
+
+    buttomap[gp_rst]="GRST";
+    buttomap[gp_del]="GDEL";
 
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");
