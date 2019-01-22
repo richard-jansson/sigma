@@ -83,7 +83,7 @@ function __menu_render(p){
 	  var code=e.code.toUpperCase();	
 	  var key=e.key.toUpperCase();	
         
-	  if(code=="SPACE" || code=="ENTER" || key == "G0"){
+	  if(code=="SPACE" || code=="ENTER" || code == "GSEL"){
 		  var i=0;
 
 		  // when on about page just skip back
