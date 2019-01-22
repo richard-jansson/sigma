@@ -31,7 +31,7 @@ function __genDynSet(){
 
 	for(var k in allsym){
 		var l=getSymLog(ptota,k);	
-		console.log(k +" : " + l); 
+//		console.log(k +" : " + l); 
 		freq_log[k]=l;
 	}
 
@@ -65,7 +65,7 @@ function __linear(set,x0,y0,offset,col){
 }
 
 function __spiral(set,x0,y0,offset,dir,col){
-	var r=this.w/3-128*1.3;
+	var r=this.w/3-32*1.3;
 
 	var ao=Math.PI/4;
 	var a=-Math.PI/2;
@@ -155,7 +155,7 @@ function __lin_render(p){
 	}
 	*/
 
-	this.linear(this.set,this.x0+this.w/2-128,this.y0,this.offset,"red");
+	this.linear(this.set,this.x0+this.w/2-32,this.y0,this.offset,"red");
 
 	this.linear(this.dynset,
 		this.x0+this.w/2,
@@ -194,18 +194,63 @@ function __lin_kdown(e){
 	var code=e.key.toUpperCase();	
 	var e_code=e.code.toUpperCase();	
 
-
-	if(ling_up==code){
+    if(code=="GLRN"){
 		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
-		this.rep_start(e,code);
-	}else if(ling_down==code){
+        this.stat.logact("rightnorth");
+    }
+    if(code=="GLRS"){
+        this.stat.logact("rightsouth");
 		if(this.greenoffset>this.dynset.length-5){
 			console.log("BEEEP");
 		}else{
+            this.stat.logact("rightsel");
+			this.greenoffset++;	
+		}
+    }
+    if(code=="GLRSEL"){
+        this.stat.logact("rightsel");
+		doKey(this.dynset[this.greenoffset]);	
+
+		// recalculate the new dynamic set 
+		this.dynset=this.genDynSet();
+		this.greenoffset=0;
+
+		this.offset=0;
+		this.clear();
+		this.render();
+    }
+    if(code=="GLLN"){
+		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
+        this.stat.logact("leftnorth");
+    }
+    if(code=="GLLS"){
+		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
+        this.stat.logact("leftsouth");
+    }
+    if(code=="GLLSEL"){
+        this.stat.logact("leftsel");
+		doKey(this.dynset[this.greenoffset]);	
+    }
+    if(code=="GLDEL"){
+        this.stat.logact("del");
+		game.delSym();
+    }
+
+	if(ling_up==code){
+		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
+        this.stat.logact("rightnorth");
+		this.rep_start(e,code);
+	}else if(ling_down==code ){
+        this.stat.logact("rightsouth");
+		if(this.greenoffset>this.dynset.length-5){
+			console.log("BEEEP");
+		}else{
+            this.stat.logact("rightsel");
 			this.greenoffset++;	
 		}
 		this.rep_start(e,code);
-	}else if(ling_sel==code){
+	}else if(ling_sel==code ){
+        this.stat.logact("rightsel");
 		doKey(this.dynset[this.greenoffset]);	
 
 		// recalculate the new dynamic set 
@@ -299,7 +344,7 @@ function __lin_sel(n){
 	console.log("stub");
 }
 
-function linboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
+function linboard(freq_prof,stat,target,ctx,x,y,w,h,style,fts,ft){
 	var	set=sortX(freq_prof[""]);	
 //	var ftop=freq_prof[""][set[0]];
 //	tree=setToTree(set,N,M);
@@ -307,6 +352,7 @@ function linboard(freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	var __goffset=0;
 
 	return {ctx:ctx,
+        stat: stat,
 		font: ft,
 		font_size: fts,
 		freq_prof: freq_prof,
