@@ -37,6 +37,8 @@ var sel_m=[kb_0,kb_1,kb_2,kb_3];
 var dbtns= ["GTB_0","GTB_1","GTB_2","GTB_3"];
 var sel_mbtn= ["GTL_0","GTL_1","GTL_2","GTL_3"];
 
+var daxis=["GN","GE","GS","GW"];
+var sel_maxi=["GNW","GNE","GSE","GSW"];
 
 function setToTree(set,n,m){
 	var ret=[];
@@ -358,6 +360,13 @@ function __tboard_kup(code){
 		this.__sel_node(keyn);
 		this.stat.logact("node",keyn);
 	} else if(-1!=(keyn=has_el(key,sel_mbtn))){
+		this.__sel_branch(keyn);
+		this.stat.logact("branch",keyn);
+	}
+	else if(-1!=(keyn=has_el(key,daxis))){
+		this.__sel_node(keyn);
+		this.stat.logact("node",keyn);
+	} else if(-1!=(keyn=has_el(key,sel_maxi))){
 		this.__sel_branch(keyn);
 		this.stat.logact("branch",keyn);
 	}
