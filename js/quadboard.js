@@ -157,8 +157,8 @@ function __qboard_kdown(e){
 	var code=e.code.toUpperCase();	
 
 	if(code==bcksp || code=="GDEL"){
+		this.game.delSym();
         this.stat.logact("del");
-		game.delSym();
 		return true;
 	}
 	return false;
@@ -166,10 +166,12 @@ function __qboard_kdown(e){
 // Code as string directly
 function __qboard_kup(code){
 	var keyn=has_el(code,selq);
-
+        
+    console.log(code);
+    
 	if(code==rst || code=="GRST" ){
-        this.stat.logact("rst");
         this.__rst();
+        this.stat.logact("rst");
     }
 	if(keyn==-1){
 	    keyn=has_el(code,dbtns);
@@ -199,7 +201,7 @@ function __qboard_sel(n){
 	console.log("stub");
 }
 
-function quadboard(stat,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
+function quadboard(stat,game,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=maketree(set,QUAD_ROWS,QUAD_COLS,QUAD_N_SHALLOW,QUAD_N_DEEP);
@@ -228,6 +230,7 @@ function quadboard(stat,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 		__rst: __qboard_rst,
 //		__sel_node:__qboard_sel_node,
 //		__sel_branch:__qboard_sel_branch
-		__render_quad: __render_quad
+		__render_quad: __render_quad,
+        game: game
 		}
 }

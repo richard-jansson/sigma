@@ -312,20 +312,19 @@ function init(){
 	wpm=new textArea(ctx,0,0,275,144,"green",144);
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
-	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,72,"red",72,true);
-
+	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,102,"red",62,true); 
 	stat=new stats(ctx,game,23+39*14,H-36*15,36*12-24,36*10,"red",18);
 
     if(is_loggedin) updateStatsO();
 
-//	axes_l=gaxes(ctx,W-400,H-400,360,360,[0,1]);
-	axes_r=gaxes(ctx,W-W/2,H-36*15,W/2,H/2,[2,3]);
+	axes_l=gaxes(ctx,W/2+2*36,H-5*36,5*36,5*36,[0,1]);
+	axes_r=gaxes(ctx,W/2+7*36,H-5*36,5*36,5*36,[2,3]);
 	
 	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined"){
 		weapon=0;
-		keyboard=new treeboard(freq_prof,stat,playertext,ctx,12,H-36*15,36*14,36*14,"red",108,40);
+		keyboard=new treeboard(freq_prof,stat,playertext,ctx,0,H-36*15,36*15,36*14,"red",108,40);
 	} else if(typeof(vkeyboard)!="undefined"){
 		weapon=1;
 		keyboard=new vkeyboard(stat,ctx,36,H-36*12,W-36*14,36*10,"red",36,game.greek);
@@ -355,6 +354,7 @@ function init(){
 		music.play();
 	}
 	
+    stat.render();
 	doWord();
 
 	keyboard.render();
