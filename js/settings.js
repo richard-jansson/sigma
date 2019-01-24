@@ -5,10 +5,10 @@ var curr_btn=false;
 var curr_id=false;
 
 window.onkeydown = function(e){
-    console.log("keydown");
+    console.log("keydown:" + e.code);
 }
 window.onkeyup = function(e){
-    console.log("keyup");
+    console.log("keyup"+ e.code);
 }
 
 // mashes togehter buttons from different controllers

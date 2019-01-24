@@ -402,6 +402,7 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
+    console.log(e.code);
 	if(waiting) return;
 	if(stat) stat.logkey(e);
 	if(keyboard.keydown(e)) e.preventDefault();

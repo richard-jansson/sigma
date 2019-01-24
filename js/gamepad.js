@@ -18,64 +18,41 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 var gpads=[];
-
 var buttomap={}
-/*	gp_dwn:"GS",
-	gp_rgt:"GE",
-	gp_lft:"GW",
-	gp_up:"GN",
-
-	6:"N",
-	7:"SPACE",
-	
-	12:"U",
-	15:"O",
-	13:";",
-	14:"H"};
-    */
-
-// lefthanded
-/*
-var axismap={
-	// left stick on playstation
-	"U":{0:-1,1:-1}, "O":{0: 1,1:-1},
-	"H":{0:-1,1: 1}, ";":{0: 1,1: 1},
-	// left stick on playstation
-		"I":{0:0,1:-1}, 
-	"J":{0: -1,1:0}, "L":{0:1,1:0},
-		"K":{0:0,1: 1}
-}
-*/
-
-// the right hand path
-var axismap={
-	// left stick on playstation
-	"U":{2:-1,3:-1}, "O":{2: 1,3:-1},
-	"H":{2:-1,3: 1}, ";":{2: 1,3: 1},
-	// left stick on playstation
-		"I":{2:0,3:-1}, 
-	"J":{2: -1,3:0}, "L":{2:1,3:0},
-		"K":{2:0,3: 1},
-}
-
 var axisstate=[];
 var btnstate=[];
 var btnstate2=[];
 
 // testing one at the time
-var axismap={
+var axismap_r={
 	// left stick on playstation
-	"GNW":{2:-1,3:-1},
-	"GNE":{2: 1,3:-1},
-	"GSW":{2:-1,3: 1},
-    "GSE":{2: 1,3: 1},
+	"GARNW":{2:-1,3:-1},
+	"GARNE":{2: 1,3:-1},
+	"GARSW":{2:-1,3: 1},
+    "GARSE":{2: 1,3: 1},
 	// left stick on playstation
-		"GN":{2:0,3:-1},
-	"GW":{2: -1,3:0}, "GE":{2:1,3:0},
-		"GS":{2:0,3: 1},
+		"GARN":{2:0,3:-1},
+	"GARW":{2: -1,3:0}, "GARE":{2:1,3:0},
+		"GARS":{2:0,3: 1},
+}
+var axismap_l={
+	// left stick on playstation
+	"GALNW":{0:-1,1:-1},
+	"GALNE":{0: 1,1:-1},
+	"GALSW":{0:-1,1: 1},
+    "GALSE":{0: 1,1: 1},
+	// left stick on playstation
+		"GALN":{0:0,1:-1},
+	"GALW":{0: -1,1:0}, "GALE":{0:1,1:0},
+		"GALS":{0:0,1: 1},
 }
 
+var axismaps=[axismap_l,axismap_r];
+
 var axis_val=[];
+
+function do_axis(axes,axismap){
+}
 
 function pollgamepads(){
 	var npads=navigator.getGamepads();
@@ -213,7 +190,7 @@ function initgamepad(conf){
 		}
 	});
 
-    setInterval(pollgamepads,GAMEPAD_POLL_INT);
+//    setInterval(pollgamepads,GAMEPAD_POLL_INT);
     setInterval(pollgamepads2,GAMEPAD_POLL_INT);
 }
 function pollgamepads2(){
@@ -235,7 +212,8 @@ function pollgamepads2(){
                     if(dt > BTN_MIN_T){
                         delete btnstate[k];
 
-				        var e={key:buttomap[i],code:buttomap[i]};
+				        var e={key:k,code:k,type:"gpad_btn",
+                            value:buttons[i].value};
         				window.onkeydown(e);
         				window.onkeyup(e);
                     }
@@ -243,8 +221,9 @@ function pollgamepads2(){
             }else delete btnstate[k];
         }
 
-		axis_val=axes;
 
+       for(var axismap_k in axismaps){
+        var axismap=axismaps[axismap_k];
 		for(var i in axismap){
 			var match=true;
 
@@ -292,6 +271,7 @@ function pollgamepads2(){
                 delete axisstate[i];
             }
 		}
+        }
 			
 	}
 }
