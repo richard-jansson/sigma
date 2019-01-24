@@ -66,15 +66,21 @@ span.quant {
     float:left;	
     border: 1px solid black;
     background-color: #724343;
-    height: 64px;
 }
 
-.signal, .keys, .add{
+.signal, .key, .add{
     float: left;
     border: 1px solid black;
     height: 48px;
     padding: 8 20px;
 }
-.keys {
+.key {
     background-color: #965858;
+}
+.msg {
+    background-color: #949658;
+    border:4px solid #727143; 
+    padding: 8px 20px;
+    color: white;
+    display: none;
 }
