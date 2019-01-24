@@ -45,7 +45,7 @@ function addBindAct(signal,code){
 
     var group=$(".group[signal='"+signal+"']");
     var key=$("<div></div>",{class:"key"});
-    var tc=$("<span>"+code+"</span>");
+    var tc=$("<span>"+code+"</span>",{class:"keyval"});
     var td=$("<span>(X)</span>",{class:"del"});
     td.click(delBind);
     key.append(tc);
@@ -63,10 +63,43 @@ function addBind(){
     expKey();
 }
 
+function getSignal(e,signal){
+    var keys=e.find("span.keyval");
+    var ret=[];
+    keys.each(function(){
+        ret.push($(this).html());
+    });
+    return ret;
+}
+
+function save(){
+    var block=$(this).parents(".configblock");
+
+    var groups=block.find(".group");
+
+    data={signals:{}};
+
+    groups.each(function(){
+        var signal=$(this).attr("signal");
+        if(typeof(signal)!="undefined"){
+            console.log(signal);
+            data.signals[signal]=getSignal($(this),signal);
+            console.log(data.signals[signal]);
+        }
+    })
+    console.log(data);
+    $.get("settings2.php",data,function(d){
+        console.log("request success");
+    });
+}
+
 function setupKeys(){
     $(".keys .del").click(delBind);
     $(".group .newbind").click(addBind);
+    
+    $(".savebtn").click(save);
 }
+
 
 $(document).ready(function(){
     initgamepad();
