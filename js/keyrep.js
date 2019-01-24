@@ -45,6 +45,5 @@ function __rep_stop(code){
 
 function __rep_wrap(o){
 	var t=o.o;
-	console.log("keyrep");
 	t.keydown(o.ev);
 }

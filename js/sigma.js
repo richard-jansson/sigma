@@ -313,7 +313,7 @@ function init(){
 	wpmt=new textArea(ctx,0,144,275,72,"green",72);
 	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
 	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,102,"red",62,true); 
-	stat=new stats(ctx,game,23+39*14,H-36*15,36*12-24,36*10,"red",18);
+	stat=new stats(ctx,game,23+39*14,H-36*13,36*14-24,36*10,"red",18);
 
     if(is_loggedin) updateStatsO();
 

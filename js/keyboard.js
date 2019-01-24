@@ -81,13 +81,58 @@ function __kboard_kdown(e) {
 	code=e.code.toUpperCase();
 
 	if(typeof(code)=="undefined") return false;
+    signal=this.input.getSignal(code);
+    console.log("Sig: " +signal);
+    switch(signal){
+        case "DELETE":
+		    game.delSym();
+            this.stat.logact("del");
+            this.clear();
+            this.render();
+            return true;
+            break;
+        case "SELECT":
+    		doKey(this.rows[this.cur_y][this.cur_x]);
+            this.stat.logact("sel");
+            this.clear();
+            this.render();
+    		return false;
+            break;
+        case "DOWN":
+			this.cur_y = (this.cur_y+1 > 2) ? 2 : this.cur_y +1; 
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+            break;
+        case "UP":
+			this.cur_y = (this.cur_y-1 < 0) ? 0 : this.cur_y -1; 
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+            this.stat.logact("movenorth");
+            break;
+        case "LEFT":
+            this.stat.logact("movewest");
+            this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
+            break;
+        case "RIGHT":
+            this.stat.logact("moveeast");
+			this.cur_x++;
+			if(this.cur_x>=this.rows[this.cur_y].length){
+				this.cur_x=this.rows[this.cur_y].length-1;
+			}
+            break;
+    }
+	this.clear();
+	this.render();
 
-
-	if(bcksp==code || code=="GDEL"){
+    return false; 
+    if(signal=="DELETE"){
 		game.delSym();
         this.stat.logact("del");
 		return true;
-	} if(kb_sel==code || code=="KEYE" || code=="GSEL"){
+    } 
+    if(signal=="SELECT"){
 		doKey(this.rows[this.cur_y][this.cur_x]);
         this.stat.logact("sel");
 		return false;
@@ -125,7 +170,6 @@ function __kboard_kdown(e) {
             this.cur_x = (this.cur_x-1 < 0) ? 0 : this.cur_x -1; 
 		}else if(kb_rgt==code || "GE"==code){
             this.stat.logact("moveeast");
-//			this.cur_x = (this.cur_x+1 > 9) ? 9 : this.cur_x +1;
 			this.cur_x++;
 			if(this.cur_x>=this.rows[this.cur_y].length){
 				this.cur_x=this.rows[this.cur_y].length-1;
@@ -147,9 +191,11 @@ function __kboard_kdown(e) {
 }
 
 function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek){
+    var input = new inputo("key");
+    
 	var enrows=[["q","w","e","r","t","y","u","i","o","p","'"],
 		["a","s","d","f","g","h","j","k","l",":"],
-		["z","x","c","v","b","n","m",",",".","?"]];
+		["z","x","c","v","b","n","m",",",".","?", "’"] ];
 	var greekrows=[
 		[";","ς","ε","ρ","τ","υ","ύ","θ","ι","ο","ό","π"],
 		["α","σ","δ","φ","γ","η","ξ","κ","λ"],
@@ -158,6 +204,7 @@ function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek){
 	var rows=typeof(greek)=="undefined"||greek==false?enrows:greekrows;
 
 	return {
+        input: input,
         stat: stat,
 		rows:rows,
 		native_repeat: false,

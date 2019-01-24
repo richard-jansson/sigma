@@ -5,10 +5,16 @@ if(!isset($_GET["block"])){
     die("no block specified");
 }
 
+$block=$_GET["block"];
 session_start();
 if(!isset($_SESSION["user_id"])){
-    die("var is_loggedin=false");
+    foreach($defcfg[$block] as $k => $v){
+     $cfgs[$k]=$v;
+    }
+//    echo "var is_loggedin = false;";
+    return;
 }
+
 include "cfg.php";
 include "common.php";
 
@@ -26,9 +32,6 @@ $r=mysqli_query($con,$q);
 if(!$r) die();
 $cfgs=array();
 
-foreach($defcfg[$block] as $k => $v){
-    $cfgs[$k]=$v;
-}
 while($row=mysqli_fetch_assoc($r)){
     $cfgs[$row["cfg_key"]]=$row["cfg_val"];
 }

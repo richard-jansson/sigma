@@ -16,3 +16,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+function __input_get_signal(code){
+    console.log(code);
+    for(var k in this.bindings){
+        for(var k1 in this.bindings[k]){
+            if(this.bindings[k][k1].toUpperCase()==code) return k;
+        }
+    }
+    return false;
+}
+
+function inputo(block){
+    var cdata=cfg[block];
+    var bindings={};
+    console.log(cdata);
+    for(k in cdata){
+        var bind=JSON.parse(cdata[k]);
+        bindings[k]=bind;
+    }
+
+    return {bindings:bindings,getSignal:__input_get_signal};
+}

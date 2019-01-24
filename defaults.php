@@ -6,8 +6,8 @@
             "DOWN"=>'["KeyS","ArrowDown","GARS"]',
             "LEFT"=>'["KeyA","ArrowLeft","GARW"]',
 
-            "SELECT"=>'["KeyE","Space"]',
-            "DELETE"=>'["KeyQ","Shift"]'
+            "SELECT"=>'["KeyE","Space","GBTN_0","GBTN_5"]',
+            "DELETE"=>'["KeyQ","Shift","GBTN_6"]'
             ] 
     );
 

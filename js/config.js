@@ -89,14 +89,14 @@ var DEBUG_OUTLINE=false;
 var LINEAR_SPOKES=false;
 var SHOW_STATS=true;
 
-var GAMEPAD_POLL_INT=5
-var GAMEPAD_AXIS_TRESH0=0.4;
-var GAMEPAD_AXIS_TRESH1=0.4;
+var GAMEPAD_POLL_INT=1
+var GAMEPAD_AXIS_TRESH0=0.15;
+var GAMEPAD_AXIS_TRESH1=0.3;
 
-var GAMEPAD_MIN_T=80
+var GAMEPAD_MIN_T=30
 var BTN_MIN_T=80
 
-var SHOW_AXIS=true;
+var SHOW_AXIS=false;
 // keys to select leaves 
 var dkeys=["I","L","K","J"];
 
