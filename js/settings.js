@@ -45,8 +45,10 @@ function addBindAct(signal,code){
 
     var group=$(".group[signal='"+signal+"']");
     var key=$("<div></div>",{class:"key"});
-    var tc=$("<span>"+code+"</span>",{class:"keyval"});
-    var td=$("<span>(X)</span>",{class:"del"});
+    var tc=$("<span></span>",{class:"keyval"});
+    tc.html(code);
+    var td=$("<span></span>",{class:"del"});
+    td.html("(X)");
     td.click(delBind);
     key.append(tc);
     key.append(td);
