@@ -4,6 +4,13 @@ var defaults={};
 var curr_btn=false;
 var curr_id=false;
 
+window.onkeydown = function(e){
+    console.log("keydown");
+}
+window.onkeyup = function(e){
+    console.log("keyup");
+}
+
 // mashes togehter buttons from different controllers
 function conf_pollgamepads(){
     if(!curr_id) return;
@@ -234,7 +241,9 @@ function inita(){
 var cback=null;
 
 function init(){
-    setInterval(conf_pollgamepads,GAMEPAD_POLL_INT);
+//    setInterval(conf_pollgamepads,GAMEPAD_POLL_INT);
+
+    initgamepad(); 
 
 	for(var k in settings){
 //		console.log(settings[k]);

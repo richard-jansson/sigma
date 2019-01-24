@@ -60,6 +60,7 @@ var axismap={
 
 var axisstate=[];
 var btnstate=[];
+var btnstate2=[];
 
 // testing one at the time
 var axismap={
@@ -135,27 +136,11 @@ function pollgamepads(){
 
             var x0 = ri*Math.cos(ra+a) 
             var y0 = ri*Math.sin(ra+a) 
-            
-/*
-            console.log("checking against"+i);
-            console.log("deg: "+rad+ " v. " + ad);
-            */
-//            console.log(a + " " + ad)
-//            console.log(ra + " " + rad)
-            
-/*            console.log(xi + " " + yi)
-            console.log(x0 + " " + y0)
-            */
-
 
             if( y0 > GAMEPAD_AXIS_TRESH0 
                 && 
                 Math.abs(x0) < Math.abs(GAMEPAD_AXIS_TRESH1)
             ){
-/*                console.log("k: "+i);
-				var e={key:i,code:i};
-                window.onkeyup(e);
-                */
                 if(typeof(axisstate[i])=="undefined"){
                     axisstate[i]=new Date();
                 }else{
@@ -170,32 +155,6 @@ function pollgamepads(){
             }else{
                 delete axisstate[i];
             }
-
-/*			for(var axis in axismap[i]){
-				var th=axismap[i][axis]*GAMEPAD_AXIS_TRESH0;
-				var v=axes[axis];
-				
-				var a=th*v;
-				var b=Math.abs(v)-Math.abs(th);
-				
-				if(th ==0 && Math.abs(v) > (GAMEPAD_AXIS_TRESH1)) {
-					match=false;
-					break;
-				}
-
-				if(a<0 || b<0) {
-					match=false;
-					break;
-				}
-			}
-			if(match){
-				console.log(i);
-				var e={key:i,code:i};
-				// FIXME
-				if(i==7) window.onkeydown(e);
-				else window.onkeyup(e);
-			}
-            */
 		}
 			
 	}
@@ -255,6 +214,86 @@ function initgamepad(conf){
 	});
 
     setInterval(pollgamepads,GAMEPAD_POLL_INT);
+    setInterval(pollgamepads2,GAMEPAD_POLL_INT);
+}
+function pollgamepads2(){
+	var npads=navigator.getGamepads();
+	for(var k in gpads){
+		var ind=gpads[k];
+		var gpad=npads[ind];
+
+		var buttons=gpad.buttons;
+		var axes=gpad.axes;
+
+		for(var i in buttons){
+            var k = "GBTN_"+i;
+			if(buttons[i].pressed){
+                if(typeof(btnstate[k])=="undefined"){
+                    btnstate[k]=new Date();
+                }else {
+                    var dt=new Date()-btnstate[k]
+                    if(dt > BTN_MIN_T){
+                        delete btnstate[k];
+
+				        var e={key:buttomap[i],code:buttomap[i]};
+        				window.onkeydown(e);
+        				window.onkeyup(e);
+                    }
+                }
+            }else delete btnstate[k];
+        }
+
+		axis_val=axes;
+
+		for(var i in axismap){
+			var match=true;
+
+// use angles instead 
+            var triggerv=[];
+            var inpv=[];
+			for(var axis in axismap[i]){
+                triggerv.push(axismap[i][axis])
+                inpv.push(axes[axis])
+            }
+//            console.log(triggerv);
+            // 2d for now, ought to be enough
+            var x = triggerv[0]
+            var y = triggerv[1]
+            var a = Math.atan2(x,y);
+            var ad = 180.0*a/Math.PI;
+
+
+            // input
+            var xi = inpv[0]
+            var yi = inpv[1] 
+            var ri = Math.sqrt(xi*xi+yi*yi)
+            var ra = 0-Math.atan2(xi,yi)+Math.PI/2;
+            var rad = 180.0*ra/Math.PI;
+
+            var x0 = ri*Math.cos(ra+a) 
+            var y0 = ri*Math.sin(ra+a) 
+
+            if( y0 > GAMEPAD_AXIS_TRESH0 
+                && 
+                Math.abs(x0) < Math.abs(GAMEPAD_AXIS_TRESH1)
+            ){
+                if(typeof(axisstate[i])=="undefined"){
+                    axisstate[i]=new Date();
+                }else{
+                    var dt=new Date()-axisstate[i];
+                    if(dt > GAMEPAD_MIN_T){
+                        delete axisstate[i];
+				        var e={key:i,code:i};
+                        window.onkeyup(e);
+                        window.onkeydown(e);
+                    }
+                }
+            }else{
+                delete axisstate[i];
+            }
+		}
+			
+	}
 }
 
 function __render_vect(c,x,y,mx,my){
