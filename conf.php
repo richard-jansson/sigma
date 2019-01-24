@@ -16,9 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<?php
-
-?>
+<?php include "dbcfg.php"; ?>
 <html>
 	<head>
     <meta charset="UTF-8" />
@@ -44,38 +42,28 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
                 <span>Message space</span>
             </div>
             <?php
-                foreach
-            ?>
-<!--            <div class="group" signal="UP">
+            foreach($cfgs as $k => $v){ ?>
+            <div class="group" signal="<?php echo $k; ?>">
                 <div class="signal"> 
-                    <span>UP:</span>
+                    <span><?php echo $k; ?>:</span>
                 </div>
-                <div class="keys">
+            <div class="keys">
+                <?php foreach(json_decode($v) as $i => $key) { ?>
                     <div class="key">
-                        <span class="keyval">KeyW</span>
+                        <span class="keyval"><?php echo $key; ?></span>
                         <span class="del">(X)</span>
                     </div>
-                    <div class="key">
-                        <span class="keyval">ArrowUp</span>
-                        <span class="del">(X)</span>
-                    </div>
-                    <div class="key">
-                        <span class="keyval">GBTN12</span>
-                        <span class="del">(X)</span>
-                    </div>
-                    <div class="key">
-                        <span class="keyval">GALN</span>
-                        <span class="del">(X)</span>
-                    </div>
-                </div>
--->
+                <?php } ?> 
+            </div>
                 <div class="add">
                     <div class="new">
                         <span class="newbind">ADD</span>
                     </div>
                 </div>
-
             </div>
+            <?php
+            }
+            ?>
             <div class="group">
                 <div class="save">
                     <div class="savebtn">
