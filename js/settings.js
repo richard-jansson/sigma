@@ -74,6 +74,7 @@ function getSignal(e,signal){
 
 function save(){
     var block=$(this).parents(".configblock");
+    var cfgblock=block.attr("weapon");
 
     var groups=block.find(".group");
 
@@ -88,8 +89,12 @@ function save(){
         }
     })
     console.log(data);
-    $.get("settings2.php",data,function(d){
-        console.log("request success");
+    $.get("save2.php",{block:cfgblock,data: data},function(d){
+        if(d.status=="failed"){
+            // FIMXE print to msg 
+        }else{
+            console.log("request success");
+        }
     });
 }
 
