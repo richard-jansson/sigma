@@ -1,5 +1,15 @@
 <?php
 header('Content-type: text/javascript');
+?>
+
+var GAMEPAD_POLL_INT=10
+var GAMEPAD_AXIS_TRESH0=0.4;
+var GAMEPAD_AXIS_TRESH1=0.4;
+
+var GAMEPAD_MIN_T=80
+var BTN_MIN_T=80
+
+<?php
 session_start();
 if(!isset($_SESSION["user_id"])){
     die("var is_loggedin=false");
@@ -37,10 +47,3 @@ var <?php echo $k ?> = "<?php echo $v; ?>";
 <?php
 }
 ?>
-
-var GAMEPAD_POLL_INT=10
-var GAMEPAD_AXIS_TRESH0=0.4;
-var GAMEPAD_AXIS_TRESH1=0.4;
-
-var GAMEPAD_MIN_T=80
-var BTN_MIN_T=80

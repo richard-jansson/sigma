@@ -7,10 +7,11 @@ if(!isset($_GET["block"])){
 
 $block=$_GET["block"];
 session_start();
+$cfgs=array();
+foreach($defcfg[$block] as $k => $v){
+    $cfgs[$k]=$v;
+}
 if(!isset($_SESSION["user_id"])){
-    foreach($defcfg[$block] as $k => $v){
-     $cfgs[$k]=$v;
-    }
 //    echo "var is_loggedin = false;";
     return;
 }
@@ -30,7 +31,6 @@ $q="SELECT * FROM config WHERE user_id = ".$_SESSION["user_id"]." and cfgblock =
 
 $r=mysqli_query($con,$q);
 if(!$r) die();
-$cfgs=array();
 
 while($row=mysqli_fetch_assoc($r)){
     $cfgs[$row["cfg_key"]]=$row["cfg_val"];

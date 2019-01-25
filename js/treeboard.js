@@ -282,9 +282,11 @@ function __tboard_kdown(e){
 	var code=e.code.toUpperCase();	
 	var key=e.key.toUpperCase();	
 
-	if(code==bcksp || key=="GT_DEL" ){
-//		doDelete();		
+    var signal=this.input.getSignal(code);
+
+    if(signal=="DELETE"){
 		game.delSym();
+        this.stat.logact("delete");
 		return true;
 	}
 	return false;
@@ -345,55 +347,42 @@ function __tboard_kup(code){
 
     console.log(code);
 
-	if(key==rst || key == "GT_RST"){
+    var signal=this.input.getSignal(code);
+
+    console.log(signal);
+    
+    // select branch
+    if(signal.substr(0,4)=="SELB"){
+        var keyn=parseInt(signal.substr(4));
+		this.__sel_branch(keyn);
+		this.stat.logact("branch",keyn);
+    }
+    // select leaf
+    if(signal.substr(0,4)=="SELL"){
+        var keyn=parseInt(signal.substr(4));
+		this.__sel_node(keyn);
+		this.stat.logact("node",keyn);
+    }
+
+    if(signal=="RESET"){
 		this.__rst();
 		this.stat.logact("rst",undefined);
-	}
-	else if(-1!=(keyn=has_el(key,dkeys))){
-		this.__sel_node(keyn);
-		this.stat.logact("node",keyn);
-	} else if(-1!=(keyn=has_el(key,sel_m))){
-		this.__sel_branch(keyn);
-		this.stat.logact("branch",keyn);
-	}
-	else if(-1!=(keyn=has_el(key,dbtns))){
-		this.__sel_node(keyn);
-		this.stat.logact("node",keyn);
-	} else if(-1!=(keyn=has_el(key,sel_mbtn))){
-		this.__sel_branch(keyn);
-		this.stat.logact("branch",keyn);
-	}
-	else if(-1!=(keyn=has_el(key,daxis))){
-		this.__sel_node(keyn);
-		this.stat.logact("node",keyn);
-	} else if(-1!=(keyn=has_el(key,sel_maxi))){
-		this.__sel_branch(keyn);
-		this.stat.logact("branch",keyn);
-	}
+    }
+    
 
 	// do not prevent event 
 	return false;
 }
 
 function treeboard(freq_prof,stat,target,ctx,x,y,w,h,style,fs,yofs){
-    buttomap[gptl_0]="GTL_0";
-    buttomap[gptl_1]="GTL_1";
-    buttomap[gptl_2]="GTL_2";
-    buttomap[gptl_3]="GTL_3";
-
-    buttomap[gptb_0]="GTB_0";
-    buttomap[gptb_1]="GTB_1";
-    buttomap[gptb_2]="GTB_2";
-    buttomap[gptb_3]="GTB_3";
-
-    buttomap[gpt_rst]="GT_RST";
-    buttomap[gpt_del]="GT_DEL";
+    var input = new inputo("tree");
 
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=setToTree(set,N,M);
 
 	return {ctx:ctx,
+        input: input,
 		freq_prof: freq_prof,
 		set: set,
 		yofs: yofs,
