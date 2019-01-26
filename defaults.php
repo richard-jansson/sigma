@@ -13,11 +13,14 @@
             "SELB0"=>'["GBTN_14"]',
             "SELB1"=>'["GBTN_12"]',
             "SELB2"=>'["GBTN_15"]',
+            "SELB3"=>'["GBTN_15"]',
 
             "RESET"=>'["GBTN_13"]',
 
             "SELL0"=>'["GBTN_0"]',
             "SELL1"=>'["GBTN_1"]',
+            "SELL2"=>'["GBTN_0"]',
+            "SELL3"=>'["GBTN_1"]',
 
             "DELETE"=>'["GBTN_6"]'
         ]

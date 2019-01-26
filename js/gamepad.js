@@ -119,6 +119,9 @@ function pollgamepads(){
                 Math.abs(x0) < Math.abs(GAMEPAD_AXIS_TRESH1)
             ){
                 if(typeof(axisstate[i])=="undefined"){
+				    var e={key:i,code:i};
+                    window.onkeyup(e);
+                    window.onkeydown(e);
                     axisstate[i]=new Date();
                 }else{
                     var dt=new Date()-axisstate[i];
@@ -138,42 +141,6 @@ function pollgamepads(){
 }
 
 function initgamepad(conf){
-/*
-    buttomap[gp_dwn]="GS";
-    buttomap[gp_rgt]="GE";
-    buttomap[gp_lft]="GW";
-    buttomap[gp_up]="GN";
-
-    buttomap[gp_0]="G0";
-    buttomap[gp_1]="G1";
-    buttomap[gp_2]="G2";
-    buttomap[gp_3]="G3";
-
-    buttomap[gp_4]="G4";
-    buttomap[gp_5]="G5";
-    buttomap[gp_6]="G6";
-    buttomap[gp_7]="G7";
-
-    buttomap[gp_del]="GDEL";
-
-    buttomap[gp_sel]="GSEL";
-    buttomap[gp_rst]="GRST";
-    */ 
-// tree
-    
-    // linear config 
-    /*9
-    buttomap[gplin0_dwn]="GLLS";
-    buttomap[gplin0_up]="GLLN";
-    buttomap[gplin0_sel]="GLLSEL";
-
-    buttomap[gplin1_dwn]="GLRS";
-    buttomap[gplin1_up]="GLRN";
-    buttomap[gplin1_sel]="GLRSEL";
-
-    buttomap[gplin_del]="GLDEL";
-    */
-
 	window.addEventListener("gamepadconnected",function(e){
 		console.log("Got gamepad");
 		tmp=e;
@@ -201,6 +168,8 @@ function pollgamepads2(){
 
 		var buttons=gpad.buttons;
 		var axes=gpad.axes;
+		
+        axis_val=axes;
 
 		for(var i in buttons){
             var k = "GBTN_"+i;

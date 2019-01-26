@@ -36,9 +36,7 @@ var treeN1_mult=0.4;
 var tree_rad_mult=1.6;
 // 
 var mute=false;
-
-/* 
- *  Keybindings for classic keyboard.
+/*  Keybindings for classic keyboard.
  *
  */ 
 var kb_up="W";
@@ -90,13 +88,13 @@ var LINEAR_SPOKES=false;
 var SHOW_STATS=true;
 
 var GAMEPAD_POLL_INT=1
-var GAMEPAD_AXIS_TRESH0=0.15;
-var GAMEPAD_AXIS_TRESH1=0.3;
+var GAMEPAD_AXIS_TRESH0=0.5;
+var GAMEPAD_AXIS_TRESH1=0.5;
 
-var GAMEPAD_MIN_T=30
+var GAMEPAD_MIN_T=80
 var BTN_MIN_T=80
 
-var SHOW_AXIS=false;
+var SHOW_AXIS=true;
 // keys to select leaves 
 var dkeys=["I","L","K","J"];
 

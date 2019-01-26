@@ -309,22 +309,22 @@ function init(){
 
 //	curr=genTraining(tree);
 
-	wpm=new textArea(ctx,0,0,275,144,"green",144);
-	wpmt=new textArea(ctx,0,144,275,72,"green",72);
-	gametext=new textArea(ctx,280,36,(W-280)*0.8,36*3,"white");
-	playertext=new textArea(ctx,280,36*4,(W-280)*0.8,102,"red",62,true); 
-	stat=new stats(ctx,game,23+39*14,H-36*13,36*14-24,36*10,"red",18);
+	wpm=new textArea(ctx,20,20,275-20,144,"green",144);
+	wpmt=new textArea(ctx,20,20+144,275-20,72,"green",72);
+	gametext=new textArea(ctx,300,36,(W-280)*0.8,36*3,"white");
+	playertext=new textArea(ctx,300,36*4,(W-280)*0.8,102,"red",62,true); 
+	stat=new stats(ctx,game,43+39*14,H-36*14,36*14-24,36*10,"red",18);
 
     if(is_loggedin) updateStatsO();
 
-	axes_l=gaxes(ctx,W/2+2*36,H-5*36,5*36,5*36,[0,1]);
-	axes_r=gaxes(ctx,W/2+7*36,H-5*36,5*36,5*36,[2,3]);
+	axes_l=gaxes(ctx,W/2+2*36,H-4*36+20,5*36,3*36,[0,1]);
+	axes_r=gaxes(ctx,W/2+7*36,H-4*36+20,5*36,3*36,[2,3]);
 	
 	var weapon=0;
 //	if(typeof(treeboard)!="undefined") keyboard=new treeboard(freq_prof,playertext,ctx,36,36,W-36*2,H-36,"red");
 	if(typeof(treeboard)!="undefined"){
 		weapon=0;
-		keyboard=new treeboard(freq_prof,stat,playertext,ctx,0,H-36*15,36*15,36*14,"red",108,40);
+		keyboard=new treeboard(freq_prof,stat,playertext,ctx,0,H-36*14,36*15,36*14,"red",108,40);
 	} else if(typeof(vkeyboard)!="undefined"){
 		weapon=1;
 		keyboard=new vkeyboard(stat,ctx,36,H-36*12,W-36*14,36*10,"red",36,game.greek);
@@ -402,10 +402,11 @@ function doDelete(){
 }
 
 window.onkeydown=function(e){
-    console.log(e.code);
 	if(waiting) return;
 	if(stat) stat.logkey(e);
-	if(keyboard.keydown(e)) e.preventDefault();
+	if(keyboard.keydown(e)  && typeof(e.preventDefault)=="function"){
+        e.preventDefault();
+    }
 }
 
 window.onkeyup=function(e){ 

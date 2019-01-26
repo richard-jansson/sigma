@@ -335,7 +335,7 @@ function __tboard_sel_branch(branch_n){
 	p0.a=-0.39;
 	p1.a=0;
 
-	console.log("animate from "+JSON.stringify(p0)+" to "+ JSON.stringify(p1));
+//	console.log("animate from "+JSON.stringify(p0)+" to "+ JSON.stringify(p1));
 	if(this.inanim) throw "Already animating...";
 
 	this.anim(p0,p1);
@@ -345,11 +345,10 @@ function __tboard_kup(code){
 	var keyn=-1;
     var key = code;
 
-    console.log(code);
-
     var signal=this.input.getSignal(code);
-
-    console.log(signal);
+    
+    if(!signal) return;
+//    console.log(signal);
     
     // select branch
     if(signal.substr(0,4)=="SELB"){

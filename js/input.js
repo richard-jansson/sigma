@@ -18,7 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 function __input_get_signal(code){
-    console.log(code);
     for(var k in this.bindings){
         for(var k1 in this.bindings[k]){
             if(this.bindings[k][k1].toUpperCase()==code) return k;

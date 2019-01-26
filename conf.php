@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<a href="/"><img src="img/home.png" alt="logo" /></a>
 		</div>
 		<div id="settingswrap">
-		<div id="settings" weapon="key" class="configblock">
+		<div id="settings" weapon="<?php echo $_GET["block"]; ?>" class="configblock">
             <div class="heading">
                     <h2>Virtual keyboard</h2>
              </div>
