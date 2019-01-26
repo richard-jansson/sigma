@@ -27,21 +27,24 @@ function is_json($v){
     return false;
 }
 
-function is_boolean($v){
+/*function is_boolean($v){
     if($v==="false") return true;
     if($v==="true") return true;
     return false;
 }
+*/
 function is_integer2($v){
     $a=$v;
     $b=(int)$v;
     return $a==$b ? true : false;
 }
+/*
 function is_float2($v){
     $a=$v;
     $b=(float)$v;
     return $a==$b ? true : false;
 }
+*/
 
 function print_bool($k,$v){ 
     $s=$v?"checked":"";
@@ -129,7 +132,7 @@ function print_key($k,$v){ ?>
                 print "F: ".(is_float2($v)?"Y":"N")."</br>";
                 */
 
-                if(is_boolean($v)) print_bool($k,$v);
+                if(is_bool($v) || is_boolean($v)) print_bool($k,$v);
                 else if(is_json($v)) print_key($k,$v);
                 else if(is_integer2($v)) print_int($k,$v);
                 else if(is_float2($v)) print_int($k,$v);

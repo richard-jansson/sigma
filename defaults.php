@@ -1,7 +1,7 @@
 <?php
     $defcfg=array( 
         "general"=>[
-            "mute"=> false,
+            "mute"=> true,
 
             "ANIMT"=>5,
             "FPS"=>60,
