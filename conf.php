@@ -67,12 +67,9 @@ function print_int($k,$v){ ?>
         <input type="text" value="<?php echo $v; ?>" />
     </div>
     </div>
-<?php
-}
+<?php }
 
-function print_key($k,$v){ 
-print $v;
-?>
+function print_key($k,$v){ ?>
     <div class="group" signal="<?php echo $k; ?>">
     <div class="signal"> 
                 <span><?php echo $k; ?>:</span>
