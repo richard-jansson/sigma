@@ -18,6 +18,42 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 <?php include "dbcfg.php"; 
 
+function is_json($v){
+    if($v{0}=="[") return true; 
+    return false;
+}
+
+function is_boolean($v){
+    if($v==="false") return true;
+    if($v==="true") return true;
+    return false;
+}
+function is_integer2($v){
+    $a=$v;
+    $b=(int)$v;
+    return $a==$b ? true : false;
+}
+function is_float2($v){
+    $a=$v;
+    $b=(float)$v;
+    return $a==$b ? true : false;
+}
+
+function print_bool($k,$v){ 
+    $s=$v?"checked":"";
+?>
+    
+    <div class="group" input="<?php echo $k; ?>">
+    <div class="option">
+        <span><?php echo $k; ?>:</span>
+    </div>
+    <div class="value">
+        <input type="checkbox" <?php echo $s; ?> />
+    </div>
+    </div>
+<?php
+}
+
 function print_int($k,$v){ ?>
     <div class="group" input="<?php echo $k; ?>">
     <div class="option">
@@ -30,7 +66,9 @@ function print_int($k,$v){ ?>
 <?php
 }
 
-function print_key($k,$v){ ?>
+function print_key($k,$v){ 
+print $v;
+?>
     <div class="group" signal="<?php echo $k; ?>">
     <div class="signal"> 
                 <span><?php echo $k; ?>:</span>
@@ -81,8 +119,20 @@ function print_key($k,$v){ ?>
             <?php
             foreach($cfgs as $k => $v){ ?>
                 <?php 
-                if(is_int($v)) print_int($k,$v);
-                else print_key($k,$v);
+
+                /*
+                $vc=$v;
+                print "$v </br>";
+                print "B: ".(is_boolean($v)?"Y":"N")."</br>";
+                print "I: ".(is_integer2($v)?"Y":"N")."</br>";
+                print "F: ".(is_float2($v)?"Y":"N")."</br>";
+                */
+
+                if(is_boolean($v)) print_bool($k,$v);
+                else if(is_json($v)) print_key($k,$v);
+                else if(is_integer2($v)) print_int($k,$v);
+                else if(is_float2($v)) print_int($k,$v);
+                else print_key($k,$vc);
                 ?>
             <?php
             }

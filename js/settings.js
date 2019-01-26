@@ -92,7 +92,12 @@ function save(){
         }
         if(typeof(input)!="undefined"){
             var inp = $(this).find("input");
-            data.inputs[input]=parseInt(inp.val());
+            if(inp.attr("type")=="checkbox"){
+                data.inputs[input]=typeof(inp.attr("checkbox"))!="undefined";
+            }else {
+                data.inputs[input]=parseInt(inp.val());
+            }
+
         }
     })
     console.log(data);

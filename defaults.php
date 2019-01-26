@@ -1,11 +1,14 @@
 <?php
     $defcfg=array( 
         "general"=>[
+            "mute"=> false,
+
             "ANIMT"=>5,
             "FPS"=>60,
             "N_LEAVES"=>4,
             "N_BRANCHES"=>4,
             "treeN1_mult"=>0.4,
+            "tree_rad_mult"=>1.6,
 
             "QUAD_COLS"=>4,
             "QUAD_ROWS"=>2,
@@ -18,7 +21,13 @@
     		"GAMEPAD_AXIS_TRESH0"=>0.5,
 	    	"GAMEPAD_AXIS_TRESH1"=>0.5,
     		"GAMEPAD_MIN_T"=>80,
-		    "BTN_MIN_T"=>80
+		    "BTN_MIN_T"=>80,
+            "KB_INT"=>150,
+
+            "DEBUG_OUTLINE"=>false,
+            "LiNEAR_SPOKES"=>false,
+            "SHOW_STATS"=>true,
+            "SHOW_AXIS"=>true
         ],
         "key"=>[
             "UP"=>'["KeyW","ArrowUp","GARN"]',
