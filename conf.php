@@ -16,7 +16,44 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<?php include "dbcfg.php"; ?>
+<?php include "dbcfg.php"; 
+
+function print_int($k,$v){ ?>
+    <div class="group" input="<?php echo $k; ?>">
+    <div class="option">
+        <span><?php echo $k; ?>:</span>
+    </div>
+    <div class="value">
+        <input type="text" value="<?php echo $v; ?>" />
+    </div>
+    </div>
+<?php
+}
+
+function print_key($k,$v){ ?>
+    <div class="group" signal="<?php echo $k; ?>">
+    <div class="signal"> 
+                <span><?php echo $k; ?>:</span>
+    </div>
+    <?php
+    foreach(json_decode($v) as $i => $key) {?>
+    <div class="keys">
+        <div class="key">
+            <span class="keyval"><?php echo $key; ?></span>
+            <span class="del">(X)</span>
+        </div>
+    </div>
+<?php
+    }
+    ?>
+    <div class="new">
+        <span class="newbind">ADD</span>
+    </div>
+    </div>
+<?php
+}
+
+?>
 <html>
 	<head>
     <meta charset="UTF-8" />
@@ -43,24 +80,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
             </div>
             <?php
             foreach($cfgs as $k => $v){ ?>
-            <div class="group" signal="<?php echo $k; ?>">
-                <div class="signal"> 
-                    <span><?php echo $k; ?>:</span>
-                </div>
-            <div class="keys">
-                <?php foreach(json_decode($v) as $i => $key) { ?>
-                    <div class="key">
-                        <span class="keyval"><?php echo $key; ?></span>
-                        <span class="del">(X)</span>
-                    </div>
-                <?php } ?> 
-            </div>
-                <div class="add">
-                    <div class="new">
-                        <span class="newbind">ADD</span>
-                    </div>
-                </div>
-            </div>
+                <?php 
+                if(is_int($v)) print_int($k,$v);
+                else print_key($k,$v);
+                ?>
             <?php
             }
             ?>

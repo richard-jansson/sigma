@@ -67,10 +67,13 @@ if(!isset($_GET["block"])){
 $block=mysqli_real_escape_string($con,$_GET["block"]); 
 
 $signals=$_GET["data"]["signals"];
-
-
 foreach($signals as $k => $v){
     insupd($con,$_SESSION["user_id"],$block,$k,json_encode($v));
+}
+
+$inputs=$_GET["data"]["inputs"];
+foreach($inputs as $k => $v){
+    insupd($con,$_SESSION["user_id"],$block,$k,$v);
 }
 
 

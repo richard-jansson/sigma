@@ -1,5 +1,25 @@
 <?php
     $defcfg=array( 
+        "general"=>[
+            "ANIMT"=>5,
+            "FPS"=>60,
+            "N_LEAVES"=>4,
+            "N_BRANCHES"=>4,
+            "treeN1_mult"=>0.4,
+
+            "QUAD_COLS"=>4,
+            "QUAD_ROWS"=>2,
+            "QUAD_TOPPAD"=>20,
+            "QUAD_RPAD"=>5,
+            "QUAD_NSHALLOW"=>7,
+            "QUAD_NDEEP"=>7,
+
+            "GAMEPAD_POLL_INT"=>1,
+    		"GAMEPAD_AXIS_TRESH0"=>0.5,
+	    	"GAMEPAD_AXIS_TRESH1"=>0.5,
+    		"GAMEPAD_MIN_T"=>80,
+		    "BTN_MIN_T"=>80
+        ],
         "key"=>[
             "UP"=>'["KeyW","ArrowUp","GARN"]',
             "RIGHT"=>'["KeyD","ArrowRight","GARE"]',

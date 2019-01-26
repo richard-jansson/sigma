@@ -80,14 +80,19 @@ function save(){
 
     var groups=block.find(".group");
 
-    data={signals:{}};
+    data={signals:{},inputs:{}};
 
     groups.each(function(){
         var signal=$(this).attr("signal");
+        var input=$(this).attr("input");
         if(typeof(signal)!="undefined"){
             console.log(signal);
             data.signals[signal]=getSignal($(this),signal);
             console.log(data.signals[signal]);
+        }
+        if(typeof(input)!="undefined"){
+            var inp = $(this).find("input");
+            data.inputs[input]=parseInt(inp.val());
         }
     })
     console.log(data);

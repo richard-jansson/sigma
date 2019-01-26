@@ -68,7 +68,7 @@ span.quant {
     background-color: #724343;
 }
 
-.signal, .key, .add, .savebtn{
+.signal, .key, .add, .savebtn,.option,.value{
     float: left;
     border: 1px solid black;
     height: 48px;
