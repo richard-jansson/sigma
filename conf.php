@@ -16,7 +16,11 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<?php include "dbcfg.php"; 
+<?php 
+
+if(!in_array($_GET["block"],array("general","key","tree"))) die();
+
+include "dbcfg.php"; 
 
 function is_json($v){
     if($v{0}=="[") return true; 
@@ -111,7 +115,7 @@ print $v;
 		<div id="settingswrap">
 		<div id="settings" weapon="<?php echo $_GET["block"]; ?>" class="configblock">
             <div class="heading">
-                    <h2>Virtual keyboard</h2>
+                    <h2><?php echo $_GET["block"]; ?></h2>
              </div>
             <div class="msg">
                 <span>Message space</span>

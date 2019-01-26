@@ -93,7 +93,7 @@ function save(){
         if(typeof(input)!="undefined"){
             var inp = $(this).find("input");
             if(inp.attr("type")=="checkbox"){
-                data.inputs[input]=typeof(inp.attr("checkbox"))!="undefined";
+                data.inputs[input]=inp.is(":checked");
             }else {
                 data.inputs[input]=parseInt(inp.val());
             }
