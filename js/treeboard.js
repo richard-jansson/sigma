@@ -30,10 +30,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  */
 
-var dkeys=[kb_up,kb_rgt,kb_dwn,kb_lft];
-
-var sel_m=[kb_0,kb_1,kb_2,kb_3];
-
 var dbtns= ["GTB_0","GTB_1","GTB_2","GTB_3"];
 var sel_mbtn= ["GTL_0","GTL_1","GTL_2","GTL_3"];
 
@@ -169,8 +165,8 @@ function __render_treeboard(p){
 
 
   // code duplication
-  for(var i=0;i<N;i++){
-	  a=i*2*Math.PI/N+o;
+  for(var i=0;i<N_LEAVES;i++){
+	  a=i*2*Math.PI/N_LEAVES+o;
 	  x0=Math.cos(a)*r*treeN1_mult+x;
 	  y0=Math.sin(a)*r*treeN1_mult+y;
 
@@ -205,7 +201,7 @@ function __render_treeboard(p){
 	
 	var s2coords=[];
 	
-	for(var i=0;i<M;i++){
+	for(var i=0;i<N_BRANCHES;i++){
 		a=o+i*2*Math.PI/4;	
 		
 		y0=Math.sin(a)*r*tree_rad_mult;
@@ -217,7 +213,7 @@ function __render_treeboard(p){
 		this.ctx.stroke();
 
 		s2coords.push({x:(x+x0),y:(y+y0),a:a});
-		__render_tree(ctx,this.tree[4+i],x+x0,y+y0,N,M,fs,a,r);
+		__render_tree(ctx,this.tree[4+i],x+x0,y+y0,N_LEAVES,N_BRANCHES,fs,a,r);
 	}
 		
 	if(typeof(p)=="undefined"){
@@ -294,7 +290,7 @@ function __tboard_kdown(e){
 
 function __tboard_rst(){
 	this.set=sortX(this.freq_prof[""]);	
-	this.tree=setToTree(this.set,N,M);
+	this.tree=setToTree(this.set,N_LEAVES,N_BRANCHES);
 
 	this.clear();
 	this.render();
@@ -310,7 +306,7 @@ function __tboard_sel_node(node_n){
 	}
 
 	this.set=sortX(freq_prof[""]);	
-	this.tree=setToTree(this.set,N,M);
+	this.tree=setToTree(this.set,N_LEAVES,N_BRANCHES);
 
 	this.clear();
 	this.render();
@@ -319,14 +315,14 @@ function __tboard_sel_node(node_n){
 // select the branch_n:t branch  
 function __tboard_sel_branch(branch_n){
 	// FIXME check
-	if(typeof(this.tree[N+branch_n])=="undefined" || this.tree[N+branch_n].length==0){
+	if(typeof(this.tree[N_LEAVES+branch_n])=="undefined" || this.tree[N_LEAVES+branch_n].length==0){
 		if(!mute) err.play();	
 		return;
 	}
 
 	if(!mute) rot.play();
 
-	this.tree=this.tree[N+branch_n];
+	this.tree=this.tree[N_LEAVES+branch_n];
 
 	var p0=this.coords[1][branch_n];
 	var p1=this.coords[0];
@@ -378,7 +374,7 @@ function treeboard(freq_prof,stat,target,ctx,x,y,w,h,style,fs,yofs){
 
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
-	tree=setToTree(set,N,M);
+	tree=setToTree(set,N_LEAVES,N_BRANCHES);
 
 	return {ctx:ctx,
         input: input,

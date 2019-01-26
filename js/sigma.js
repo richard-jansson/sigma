@@ -16,6 +16,31 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+var mute=cfg.general.mute;
+var ANIMT=cfg.general.ANIMT;
+var FPS=cfg.general.FPS;
+var N_LEAVES=cfg.general.N_LEAVES;
+var N_BRANCHES=cfg.general.N_BRANCHES;
+var treeN1_mult=cfg.general.treeN1_mult;
+var tree_rad_mult=cfg.general.tree_rad_mult;
+var QUAD_COLS=cfg.general.QUAD_COLS;
+var QUAD_ROWS=cfg.general.QUAD_ROWS;
+var QUAD_TOPPAD=cfg.general.QUAD_TOPPAD;
+var QUAD_RPAD=cfg.general.QUAD_RPAD;
+var QUAD_NSHALLOW=cfg.general.QUAD_NSHALLOW;
+var QUAD_NDEEP=cfg.general.QUAD_NDEEP;
+var GAMEPAD_POLL_INT=cfg.general.GAMEPAD_POLL_INT;
+var GAMEPAD_AXIS_TRESH0=cfg.general.GAMEPAD_AXIS_TRESH0;
+var GAMEPAD_AXIS_TRESH1=cfg.general.GAMEPAD_AXIS_TRESH1;
+var GAMEPAD_MIN_T=cfg.general.GAMEPAD_MIN_T;
+var BTN_MIN_T=cfg.general.BTN_MIN_T;
+var KB_INT=cfg.general.KB_INT;
+var DEBUG_OUTLINE=cfg.general.DEBUG_OUTLINE;
+var LiNEAR_SPOKES=cfg.general.LiNEAR_SPOKES;
+var SHOW_STATS=cfg.general.SHOW_STATS;
+var SHOW_AXIS=cfg.general.SHOW_AXIS;
+
 var weapon;
 var canvas;
 var ctx;
