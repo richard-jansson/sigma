@@ -20,7 +20,7 @@ function login(){
         }else{
             $("#login_msg").html("");
             console.log("success");
-            window.location="conf.html";
+            window.location="conf.php?block=general";
         }
     }).fail(function(){
         $("#login_msg").html("Failed to submit request, please try again.");
@@ -60,8 +60,21 @@ function register(){
     
     $("#register_msg").html("");
 }
+
+function logout(){
+    $.get("logout.php",function(){
+        window.location.href="login.html";
+    });
+}
+
 $(document).ready(function(){
-    console.log("ready");
-    $("#login").click(login);
-    $("#register").click(register);
+    if(is_loggedin){ 
+        $("#settingswrap").hide();
+        $("#logout").show();
+        $("#lunames").html(user_name);
+        $("#logoutlnk").click(logout);
+    }else{
+        $("#login").click(login);
+        $("#register").click(register);
+    }
 })

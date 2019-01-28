@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
     	<link href="css/settings.css" rel="stylesheet" />
     	<link href="css/login.css" rel="stylesheet" />
 		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="settings3.php?block=general"></script>
 		<script type="text/javascript" src="js/login.js"></script>
 
 		<title>The Brave Future of Text</title>
@@ -31,6 +32,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<div id="logo">
 			<a href="/"><img src="img/home.png" alt="logo" /></a>
 		</div>
+		<div id="logout" style="display:none">
+            <h1>Login / Register</h1>
+            <p>You are logged in as <span id="lunames"></span></p>
+            <a id="logoutlnk" href="javascript:logout()">Log out</a>
+        </div>
 		<div id="settingswrap">
             <h1>Login / Register</h1>
             <p>In order to save your settings you'll have to sign up. Obviously we're using cookies to keep track of your session.</p>

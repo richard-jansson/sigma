@@ -22,3 +22,8 @@
     border:2px solid #920505;
     display: none;
 }
+#logout {
+	width: 800px;
+	margin: 2% 5% 20% 20%;
+	float: left;
+}
