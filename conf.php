@@ -18,14 +18,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 <?php 
 
-if(!in_array($_GET["block"],array("general","key","tree"))) die();
+if(!in_array($_GET["block"],array("general","key","tree","quad"))) die();
 
 include "dbcfg.php"; 
 
-function is_json($v){
-    if($v{0}=="[") return true; 
-    return false;
-}
 
 /*function is_boolean($v){
     if($v==="false") return true;

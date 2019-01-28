@@ -12,6 +12,10 @@ function is_float2($v){
     $b=(float)$v;
     return $a==$b ? true : false;
 }
+function is_json($v){
+    if($v{0}=="[") return true; 
+    return false;
+}
 }
 
 if(!isset($_GET["block"]) && !$block){
@@ -48,9 +52,10 @@ if(!$r) die();
 
 while($row=mysqli_fetch_assoc($r)){
     if(is_boolean($row["cfg_val"])) $v=$row["cfg_val"]=="true"?true:false;
+    else if(is_json($v)) $v=$row["cfg_val"];
     else if(is_float2($row["cfg_val"])) $v=(float)$row["cfg_val"];
     else $v=$row["cfg_val"];
-//    $cfgs[$row["cfg_key"]]=$row["cfg_val"];
+
     $cfgs[$row["cfg_key"]]=$v;
 }
 
