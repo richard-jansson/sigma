@@ -190,7 +190,7 @@ function __kboard_kdown(e) {
 	}
 }
 
-function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek){
+function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek,russian){
     var input = new inputo("key");
     
 	var enrows=[["q","w","e","r","t","y","u","i","o","p","'"],
@@ -200,8 +200,16 @@ function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek){
 		[";","ς","ε","ρ","τ","υ","ύ","θ","ι","ο","ό","π"],
 		["α","σ","δ","φ","γ","η","ξ","κ","λ"],
 		["ζ","χ","ψ","ω","β","ν","μ",","]];
+	var russianrows=[
+        ["й","ц","у","к","е","н","г","ш","щ","з","х","ъ"],
+        ["ф","ы","в","а","п","р","о","л","д","ж","э"],
+        ["я","ч","с","м","и","т","ь","б",","]]
 
 	var rows=typeof(greek)=="undefined"||greek==false?enrows:greekrows;
+
+    if(typeof(russian)!="undefined"){
+        rows=russianrows;
+    }
 
 	return {
         input: input,

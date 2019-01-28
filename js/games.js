@@ -226,6 +226,7 @@ function gamexx(match,partial,del){
 		content:books[level],
 		freq_prof:books[level].freq_prof,
 		greek: typeof(books[level].greek)!="undefined"&&books[level].greek,
+        russian: typeof(books[level].russian)!="undefined"&&books[level].russian,
 		nxtWord: nxtWord,
 		splitWord: splitWord,
 		addSym:addSym,
