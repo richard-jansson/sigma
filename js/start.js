@@ -16,6 +16,13 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+var mute=cfg.general.mute;
+var GAMEPAD_POLL_INT=cfg.general.GAMEPAD_POLL_INT;
+var GAMEPAD_AXIS_TRESH0=cfg.general.GAMEPAD_AXIS_TRESH0;
+var GAMEPAD_AXIS_TRESH1=cfg.general.GAMEPAD_AXIS_TRESH1;
+var GAMEPAD_MIN_T=cfg.general.GAMEPAD_MIN_T;
+var BTN_MIN_T=cfg.general.BTN_MIN_T;
+
 var waiting=true;
 var curr;
 var pword="";

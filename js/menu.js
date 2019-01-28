@@ -82,8 +82,13 @@ function __menu_render(p){
   function __menu_kdown(e){
 	  var code=e.code.toUpperCase();	
 	  var key=e.key.toUpperCase();	
+    
+        var signal=this.input.getSignal(code);
+
+        if(!signal) return;
         
-	  if(code=="SPACE" || code=="ENTER" || code == "GSEL"){
+//	  if(code=="SPACE" || code=="ENTER" || code == "GSEL"){
+      if(signal=="SELECT"){
 		  var i=0;
 
 		  // when on about page just skip back
@@ -145,7 +150,8 @@ function __menu_render(p){
 
 
 		  return true;
-	  }if(key=="W" || key=="ARROWUP" || key == "GN"){
+//	  }if(key=="W" || key=="ARROWUP" || key == "GN"){
+    }else if(signal=="UP"){
 		  this.cursor=this.cursor-1;
 		  if(this.cursor<0) this.cursor=this.mposts-1;
 
@@ -154,7 +160,8 @@ function __menu_render(p){
 		  this.render();
 
 		  return true;
-	  }else if(key=="S" || key=="ARROWDOWN" || key == "GS"){
+//	  }else if(key=="S" || key=="ARROWDOWN" || key == "GS"){
+    }else if(signal=="DOWN"){
 		  this.cursor=(this.cursor+1)%this.mposts;
 		  if(!mute) hit.play();
 		  this.clear();
@@ -174,6 +181,7 @@ function __menu_render(p){
   }
 
   function gmenu(ctx,x,y,w,h,style,fts,ft){
+    var input = new inputo("menu");
 	  var weapons={"tree":0,"quad":1,"classic":2,"lin":3,
 	  		"back":{back:true}};
 
@@ -192,6 +200,7 @@ function __menu_render(p){
 
 	return {
 		path: [],
+        input: input,
 		ctx:ctx,
 		font: ft,
 		omenu: menu,

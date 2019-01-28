@@ -29,6 +29,11 @@
             "SHOW_STATS"=>true,
             "SHOW_AXIS"=>true
         ],
+        "menu"=>[
+            "SELECT"=>'["KeyE","Space","GBTN_0","GBTN_5"]',
+            "UP"=>'["KeyW","ArrowUp","GARN"]',
+            "DOWN"=>'["KeyS","ArrowDown","GARS"]'
+        ],
         "key"=>[
             "UP"=>'["KeyW","ArrowUp","GARN"]',
             "RIGHT"=>'["KeyD","ArrowRight","GARE"]',
