@@ -14,8 +14,8 @@
             "QUAD_ROWS"=>2,
             "QUAD_TOPPAD"=>20,
             "QUAD_RPAD"=>5,
-            "QUAD_N_SHALLOW"=>7,
-            "QUAD_N_DEEP"=>7,
+            "QUAD_N_SHALLOW"=>3,
+            "QUAD_N_DEEP"=>1,
 
             "GAMEPAD_POLL_INT"=>1,
     		"GAMEPAD_AXIS_TRESH0"=>0.5,
