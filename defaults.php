@@ -10,12 +10,12 @@
             "treeN1_mult"=>0.4,
             "tree_rad_mult"=>1.6,
 
-            "QUAD_COLS"=>4,
+            "QUAD_COLS"=>2,
             "QUAD_ROWS"=>2,
             "QUAD_TOPPAD"=>20,
             "QUAD_RPAD"=>5,
-            "QUAD_NSHALLOW"=>7,
-            "QUAD_NDEEP"=>7,
+            "QUAD_N_SHALLOW"=>7,
+            "QUAD_N_DEEP"=>7,
 
             "GAMEPAD_POLL_INT"=>1,
     		"GAMEPAD_AXIS_TRESH0"=>0.5,
@@ -25,7 +25,7 @@
             "KB_INT"=>150,
 
             "DEBUG_OUTLINE"=>false,
-            "LiNEAR_SPOKES"=>false,
+            "LINEAR_SPOKES"=>false,
             "SHOW_STATS"=>true,
             "SHOW_AXIS"=>true
         ],
@@ -51,7 +51,19 @@
             "SELL2"=>'["GBTN_0"]',
             "SELL3"=>'["GBTN_1"]',
 
-            "DELETE"=>'["GBTN_6"]'
+            "DELETE"=>'["GBTN_6"]',
+        ],
+        "quad"=>[
+            "SELQ0"=>'["GBTN_4"]',
+            "SELQ1"=>'["GBTN_5"]',
+            "SELQ2"=>'["GBTN_6"]',
+            "SELQ3"=>'["GBTN_7"]',
+/*            "SELQ4"=>'["GBTN_0"]',
+            "SELQ5"=>'["GBTN_1"]',
+            "SELQ6"=>'["GBTN_0"]',
+            "SELQ7"=>'["GBTN_1"]',*/
+            "DELETE"=>'["GBTN_0"]',
+            "RESET"=>'["GBTN_1"]'
         ]
     )
 ?>

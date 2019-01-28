@@ -95,7 +95,7 @@ function save(){
             if(inp.attr("type")=="checkbox"){
                 data.inputs[input]=inp.is(":checked");
             }else {
-                data.inputs[input]=parseInt(inp.val());
+                data.inputs[input]=parseFloat(inp.val());
             }
 
         }

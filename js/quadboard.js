@@ -155,8 +155,9 @@ function __clear_quadboard(){
 // here we receive the full js event
 function __qboard_kdown(e){
 	var code=e.code.toUpperCase();	
+    var signal=this.input.getSignal(code);
 
-	if(code==bcksp || code=="GDEL"){
+    if(signal=="DELETE"){
 		this.game.delSym();
         this.stat.logact("del");
 		return true;
@@ -165,19 +166,17 @@ function __qboard_kdown(e){
 }
 // Code as string directly
 function __qboard_kup(code){
-	var keyn=has_el(code,selq);
-        
-    console.log(code);
+    var signal=this.input.getSignal(code);
+    if(!signal) return;
     
-	if(code==rst || code=="GRST" ){
+    if(signal=="RESET"){
         this.__rst();
         this.stat.logact("rst");
     }
-	if(keyn==-1){
-	    keyn=has_el(code,dbtns);
-    }
-	if(keyn==-1) return;
+    if(signal.substr(0,4)!="SELQ") return;
 
+    var keyn=parseInt(signal.substr(4));
+    
 	if(typeof(this.tree[keyn])=="string"){
         this.stat.logact("selleaf",keyn);
 		doKey(this.tree[keyn]);
@@ -202,6 +201,8 @@ function __qboard_sel(n){
 }
 
 function quadboard(stat,game,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
+    var input = new inputo("quad");
+
 	set=sortX(freq_prof[""]);	
 	ftop=freq_prof[""][set[0]];
 	tree=maketree(set,QUAD_ROWS,QUAD_COLS,QUAD_N_SHALLOW,QUAD_N_DEEP);
@@ -209,6 +210,7 @@ function quadboard(stat,game,freq_prof,target,ctx,x,y,w,h,style,fts,ft){
 	console.log("jhwui");
 
 	return {ctx:ctx,
+        input: input,
         stat: stat,
 		font: ft,
 		font_size: fts,
