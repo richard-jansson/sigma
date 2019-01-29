@@ -207,7 +207,7 @@ function vkeyboard(stat,ctx,x,y,w,h,style,font_size,greek,russian){
 
 	var rows=typeof(greek)=="undefined"||greek==false?enrows:greekrows;
 
-    if(typeof(russian)!="undefined" || russian!=false){
+    if(typeof(russian)!="undefined" && russian!=false){
         rows=russianrows;
     }
 
