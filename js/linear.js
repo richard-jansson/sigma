@@ -193,12 +193,16 @@ function __lin_clear(){
 function __lin_kdown(e){
 	var code=e.key.toUpperCase();	
 	var e_code=e.code.toUpperCase();	
+    var signal=this.input.getSignal(code);
 
-    if(code=="GLRN"){
+    if(!signal) return;
+
+//    if(code=="GLRN"){
+    if(signal=="DYNUP"){
 		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
         this.stat.logact("rightnorth");
     }
-    if(code=="GLRS"){
+    if(signal=="DYNDOWN"){
         this.stat.logact("rightsouth");
 		if(this.greenoffset>this.dynset.length-5){
 			console.log("BEEEP");
@@ -207,7 +211,7 @@ function __lin_kdown(e){
 			this.greenoffset++;	
 		}
     }
-    if(code=="GLRSEL"){
+    if(signal=="DYNSELECT"){
         this.stat.logact("rightsel");
 		doKey(this.dynset[this.greenoffset]);	
 
@@ -219,11 +223,11 @@ function __lin_kdown(e){
 		this.clear();
 		this.render();
     }
-    if(code=="GLLN"){
+    if(signal=="STATUP"){
         this.stat.logact("leftnorth");
 		this.offset=this.offset>1?this.offset-1:0;
     }
-    if(code=="GLLS"){
+    if(signal=="STATDOWN"){
         this.stat.logact("leftsouth");
 		if(this.offset>this.set.length-5){
 			console.log("BEEEP");
@@ -231,7 +235,7 @@ function __lin_kdown(e){
 			this.offset++;	
 		}
     }
-    if(code=="GLLSEL"){
+    if(signal=="STATSELECT"){
         this.stat.logact("leftsel");
 		doKey(this.set[this.offset]);	
 		this.dynset=this.genDynSet();
@@ -241,11 +245,11 @@ function __lin_kdown(e){
 		this.clear();
 		this.render();
     }
-    if(code=="GLDEL"){
+    if(signal=="DELETE"){
         this.stat.logact("del");
 		game.delSym();
     }
-
+/*
 	if(ling_up==code){
 		this.greenoffset=this.greenoffset>1?this.greenoffset-1:0;
         this.stat.logact("rightnorth");
@@ -320,6 +324,7 @@ function __lin_kdown(e){
 		this.render();
 		return true;
 	}
+    */
 	
 	var key=e.key.toUpperCase();
 
@@ -332,7 +337,7 @@ function __lin_kdown(e){
 function __lin_kup(key,code){
 	this.rep_stop(key);
 
-	if(code==bcksp){
+/*	if(code==bcksp){
 		console.log("deleeete!!");
 		doDelete();
 		return false;
@@ -343,8 +348,9 @@ function __lin_kup(key,code){
 		this.render();
 		return true;
 	}
+    */
 
-	if(code==rst) this.__rst();
+//	if(code==rst) this.__rst();
 }
 
 function __lin_rst(){
@@ -363,8 +369,10 @@ function linboard(freq_prof,stat,target,ctx,x,y,w,h,style,fts,ft){
 //	tree=setToTree(set,N,M);
 	var __offset=0;
 	var __goffset=0;
+    var input = new inputo("linear");
 
 	return {ctx:ctx,
+        input: input,
         stat: stat,
 		font: ft,
 		font_size: fts,

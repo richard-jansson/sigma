@@ -69,6 +69,15 @@
             "SELQ7"=>'["GBTN_1"]',*/
             "DELETE"=>'["GBTN_0"]',
             "RESET"=>'["GBTN_1"]'
+        ],
+        "linear"=>[
+            "DYNUP"=>'["KeyW","ArrowUp","GARN"]',
+            "DYNDOWN"=>'["KeyD","ArrowRight","GARE"]',
+            "DYNSELECT"=>'["KeyD","ArrowRight","GARE"]',
+            "STATUP"=>'["KeyW","ArrowUp","GARN"]',
+            "STATDOWN"=>'["KeyD","ArrowRight","GARE"]',
+            "STATSELECT"=>'["KeyD","ArrowRight","GARE"]',
+            "DELETE"=>'["KeyD","ArrowRight","GARE"]'
         ]
     )
 ?>

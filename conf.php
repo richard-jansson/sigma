@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 <?php 
 
-$menus=array("general","key","tree","quad","menu");
+$menus=array("general","key","tree","quad","menu","linear");
 if(!in_array($_GET["block"],$menus)) die();
 
 include "dbcfg.php"; 
