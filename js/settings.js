@@ -6,6 +6,7 @@ window.onkeyup=function(e){
 }
 window.onkeydown=function(e){
     if(expecting_inp){
+        expecting_inp=false;
         console.log(e.code);
         addBindAct(curr_signal,e.code);
     }
@@ -53,8 +54,8 @@ function addBindAct(signal,code){
     key.append(tc);
     key.append(td);
     
-    var keys=group.find(".keys");
-    keys.append(key);
+    var sig=group.find(".signal");
+    key.insertAfter(sig);
 }
 
 function addBind(){
