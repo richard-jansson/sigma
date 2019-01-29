@@ -77,6 +77,9 @@ function getSignal(e,signal){
 
 function back(){
     window.location.href="start.html"
+}
+
+function save(){
     var block=$(this).parents(".configblock");
     var cfgblock=block.attr("weapon");
 
