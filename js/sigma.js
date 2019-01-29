@@ -106,7 +106,7 @@ function updateStats(){
 
 function updateStatsO(){
     var xhr=new XMLHttpRequest();
-    xhr.open('GET','stats.php?uid='+user_id);
+    xhr.open('GET','stats.php?uid='+user_id+"&cfg="+JSON.stringify(cfg));
 
     xhr.onreadystatechange=function(){
         if(this.readyState!=XMLHttpRequest.DONE) return;

@@ -112,6 +112,7 @@ function back(){
 }
 
 function setupKeys(){
+    if(!is_loggedin) window.location.href="login.html";
     $(".keys .del").click(delBind);
     $(".group .newbind").click(addBind);
     

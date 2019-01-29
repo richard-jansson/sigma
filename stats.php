@@ -15,8 +15,15 @@ if(!$con){
     die();
 }
 if(!isset($_GET["sid"])){
+    $cfgblob="";
+    if(isset($_GET["cfg"])){
+        $cfg=$_GET["cfg"];
+        $tmp=json_decode($cfg);
+        $cfgblob=json_encode($cfg);
+    }
+
     $user_id=$_SESSION["user_id"];
-    $q="INSERT INTO sessions (user_id) VALUES ($user_id)";
+    $q="INSERT INTO sessions (user_id,cfg) VALUES ($user_id,$cfgblob)";
     $r=mysqli_query($con,$q);
     if(!$r){ 
         $o["status"]="failed";
