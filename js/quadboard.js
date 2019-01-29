@@ -162,6 +162,10 @@ function __qboard_kdown(e){
         this.stat.logact("del");
 		return true;
 	}
+    if(signal=="RESET"){
+        this.__rst();
+        this.stat.logact("rst");
+    }
 	return false;
 }
 // Code as string directly

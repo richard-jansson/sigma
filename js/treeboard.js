@@ -285,6 +285,10 @@ function __tboard_kdown(e){
         this.stat.logact("delete");
 		return true;
 	}
+    if(signal=="RESET"){
+		this.__rst();
+		this.stat.logact("rst",undefined);
+    }
 	return false;
 }
 

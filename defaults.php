@@ -30,9 +30,9 @@
             "SHOW_AXIS"=>true
         ],
         "menu"=>[
-            "SELECT"=>'["KeyE","Space","GBTN_0","GBTN_5"]',
-            "UP"=>'["KeyW","ArrowUp","GARN"]',
-            "DOWN"=>'["KeyS","ArrowDown","GARS"]'
+            "SELECT"=>'["GBTN_7","GBTN_0","Enter","Space","KeyE"]',
+            "UP"=>'["ArrowUp","KeyW","GARN","GALN","GBTN_12"]',
+            "DOWN"=>'["ArrowDown","KeyS","GARS","GALS","GBTN_13"]'
         ],
         "key"=>[
             "UP"=>'["KeyW","ArrowUp","GARN"]',
@@ -44,31 +44,27 @@
             "DELETE"=>'["KeyQ","Shift","GBTN_6"]'
             ],
         "tree"=>[
-            "SELB0"=>'["GBTN_14"]',
-            "SELB1"=>'["GBTN_12"]',
-            "SELB2"=>'["GBTN_15"]',
-            "SELB3"=>'["GBTN_15"]',
+            "SELB0"=>'["GALNW","KeyQ"]',
+            "SELB1"=>'["GALNE","KeyE"]',
+            "SELB2"=>'["GALSE","KeyC"]',
+            "SELB3"=>'["GALSW","KeyZ"]',
 
-            "RESET"=>'["GBTN_13"]',
+            "RESET"=>'["GBTN_10","ShiftLeft"]',
 
-            "SELL0"=>'["GBTN_0"]',
-            "SELL1"=>'["GBTN_1"]',
-            "SELL2"=>'["GBTN_0"]',
-            "SELL3"=>'["GBTN_1"]',
+            "SELL0"=>'["KeyW","GARN"]',
+            "SELL1"=>'["GARE","KeyD"]',
+            "SELL2"=>'["GARS","KeyS"]',
+            "SELL3"=>'["GARW","KeyA"]',
 
-            "DELETE"=>'["GBTN_6"]',
+            "DELETE"=>'["GBTN_11","Space"]',
         ],
         "quad"=>[
-            "SELQ0"=>'["GBTN_4"]',
-            "SELQ1"=>'["GBTN_5"]',
-            "SELQ2"=>'["GBTN_6"]',
-            "SELQ3"=>'["GBTN_7"]',
-/*            "SELQ4"=>'["GBTN_0"]',
-            "SELQ5"=>'["GBTN_1"]',
-            "SELQ6"=>'["GBTN_0"]',
-            "SELQ7"=>'["GBTN_1"]',*/
-            "DELETE"=>'["GBTN_0"]',
-            "RESET"=>'["GBTN_1"]'
+            "SELQ0"=>'["GARNW","GALNW","KeyE"]',
+            "SELQ1"=>'["GARNE","GALNE","KeyR"]',
+            "SELQ2"=>'["GARSW","GALSW","KeyD"]',
+            "SELQ3"=>'["GARSE","GALSE","KeyF"]',
+            "DELETE"=>'["GBTN_7","GBTN_11","Space"]',
+            "RESET"=>'["GBTN_6","GBTN_10","ShiftLeft"]'
         ],
         "linear"=>[
             "DYNUP"=>'["KeyW","ArrowUp","GARN"]',
