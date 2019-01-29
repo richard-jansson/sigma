@@ -22,6 +22,7 @@ var GAMEPAD_AXIS_TRESH0=cfg.general.GAMEPAD_AXIS_TRESH0;
 var GAMEPAD_AXIS_TRESH1=cfg.general.GAMEPAD_AXIS_TRESH1;
 var GAMEPAD_MIN_T=cfg.general.GAMEPAD_MIN_T;
 var BTN_MIN_T=cfg.general.BTN_MIN_T;
+var DEBUG_OUTLINE=cfg.general.DEBUG_OUTLINE;
 
 var waiting=true;
 var curr;
