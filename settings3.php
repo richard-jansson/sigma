@@ -1,7 +1,6 @@
 <?php 
 header('Content-type: text/javascript');
 session_start();
-if(isset($_SESSION["user_id"])){
 ?>
 var cfg={
 <?php
@@ -22,7 +21,6 @@ $general=$cfgs;
 ?>
 general : <?php echo json_encode($general); ?> 
 }; 
-<?php } ?>
 <?php if(isset($_SESSION["user_id"])) { ?>
 var is_loggedin=true;
 var user_name = "<?php echo $_SESSION["username"]; ?>";

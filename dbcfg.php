@@ -24,11 +24,11 @@ if(!isset($_GET["block"]) && !$block){
 if(!$block) $block=$_GET["block"];
 
 
-session_start();
 //$cfgs=array();
 foreach($defcfg[$block] as $k => $v){
     $cfgs[$k]=$v;
 }
+session_start();
 if(!isset($_SESSION["user_id"])){
 //    echo "var is_loggedin = false;";
     return;
