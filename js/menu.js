@@ -115,6 +115,9 @@ function __menu_render(p){
 		  for(var k in this.cmenu) mposts++;
 		  this.mposts=mposts;
 
+		  if(typeof(this.cmenu)=="object" && typeof(this.cmenu.url)=="string"){
+            window.location.href=this.cmenu.url;
+          }
 		  if(typeof(this.cmenu)=="object" && this.cmenu.back==true){
 		  		this.cmenu=this.omenu;
 		  		this.cursor=0;
@@ -193,6 +196,7 @@ function __menu_render(p){
               "Дама с собачкой":weapons,
 			  "back": {back:true}
 			  },
+              "Conf":{url: "conf.php?block=general" },
 			  "About":"Sigma is a game exploring different keyboard methods that could've been. #br# Music by nihilore and Telematix #br# made by Erudite Now"};
 	var mposts=0;
 	for(var k in menu) mposts++;

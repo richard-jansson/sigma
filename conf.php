@@ -18,7 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 <?php 
 
-if(!in_array($_GET["block"],array("general","key","tree","quad","menu"))) die();
+$menus=array("general","key","tree","quad","menu");
+if(!in_array($_GET["block"],$menus)) die();
 
 include "dbcfg.php"; 
 
@@ -108,6 +109,11 @@ function print_key($k,$v){ ?>
 		<div id="logo">
 			<a href="/"><img src="img/home.png" alt="logo" /></a>
 		</div>
+        <div id="menu">
+            <?php foreach($menus as $k=>$v){ ?>
+                <a href="conf.php?block=<?php echo $v; ?>"><?php echo $v; ?></a>
+            <?php } ?>
+        </div>
 		<div id="settingswrap">
 		<div id="settings" weapon="<?php echo $_GET["block"]; ?>" class="configblock">
             <div class="heading">
@@ -141,6 +147,9 @@ function print_key($k,$v){ ?>
                 <div class="save">
                     <div class="savebtn">
                         <span>Save</span>
+                    </div>
+                    <div class="backbtn">
+                        <span>Back</span>
                     </div>
                 </div>
             </div>

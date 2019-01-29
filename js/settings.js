@@ -74,7 +74,8 @@ function getSignal(e,signal){
     return ret;
 }
 
-function save(){
+function back(){
+    window.location.href="start.html"
     var block=$(this).parents(".configblock");
     var cfgblock=block.attr("weapon");
 
@@ -115,6 +116,7 @@ function setupKeys(){
     $(".group .newbind").click(addBind);
     
     $(".savebtn").click(save);
+    $(".backbtn").click(back);
 }
 
 
